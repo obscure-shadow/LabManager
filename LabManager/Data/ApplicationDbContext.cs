@@ -12,5 +12,8 @@ namespace LabManager.Data
             : base(options)
         {
         }
+
+        public DbSet<LabThing> LabThings {get; set;}
+        public DbSet<Chemical> Chemicals {get; set;}
     }
 }
