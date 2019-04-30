@@ -108,7 +108,7 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("LabThing");
+                    b.ToTable("LabThings");
                 });
 
             modelBuilder.Entity("LabManager.Models.Manufacturer", b =>

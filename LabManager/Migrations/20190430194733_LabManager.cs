@@ -100,7 +100,7 @@ namespace LabManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LabThing",
+                name: "LabThings",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -120,7 +120,7 @@ namespace LabManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LabThing", x => x.ID);
+                    table.PrimaryKey("PK_LabThings", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -309,7 +309,7 @@ namespace LabManager.Migrations
                 name: "ChemicalTypes");
 
             migrationBuilder.DropTable(
-                name: "LabThing");
+                name: "LabThings");
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");

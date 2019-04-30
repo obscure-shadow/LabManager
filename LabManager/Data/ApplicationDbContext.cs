@@ -19,6 +19,7 @@ namespace LabManager.Data
         public DbSet<Chemical> Chemicals { get; set; }
         public DbSet<ChemicalType> ChemicalTypes { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
+        public DbSet<LabThing> LabThings { get; set; }
         //public DbSet<LabThing> LabThings { get; set; }
         //NOTE: DbSet for LabThing was created in the Data/LabManagerContext.cs when the LabManager Controller was scaffolded.
 
@@ -28,7 +29,6 @@ namespace LabManager.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<LabManager.Models.LabThing> LabThing { get; set; }
     }
 
 }

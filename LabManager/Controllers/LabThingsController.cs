@@ -22,7 +22,7 @@ namespace LabManager.Controllers
         // GET: LabThings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.LabThing.ToListAsync());
+            return View(await _context.LabThings.ToListAsync());
         }
 
         // GET: LabThings/Details/5
@@ -33,7 +33,7 @@ namespace LabManager.Controllers
                 return NotFound();
             }
 
-            var labThing = await _context.LabThing
+            var labThing = await _context.LabThings
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (labThing == null)
             {
@@ -73,7 +73,7 @@ namespace LabManager.Controllers
                 return NotFound();
             }
 
-            var labThing = await _context.LabThing.FindAsync(id);
+            var labThing = await _context.LabThings.FindAsync(id);
             if (labThing == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace LabManager.Controllers
                 return NotFound();
             }
 
-            var labThing = await _context.LabThing
+            var labThing = await _context.LabThings
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (labThing == null)
             {
@@ -139,15 +139,15 @@ namespace LabManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var labThing = await _context.LabThing.FindAsync(id);
-            _context.LabThing.Remove(labThing);
+            var labThing = await _context.LabThings.FindAsync(id);
+            _context.LabThings.Remove(labThing);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool LabThingExists(int id)
         {
-            return _context.LabThing.Any(e => e.ID == id);
+            return _context.LabThings.Any(e => e.ID == id);
         }
     }
 }
