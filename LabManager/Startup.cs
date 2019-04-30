@@ -44,7 +44,7 @@ namespace LabManager
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             //NOTE: Changed <IdentityUser> below to <Employee>
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<Employee>()
 
             //services.AddDbContext<LabThing>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
