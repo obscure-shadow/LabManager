@@ -13,9 +13,25 @@ namespace LabManager.Data
             : base(options)
         {
         }
-        //NOTE: LabThing and Chemical have Category, Manufacturer, and ChemicalType referenced as FKs. There is no need to add a DbSet for them here because LabThing and Chemical reference them.
-        public DbSet<LabThing> LabThings {get; set;}
-        public DbSet<Chemical> Chemicals {get; set;}
 
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Chemical> Chemicals { get; set; }
+        public DbSet<ChemicalType> ChemicalTypes { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
+        //public DbSet<LabThing> LabThings { get; set; }
+        //NOTE: DbSet for LabThing was created in the Data/LabManagerContext.cs when the LabManager Controller was scaffolded.
+
+        //NOTE: Confirm whether this is necessary (compare to BangazonSite project):
+        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+        //public DbSet<LabThing> LabThings { get; set; }
+        //NOTE: DbSet for LabThing was created in the Data/LabManagerContext.cs when the LabManager Controller was scaffolded.
+
+        //NOTE: Confirm whether this is necessary (compare to BangazonSite project):
+        public DbSet<LabManager.Models.LabThing> LabThing { get; set; }
     }
+
 }

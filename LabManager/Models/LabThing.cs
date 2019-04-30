@@ -27,9 +27,5 @@ namespace LabManager.Models
         //public List<Employee> Employee { get; set; }
         //public List<Category> Category { get; set; }
         //public List<Manufacturer> Manufacturer { get; set; }
-
-
-
-
     }
 }
