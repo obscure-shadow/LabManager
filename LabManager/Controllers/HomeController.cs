@@ -20,6 +20,16 @@ namespace LabManager.Controllers
             return View();
         }
 
+        public IActionResult LabThing()
+        {
+            return View();
+        }
+
+        public IActionResult Chemical()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

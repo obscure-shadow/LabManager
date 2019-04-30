@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using LabManager.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using LabManager.Models;
 
 namespace LabManager
 {
@@ -35,14 +37,22 @@ namespace LabManager
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+     //==================================================================================================
+     //NOTE: Dependency injection
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            //NOTE: Changed <IdentityUser> below to <Employee>
+            services.AddDefaultIdentity<Employee>()
+
+            //services.AddDbContext<LabThing>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
+    //==================================================================================================
+
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

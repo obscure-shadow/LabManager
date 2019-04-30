@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace LabManager.Data.Migrations
+namespace LabManager.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class LabManager : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,11 +40,100 @@ namespace LabManager.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    HireDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Chemicals",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    ReceivedDate = table.Column<DateTime>(nullable: false),
+                    OpenDate = table.Column<DateTime>(nullable: false),
+                    ExpirationDate = table.Column<DateTime>(nullable: false),
+                    COA = table.Column<string>(nullable: true),
+                    OpenedBy = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true),
+                    EmployeeID = table.Column<int>(nullable: false),
+                    ManufacturerID = table.Column<int>(nullable: false),
+                    ChemicalTypeID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chemicals", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChemicalTypes",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChemicalTypes", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LabThing",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    SerialNo = table.Column<string>(nullable: true),
+                    ModelNo = table.Column<string>(nullable: true),
+                    AcquisitionDate = table.Column<DateTime>(nullable: false),
+                    CalibratedOn = table.Column<DateTime>(nullable: false),
+                    CalibrationDue = table.Column<DateTime>(nullable: false),
+                    MaintenanceOn = table.Column<DateTime>(nullable: false),
+                    MaintenanceDue = table.Column<DateTime>(nullable: false),
+                    Note = table.Column<string>(nullable: true),
+                    EmployeeID = table.Column<int>(nullable: false),
+                    CategoryID = table.Column<int>(nullable: false),
+                    ManufacturerID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LabThing", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Manufacturers",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Manufacturers", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +298,21 @@ namespace LabManager.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Chemicals");
+
+            migrationBuilder.DropTable(
+                name: "ChemicalTypes");
+
+            migrationBuilder.DropTable(
+                name: "LabThing");
+
+            migrationBuilder.DropTable(
+                name: "Manufacturers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
