@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LabManager
+namespace LabManager.Models
 {
     public class Chemical
     {
@@ -19,10 +19,11 @@ namespace LabManager
         public int EmployeeID { get; set; }
         public int ManufacturerID {get; set;}
         public int ChemicalTypeID { get; set; }
-
-        public List<Employee> Employee { get; set; }
-        public List<Manufacturer> Manufacturer { get; set; }
-        public List<ChemicalType> ChemicalType { get; set; }
+        
+        //public Employee Employee { get; set; }
+        //public List<Employee> Employee { get; set; }
+        //public List<Manufacturer> Manufacturer { get; set; }
+        //public List<ChemicalType> ChemicalType { get; set; }
 
 
 

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using LabManager.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using LabManager.Models;
 
 namespace LabManager
 {
@@ -38,7 +39,9 @@ namespace LabManager
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            //NOTE: Changed <IdentityUser> below to <Employee>
             services.AddDefaultIdentity<IdentityUser>()
+
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 

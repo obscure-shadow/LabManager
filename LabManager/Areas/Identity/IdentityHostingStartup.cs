@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using StudentExercises.Data;
+using LabManager.Data;
 
 [assembly: HostingStartup(typeof(LabManager.Areas.Identity.IdentityHostingStartup))]
 namespace LabManager.Areas.Identity
@@ -19,8 +19,9 @@ namespace LabManager.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("ApplicationDbContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>()
-                    .AddEntityFrameworkStores<ApplicationDbContext>();
+                //NOTE: Try commenting out the line below to ehelp with Build.Run error:
+                //services.AddDefaultIdentity<IdentityUser>()
+                    //.AddEntityFrameworkStores<ApplicationDbContext>();
             });
         }
     }
