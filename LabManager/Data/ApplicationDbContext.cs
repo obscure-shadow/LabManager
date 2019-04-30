@@ -27,10 +27,7 @@ namespace LabManager.Data
         {
             base.OnModelCreating(modelBuilder);
         }
-        //public DbSet<LabThing> LabThings { get; set; }
-        //NOTE: DbSet for LabThing was created in the Data/LabManagerContext.cs when the LabManager Controller was scaffolded.
 
-        //NOTE: Confirm whether this is necessary (compare to BangazonSite project):
         public DbSet<LabManager.Models.LabThing> LabThing { get; set; }
     }
 
