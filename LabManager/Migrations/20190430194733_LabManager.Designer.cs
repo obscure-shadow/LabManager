@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190430154307_[LabManager]")]
+    [Migration("20190430194733_LabManager")]
     partial class LabManager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -110,7 +110,7 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("LabThing");
+                    b.ToTable("LabThings");
                 });
 
             modelBuilder.Entity("LabManager.Models.Manufacturer", b =>
