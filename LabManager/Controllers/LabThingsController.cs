@@ -74,8 +74,9 @@ namespace LabManager.Controllers
                 };
                 CategoriesList.Add(categoryItem);
             };
+            //-------------------------------------------------------------------------------------------------------
 
-            
+
 
             labThingCreateViewModel.Category = CategoriesList;
             //-------------------------------------------------------------------------------------------------------
@@ -102,16 +103,11 @@ namespace LabManager.Controllers
             labThingCreateViewModel.Manufacturer = ManufacturersList;
 
 
-            //-------------------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------------------
             return View(labThingCreateViewModel);
-
-
-
-
-
+        //-------------------------------------------------------------------------------------------------------------
         }
 
-        //-------------------------------------------------------------------------------------------------------------
 
         //----------------------------------------------------------------------------------------------------
 
@@ -138,12 +134,12 @@ namespace LabManager.Controllers
 
             }
 
-            //Get product type data from the database
+            //Get category data from the database
             var CategoryData = _context.Categories;
 
             List<SelectListItem> CategoriesList = new List<SelectListItem>();
 
-            //Include the select option in the product type list
+            //Include the select option in the category list
             CategoriesList.Insert(0, new SelectListItem
             {
                 Text = "Select",
@@ -160,14 +156,46 @@ namespace LabManager.Controllers
             };
 
             ltViewModel.Category = CategoriesList;
-            return View(ltViewModel);
 
+        //----------------------------------------------------------------------------------------------------
+
+            var ManufacturerData = _context.Manufacturers;
+
+            List<SelectListItem> ManufacturersList = new List<SelectListItem>();
+
+            //Include the select option in the manufacturer list
+            ManufacturersList.Insert(0, new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
+            foreach (var m in ManufacturerData)
+            {
+                SelectListItem manufacturersList = new SelectListItem
+                {
+                    Value = m.ID.ToString(),
+                    Text = m.Name
+                };
+                ManufacturersList.Add(manufacturersList);
+            };
+
+            ltViewModel.Manufacturer = ManufacturersList;
+
+            //----------------------------------------------------------------------------------------------------
+
+
+
+            //----------------------------------------------------------------------------------------------------
+
+            return View(ltViewModel);
         }
 
-            //=========================================================================================
-            //NOTE: Original Edit methods:
-            // GET: LabThings/Edit/5
-            public async Task<IActionResult> Edit(int? id)
+
+
+        //=========================================================================================
+        //NOTE: Original Edit methods:
+        // GET: LabThings/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -232,6 +260,7 @@ namespace LabManager.Controllers
 
             var labThing = await _context.LabThings
                 .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
                 .FirstOrDefaultAsync(x => x.ID == id);
             if (labThing == null)
             {
