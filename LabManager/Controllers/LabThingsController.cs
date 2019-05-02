@@ -35,18 +35,23 @@ namespace LabManager.Controllers
         // GET: LabThings
         public async Task<IActionResult> Index()
         {
-            //var applicationDbContext = _context.LabThings
-            //    .Include(lt => lt.ID)
+            var applicationDbContext = _context.LabThings
+                .Include(lt => lt.Category);
             //    .Include(lt => lt.Employee);
-            return View(await _context.LabThings.ToListAsync());
+            return View(await applicationDbContext.ToListAsync());
         }
+
+
+    //    var labThing = await _context.LabThings
+    //.Include(lt => lt.Category)
+    //.FirstOrDefaultAsync(x => x.ID == id);
 
 
 
         //========================================================================================
         //NOTE: Original Create method:
 
-         //GET: LabThings/Create
+        //GET: LabThings/Create
         public IActionResult Create()
         {
             //NOTE: Added ViewData to the original method:
