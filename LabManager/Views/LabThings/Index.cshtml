@@ -42,9 +42,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.EmployeeID)
             </th>
-            <th>
+            @****************************************************************@
+            @*Custom drop down list for categories:*@
+
+            @****************************************************************@
+
+            @*<th>
                 @Html.DisplayNameFor(model => model.CategoryID)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.ManufacturerID)
             </th>
@@ -84,9 +89,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EmployeeID)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.CategoryID)
-            </td>
+            </td>*@
+            @****************************************************************@
+            @*Custom drop down list for categories:*@
+
+            @****************************************************************@
+
             <td>
                 @Html.DisplayFor(modelItem => item.ManufacturerID)
             </td>

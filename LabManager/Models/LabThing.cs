@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,6 +18,13 @@ namespace LabManager.Models
         public DateTime MaintenanceOn { get; set; }
         public DateTime MaintenanceDue { get; set; }
         public string Note { get; set; }
+
+        [NotMapped]
+        public Employee Employee { get; set; }
+        [NotMapped]
+        public Category Category { get; set; }
+        [NotMapped]
+        public Manufacturer Manufacturer { get; set; }
 
         public int EmployeeID { get; set; }
         public int CategoryID { get; set; }

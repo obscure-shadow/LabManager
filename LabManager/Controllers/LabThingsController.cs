@@ -7,66 +7,151 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LabManager.Data;
 using LabManager.Models;
+using LabManager.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace LabManager.Controllers
 {
+    [Authorize]
     public class LabThingsController : Controller
     {
+
+        private readonly UserManager<Employee> _userManager;
+
         private readonly ApplicationDbContext _context;
 
-        public LabThingsController(ApplicationDbContext context)
+        public LabThingsController(ApplicationDbContext context, UserManager<Employee> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
+
+        private Task<Employee> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
+
+        //=========================================================================================
+
 
         // GET: LabThings
         public async Task<IActionResult> Index()
         {
+            //var applicationDbContext = _context.LabThings
+            //    .Include(lt => lt.ID)
+            //    .Include(lt => lt.Employee);
             return View(await _context.LabThings.ToListAsync());
         }
 
-        // GET: LabThings/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var labThing = await _context.LabThings
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (labThing == null)
-            {
-                return NotFound();
-            }
 
-            return View(labThing);
-        }
+        //========================================================================================
+        //NOTE: Original Create method:
 
-        // GET: LabThings/Create
+         //GET: LabThings/Create
         public IActionResult Create()
         {
-            return View();
+            //NOTE: Added ViewData to the original method:
+            //ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThing.CategoryID);
+
+            //NOTE: Example from Brittany's BSite project:
+            var CategoryData = _context.Categories;
+            List<SelectListItem> CategoriesList = new List<SelectListItem>();
+
+            CategoriesList.Insert(0, new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
+
+            foreach (var cat in CategoryData)
+            {
+                SelectListItem categoryItem = new SelectListItem
+                {
+                    Value = cat.ID.ToString(),
+                    Text = cat.Name
+                };
+                CategoriesList.Add(categoryItem);
+            };
+
+            LabThingCreateViewModel labThingCreateViewModel = new LabThingCreateViewModel();
+
+            labThingCreateViewModel.Category = CategoriesList;
+
+            return View(labThingCreateViewModel);
         }
 
-        // POST: LabThings/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //-------------------------------------------------------------------------------------------------------------
+
+        //POST: LabThings/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        // public async Task<IActionResult> Create([Bind("ID,Name,SerialNo,ModelNo,AcquisitionDate,CalibratedOn,CalibrationDue,MaintenanceOn,MaintenanceDue,Note,EmployeeID,CategoryID,ManufacturerID")] LabThing labThing)
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         _context.Add(labThing);
+        //         await _context.SaveChangesAsync();
+        //         return RedirectToAction(nameof(Index));
+        //     }
+        //     ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThing.CategoryID);
+
+        //     return View(labThing);
+        // }
+
+        //----------------------------------------------------------------------------------------------------
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,SerialNo,ModelNo,AcquisitionDate,CalibratedOn,CalibrationDue,MaintenanceOn,MaintenanceDue,Note,EmployeeID,CategoryID,ManufacturerID")] LabThing labThing)
+        public async Task<IActionResult> Create(LabThingCreateViewModel ltViewModel)
         {
+
+            //BR: the User and UserId fields must be disregarded in order to determine if the model state is valid
+            ModelState.Remove("LabThing.Employee");
+            ModelState.Remove("LabThing.EmployeeID");
+
+            //BR: the user is instead obtained by the current authorized user
+            var user = await GetCurrentUserAsync();
+
             if (ModelState.IsValid)
             {
-                _context.Add(labThing);
+                //BR: the user id is declaired using the asyc method above and established once model state is determined
+                ltViewModel.LabThing.Employee = user;
+                _context.Add(ltViewModel.LabThing);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //BR: the routing occurs here instead of in the view because the product id must be created before the redirect occurs
+                return RedirectToAction("Details", new { id = ltViewModel.LabThing.CategoryID });
+
             }
-            return View(labThing);
+
+            //BR: get product type data from the database
+            var CategoryData = _context.Categories;
+
+            List<SelectListItem> CategoriesList = new List<SelectListItem>();
+
+            //BR: include the select option in the product type list
+            CategoriesList.Insert(0, new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
+            foreach (var cat in CategoryData)
+            {
+                SelectListItem categoriesList = new SelectListItem
+                {
+                    Value = cat.ID.ToString(),
+                    Text = cat.Name
+                };
+                CategoriesList.Add(categoriesList);
+            };
+
+            ltViewModel.Category = CategoriesList;
+            return View(ltViewModel);
+
         }
 
-        // GET: LabThings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+            //=========================================================================================
+            //NOTE: Original Edit methods:
+            // GET: LabThings/Edit/5
+            public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -78,12 +163,14 @@ namespace LabManager.Controllers
             {
                 return NotFound();
             }
+            //NOTE: Added ViewData:
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThing.CategoryID);
             return View(labThing);
         }
 
+        //-------------------------------------------------------------------------------------------------------------
+
         // POST: LabThings/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,SerialNo,ModelNo,AcquisitionDate,CalibratedOn,CalibrationDue,MaintenanceOn,MaintenanceDue,Note,EmployeeID,CategoryID,ManufacturerID")] LabThing labThing)
@@ -116,6 +203,31 @@ namespace LabManager.Controllers
             return View(labThing);
         }
 
+        //==============================================================================
+        //NOTE: Original details method:
+
+        //GET: LabThings/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var labThing = await _context.LabThings
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (labThing == null)
+            {
+                return NotFound();
+            }
+
+            return View(labThing);
+        }
+
+
+        //=========================================================================================
+        //NOTE: Original Delete method:
+
         // GET: LabThings/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -133,7 +245,7 @@ namespace LabManager.Controllers
 
             return View(labThing);
         }
-
+        //-------------------------------------------------------------------------------------------------------------
         // POST: LabThings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -149,5 +261,10 @@ namespace LabManager.Controllers
         {
             return _context.LabThings.Any(e => e.ID == id);
         }
+
+        //=========================================================================================
+        //=========================================================================================
+
+        //=========================================================================================
     }
 }
