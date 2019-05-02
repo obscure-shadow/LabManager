@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<LabManager.Models.LabThing>
+@*@model LabManager.Models.ViewModels.LabThingCreateViewModel*@
+
 
 @{
     ViewData["Title"] = "Index";
@@ -47,65 +49,63 @@
 
             @****************************************************************@
 
-            @*<th>
-                @Html.DisplayNameFor(model => model.CategoryID)
-            </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.ManufacturerID)
+                    @Html.DisplayNameFor(LabThing => LabThing.Category.Name)
+                </th>
+            <th>
+                @Html.DisplayNameFor(LabThing => LabThing.ManufacturerID)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SerialNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModelNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AcquisitionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CalibratedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CalibrationDue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaintenanceOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaintenanceDue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeID)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.CategoryID)
-            </td>*@
-            @****************************************************************@
-            @*Custom drop down list for categories:*@
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SerialNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcquisitionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CalibratedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CalibrationDue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaintenanceOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaintenanceDue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeID)
+                </td>
+          
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
 
-            @****************************************************************@
-
-            <td>
-                @Html.DisplayFor(modelItem => item.ManufacturerID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufacturerID)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

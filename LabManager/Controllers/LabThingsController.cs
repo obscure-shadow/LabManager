@@ -104,30 +104,30 @@ namespace LabManager.Controllers
         public async Task<IActionResult> Create(LabThingCreateViewModel ltViewModel)
         {
 
-            //BR: the User and UserId fields must be disregarded in order to determine if the model state is valid
+            //The Employee and EmployeeId fields must be disregarded in order to determine if the model state is valid
             ModelState.Remove("LabThing.Employee");
             ModelState.Remove("LabThing.EmployeeID");
 
-            //BR: the user is instead obtained by the current authorized user
+            //The user is instead obtained by the current authorized user
             var user = await GetCurrentUserAsync();
 
             if (ModelState.IsValid)
             {
-                //BR: the user id is declaired using the asyc method above and established once model state is determined
+                //The Employee Id is declaired using the async method above and established once model state is determined
                 ltViewModel.LabThing.Employee = user;
                 _context.Add(ltViewModel.LabThing);
                 await _context.SaveChangesAsync();
-                //BR: the routing occurs here instead of in the view because the product id must be created before the redirect occurs
+                //The routing occurs here instead of in the view because the LabThing id must be created before the redirect occurs
                 return RedirectToAction("Details", new { id = ltViewModel.LabThing.CategoryID });
 
             }
 
-            //BR: get product type data from the database
+            //Get product type data from the database
             var CategoryData = _context.Categories;
 
             List<SelectListItem> CategoriesList = new List<SelectListItem>();
 
-            //BR: include the select option in the product type list
+            //Include the select option in the product type list
             CategoriesList.Insert(0, new SelectListItem
             {
                 Text = "Select",
@@ -215,7 +215,8 @@ namespace LabManager.Controllers
             }
 
             var labThing = await _context.LabThings
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .Include(lt => lt.Category)
+                .FirstOrDefaultAsync(x => x.ID == id);
             if (labThing == null)
             {
                 return NotFound();
