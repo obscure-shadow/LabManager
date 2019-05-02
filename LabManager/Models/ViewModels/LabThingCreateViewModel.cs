@@ -11,5 +11,7 @@ namespace LabManager.Models.ViewModels
         public LabThing LabThing { get; set; }
 
         public List<SelectListItem> Category { get; set; }
+        public List<SelectListItem> Manufacturer { get; set; }
+        public List<SelectListItem> Employee { get; set; }
     }
 }

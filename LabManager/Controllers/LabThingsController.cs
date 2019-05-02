@@ -33,20 +33,15 @@ namespace LabManager.Controllers
 
 
         // GET: LabThings
+        //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.LabThings
-                .Include(lt => lt.Category);
-            //    .Include(lt => lt.Employee);
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer);
+                //.Include(lt => lt.Employee);
             return View(await applicationDbContext.ToListAsync());
         }
-
-
-    //    var labThing = await _context.LabThings
-    //.Include(lt => lt.Category)
-    //.FirstOrDefaultAsync(x => x.ID == id);
-
-
 
         //========================================================================================
         //NOTE: Original Create method:
@@ -54,19 +49,22 @@ namespace LabManager.Controllers
         //GET: LabThings/Create
         public IActionResult Create()
         {
-            //NOTE: Added ViewData to the original method:
-            //ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThing.CategoryID);
+        //-------------------------------------------------------------------------------------------------------
+        //NOTE: The variable labThingCreateViewModel is used at the end of all navigation properties to add the nav prop to the view model:
+            LabThingCreateViewModel labThingCreateViewModel = new LabThingCreateViewModel();
 
-            //NOTE: Example from Brittany's BSite project:
+        // NOTE: Gets Categories with the LabThing and creates a list
             var CategoryData = _context.Categories;
             List<SelectListItem> CategoriesList = new List<SelectListItem>();
 
+            //NOTE: Adds an empty list item at the first position in the list as a placeholder:
             CategoriesList.Insert(0, new SelectListItem
             {
                 Text = "Select",
                 Value = ""
             });
 
+            //NOTE: Loops through each item in the list, stores it in categoryItem, and adds it to the categories list created above.
             foreach (var cat in CategoryData)
             {
                 SelectListItem categoryItem = new SelectListItem
@@ -77,30 +75,43 @@ namespace LabManager.Controllers
                 CategoriesList.Add(categoryItem);
             };
 
-            LabThingCreateViewModel labThingCreateViewModel = new LabThingCreateViewModel();
+            
 
             labThingCreateViewModel.Category = CategoriesList;
+            //-------------------------------------------------------------------------------------------------------
 
+            var ManufacturerData = _context.Manufacturers;
+            List<SelectListItem> ManufacturersList = new List<SelectListItem>();
+
+            ManufacturersList.Insert(0, new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
+
+            foreach(var m in ManufacturerData)
+            {
+                SelectListItem manufacturerItem = new SelectListItem
+                {
+                    Value = m.ID.ToString(),
+                    Text = m.Name
+                };
+                ManufacturersList.Add(manufacturerItem);
+            }
+
+            labThingCreateViewModel.Manufacturer = ManufacturersList;
+
+
+            //-------------------------------------------------------------------------------------------------------
             return View(labThingCreateViewModel);
+
+
+
+
+
         }
 
         //-------------------------------------------------------------------------------------------------------------
-
-        //POST: LabThings/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        // public async Task<IActionResult> Create([Bind("ID,Name,SerialNo,ModelNo,AcquisitionDate,CalibratedOn,CalibrationDue,MaintenanceOn,MaintenanceDue,Note,EmployeeID,CategoryID,ManufacturerID")] LabThing labThing)
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         _context.Add(labThing);
-        //         await _context.SaveChangesAsync();
-        //         return RedirectToAction(nameof(Index));
-        //     }
-        //     ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThing.CategoryID);
-
-        //     return View(labThing);
-        // }
 
         //----------------------------------------------------------------------------------------------------
 

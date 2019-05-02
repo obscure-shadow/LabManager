@@ -44,16 +44,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.EmployeeID)
             </th>
-            @****************************************************************@
-            @*Custom drop down list for categories:*@
-
-            @****************************************************************@
 
             <th>
                     @Html.DisplayNameFor(LabThing => LabThing.Category.Name)
                 </th>
             <th>
-                @Html.DisplayNameFor(LabThing => LabThing.ManufacturerID)
+                @Html.DisplayNameFor(LabThing => LabThing.Manufacturer.Name)
             </th>
             <th></th>
         </tr>
@@ -98,7 +94,7 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.ManufacturerID)
+                    @Html.DisplayFor(modelItem => item.Manufacturer.Name)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
