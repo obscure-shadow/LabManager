@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190502163551_LabManager")]
+    [Migration("20190503142443_LabManager")]
     partial class LabManager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -92,7 +92,7 @@ namespace LabManager.Migrations
 
                     b.Property<int>("CategoryID");
 
-                    b.Property<int>("EmployeeID");
+                    b.Property<string>("EmployeeId");
 
                     b.Property<DateTime>("MaintenanceDue");
 
@@ -109,6 +109,10 @@ namespace LabManager.Migrations
                     b.Property<string>("SerialNo");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("ManufacturerID");
 
                     b.ToTable("LabThings");
                 });
@@ -309,6 +313,19 @@ namespace LabManager.Migrations
                         .IsRequired();
 
                     b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("LabManager.Models.LabThing", b =>
+                {
+                    b.HasOne("LabManager.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LabManager.Models.Manufacturer", "Manufacturer")
+                        .WithMany()
+                        .HasForeignKey("ManufacturerID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

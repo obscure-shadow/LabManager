@@ -136,8 +136,8 @@ namespace LabManager.Data
 
             var labThing = new LabThing[]
             {
-                new LabThing{Name="Pipette", SerialNo="ABC12345NRX", ModelNo="1980", AcquisitionDate=DateTime.Parse("2001-01-01"), CalibratedOn=DateTime.Parse("2019-02-01"), CalibrationDue=DateTime.Parse("2020-02-01"), MaintenanceOn=DateTime.Parse("2019-02-01"), MaintenanceDue=DateTime.Parse("2020-02-01"), Note="N/A", EmployeeID=1, CategoryID=3, ManufacturerID=7},
-                new LabThing { Name = "Spectrometric Analyzer", SerialNo = "SN48206874", ModelNo = "AB24509", AcquisitionDate = DateTime.Parse("2015-07-09"), CalibratedOn = DateTime.Parse("2019-04-16"), CalibrationDue = DateTime.Parse("2019-05-16"), MaintenanceOn = DateTime.Parse("2019-01-01"), MaintenanceDue = DateTime.Parse("2020-01-01"), Note = "N/A", EmployeeID =2, CategoryID =1, ManufacturerID =22}
+                new LabThing{Name="Pipette", SerialNo="ABC12345NRX", ModelNo="1980", AcquisitionDate=DateTime.Parse("2001-01-01"), CalibratedOn=DateTime.Parse("2019-02-01"), CalibrationDue=DateTime.Parse("2020-02-01"), MaintenanceOn=DateTime.Parse("2019-02-01"), MaintenanceDue=DateTime.Parse("2020-02-01"), Note="N/A", EmployeeId="1", CategoryID=3, ManufacturerID=7},
+                new LabThing { Name = "Spectrometric Analyzer", SerialNo = "SN48206874", ModelNo = "AB24509", AcquisitionDate = DateTime.Parse("2015-07-09"), CalibratedOn = DateTime.Parse("2019-04-16"), CalibrationDue = DateTime.Parse("2019-05-16"), MaintenanceOn = DateTime.Parse("2019-01-01"), MaintenanceDue = DateTime.Parse("2020-01-01"), Note = "N/A", EmployeeId ="2", CategoryID =1, ManufacturerID =22}
     };
             foreach (LabThing lt in labThing)
             {

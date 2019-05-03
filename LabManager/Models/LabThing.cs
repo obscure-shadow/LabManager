@@ -26,7 +26,7 @@ namespace LabManager.Models
         //[NotMapped]
         public Manufacturer Manufacturer { get; set; }
 
-        public int EmployeeID { get; set; }
+        public string EmployeeId { get; set; }
         public int CategoryID { get; set; }
         public int ManufacturerID { get; set; }
 

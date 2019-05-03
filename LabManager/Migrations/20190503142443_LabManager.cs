@@ -100,30 +100,6 @@ namespace LabManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LabThings",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    SerialNo = table.Column<string>(nullable: true),
-                    ModelNo = table.Column<string>(nullable: true),
-                    AcquisitionDate = table.Column<DateTime>(nullable: false),
-                    CalibratedOn = table.Column<DateTime>(nullable: false),
-                    CalibrationDue = table.Column<DateTime>(nullable: false),
-                    MaintenanceOn = table.Column<DateTime>(nullable: false),
-                    MaintenanceDue = table.Column<DateTime>(nullable: false),
-                    Note = table.Column<string>(nullable: true),
-                    EmployeeID = table.Column<int>(nullable: false),
-                    CategoryID = table.Column<int>(nullable: false),
-                    ManufacturerID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LabThings", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Manufacturers",
                 columns: table => new
                 {
@@ -242,6 +218,42 @@ namespace LabManager.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LabThings",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    SerialNo = table.Column<string>(nullable: true),
+                    ModelNo = table.Column<string>(nullable: true),
+                    AcquisitionDate = table.Column<DateTime>(nullable: false),
+                    CalibratedOn = table.Column<DateTime>(nullable: false),
+                    CalibrationDue = table.Column<DateTime>(nullable: false),
+                    MaintenanceOn = table.Column<DateTime>(nullable: false),
+                    MaintenanceDue = table.Column<DateTime>(nullable: false),
+                    Note = table.Column<string>(nullable: true),
+                    EmployeeId = table.Column<string>(nullable: true),
+                    CategoryID = table.Column<int>(nullable: false),
+                    ManufacturerID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LabThings", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_LabThings_Categories_CategoryID",
+                        column: x => x.CategoryID,
+                        principalTable: "Categories",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LabThings_Manufacturers_ManufacturerID",
+                        column: x => x.ManufacturerID,
+                        principalTable: "Manufacturers",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -280,6 +292,16 @@ namespace LabManager.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LabThings_CategoryID",
+                table: "LabThings",
+                column: "CategoryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LabThings_ManufacturerID",
+                table: "LabThings",
+                column: "ManufacturerID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -300,9 +322,6 @@ namespace LabManager.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Categories");
-
-            migrationBuilder.DropTable(
                 name: "Chemicals");
 
             migrationBuilder.DropTable(
@@ -312,13 +331,16 @@ namespace LabManager.Migrations
                 name: "LabThings");
 
             migrationBuilder.DropTable(
-                name: "Manufacturers");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Manufacturers");
         }
     }
 }

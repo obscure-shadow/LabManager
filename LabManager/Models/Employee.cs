@@ -9,6 +9,8 @@ namespace LabManager.Models
     {
         public Employee() { }
 
+        //public int ID { get; set; }
+
         [Required]
         [Display(Name ="First Name")]
         public string FirstName { get; set; }

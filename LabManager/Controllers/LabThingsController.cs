@@ -20,26 +20,25 @@ namespace LabManager.Controllers
         private readonly UserManager<Employee> _userManager;
 
         private readonly ApplicationDbContext _context;
-
+        //public LabThingsController(ApplicationDbContext context)
         public LabThingsController(ApplicationDbContext context, UserManager<Employee> userManager)
         {
             _userManager = userManager;
             _context = context;
         }
+        //private Task<Employee> GetCurrentUserAsync() => _context.GetUserAsync(HttpContext.User);
 
         private Task<Employee> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
         //=========================================================================================
-
-
         // GET: LabThings
         //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.LabThings
+                //.Include(lt => lt.Employee)
                 .Include(lt => lt.Category)
                 .Include(lt => lt.Manufacturer);
-                //.Include(lt => lt.Employee);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -74,10 +73,6 @@ namespace LabManager.Controllers
                 };
                 CategoriesList.Add(categoryItem);
             };
-            //-------------------------------------------------------------------------------------------------------
-
-
-
             labThingCreateViewModel.Category = CategoriesList;
             //-------------------------------------------------------------------------------------------------------
 
@@ -101,22 +96,39 @@ namespace LabManager.Controllers
             }
 
             labThingCreateViewModel.Manufacturer = ManufacturersList;
+            //-------------------------------------------------------------------------------------------------------------
 
+            //var EmployeeData = _context.Employees;
+            //List<SelectListItem> EmployeesList = new List<SelectListItem>();
 
-        //-------------------------------------------------------------------------------------------------------------
+            //EmployeesList.Insert(0, new SelectListItem
+            //{
+            //    Text = "Select",
+            //    Value = ""
+            //});
+
+            //foreach (var e in EmployeeData)
+            //{
+            //    SelectListItem employeeItem = new SelectListItem
+            //    {
+            //        Value = e.ID.ToString(),
+            //        Text = e.FirstName
+            //    };
+            //    EmployeesList.Add(employeeItem);
+            //}
+
+            //labThingCreateViewModel.Employee = EmployeesList;
+
+            //----------------------------------------------------------------------------------------------------
             return View(labThingCreateViewModel);
-        //-------------------------------------------------------------------------------------------------------------
         }
-
-
-        //----------------------------------------------------------------------------------------------------
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LabThingCreateViewModel ltViewModel)
         {
 
-            //The Employee and EmployeeId fields must be disregarded in order to determine if the model state is valid
+            //The Employee and EmployeeID fields must be disregarded in order to determine if the model state is valid
             ModelState.Remove("LabThing.Employee");
             ModelState.Remove("LabThing.EmployeeID");
 
@@ -130,9 +142,10 @@ namespace LabManager.Controllers
                 _context.Add(ltViewModel.LabThing);
                 await _context.SaveChangesAsync();
                 //The routing occurs here instead of in the view because the LabThing id must be created before the redirect occurs
-                return RedirectToAction("Details", new { id = ltViewModel.LabThing.CategoryID });
-
+                return RedirectToAction("Details", new { id = ltViewModel.LabThing });
             }
+            //----------------------------------------------------------------------------------------------------
+            //NOTE: Category dropdown:
 
             //Get category data from the database
             var CategoryData = _context.Categories;
@@ -158,6 +171,7 @@ namespace LabManager.Controllers
             ltViewModel.Category = CategoriesList;
 
         //----------------------------------------------------------------------------------------------------
+        //NOTE: Manufacturer dropdown:
 
             var ManufacturerData = _context.Manufacturers;
 
@@ -182,16 +196,9 @@ namespace LabManager.Controllers
             ltViewModel.Manufacturer = ManufacturersList;
 
             //----------------------------------------------------------------------------------------------------
-
-
-
-            //----------------------------------------------------------------------------------------------------
-
             return View(ltViewModel);
         }
-
-
-
+        
         //=========================================================================================
         //NOTE: Original Edit methods:
         // GET: LabThings/Edit/5
@@ -248,7 +255,6 @@ namespace LabManager.Controllers
         }
 
         //==============================================================================
-        //NOTE: Original details method:
 
         //GET: LabThings/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -261,6 +267,7 @@ namespace LabManager.Controllers
             var labThing = await _context.LabThings
                 .Include(lt => lt.Category)
                 .Include(lt => lt.Manufacturer)
+                //.Include(lt => lt.Employee)
                 .FirstOrDefaultAsync(x => x.ID == id);
             if (labThing == null)
             {
