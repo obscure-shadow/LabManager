@@ -43,11 +43,11 @@ namespace LabManager.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "First Name")]
-            public string FirstName { get; internal set; }
+            public string FirstName { get; set; }
 
             [Required]
             [Display(Name = "Last Name")]
-            public string LastName { get; internal set; }
+            public string LastName { get; set; }
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
