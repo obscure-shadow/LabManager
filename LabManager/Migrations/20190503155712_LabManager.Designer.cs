@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190503142443_LabManager")]
+    [Migration("20190503155712_LabManager")]
     partial class LabManager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,8 @@ namespace LabManager.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("CategoryID");
+
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("ManufacturerID");
 
@@ -321,6 +323,10 @@ namespace LabManager.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LabManager.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("LabManager.Models.Manufacturer", "Manufacturer")
                         .WithMany()

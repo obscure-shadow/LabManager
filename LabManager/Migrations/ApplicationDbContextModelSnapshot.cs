@@ -110,6 +110,8 @@ namespace LabManager.Migrations
 
                     b.HasIndex("CategoryID");
 
+                    b.HasIndex("EmployeeId");
+
                     b.HasIndex("ManufacturerID");
 
                     b.ToTable("LabThings");
@@ -319,6 +321,10 @@ namespace LabManager.Migrations
                         .WithMany()
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LabManager.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("LabManager.Models.Manufacturer", "Manufacturer")
                         .WithMany()

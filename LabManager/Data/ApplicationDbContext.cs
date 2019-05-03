@@ -13,8 +13,10 @@ namespace LabManager.Data
             : base(options)
         {
         }
-
+        //NOTE: Employee is ApplicationUser:
         public DbSet<Employee> Employees { get; set; }
+
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Chemical> Chemicals { get; set; }
         public DbSet<ChemicalType> ChemicalTypes { get; set; }
@@ -24,10 +26,15 @@ namespace LabManager.Data
         //NOTE: DbSet for LabThing was created in the Data/LabManagerContext.cs when the LabManager Controller was scaffolded.
 
         //NOTE: Confirm whether this is necessary (compare to BangazonSite project):
-        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
         }
+
+        //public void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //}
 
     }
 

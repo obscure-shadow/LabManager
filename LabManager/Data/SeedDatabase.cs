@@ -1,4 +1,6 @@
 ﻿using LabManager.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +12,12 @@ namespace LabManager.Data
     {
         public static void Initialize(ApplicationDbContext context)
         {
-    //======================================================================
+
+            //======================================================================
             //NOTE: Seeds the database with Categories
             context.Database.EnsureCreated();
 
-            if(context.Categories.Any())
+            if (context.Categories.Any())
             {
                 return;
             }
@@ -31,7 +34,7 @@ namespace LabManager.Data
                 context.Categories.Add(c);
             }
             context.SaveChanges();
-    //======================================================================
+            //======================================================================
 
             //NOTE: Seeds the database with ChemicalTypes
 
@@ -104,6 +107,27 @@ namespace LabManager.Data
 
             //NOTE: Seeds the database with Employees
 
+
+            //FROM BANGAZON:
+            //ApplicationUser user = new ApplicationUser
+            //{
+            //    FirstName = "admin",
+            //    LastName = "admin",
+            //    StreetAddress = "123 Infinity Way",
+            //    UserName = "admin@admin.com",
+            //    NormalizedUserName = "ADMIN@ADMIN.COM",
+            //    Email = "admin@admin.com",
+            //    NormalizedEmail = "ADMIN@ADMIN.COM",
+            //    EmailConfirmed = true,
+            //    LockoutEnabled = false,
+            //    SecurityStamp = Guid.NewGuid().ToString("D")
+            //};
+            //var passwordHash = new PasswordHasher<ApplicationUser>();
+            //user.PasswordHash = passwordHash.HashPassword(user, "Admin8*");
+            //modelBuilder.Entity<ApplicationUser>().HasData(user);
+            //======================================================================
+            // Modified employee:
+
             context.Database.EnsureCreated();
 
             if (context.Employees.Any())
@@ -111,17 +135,52 @@ namespace LabManager.Data
                 return;
             }
 
-            var employees = new Employee[]
+            var employees = new List<Employee>();
+
+            Employee employee = new Employee
             {
-                new Employee{FirstName="Patricia", LastName="Spinelli", HireDate=DateTime.Parse("2006-03-15")},
-                new Employee{FirstName="Bert", LastName="Bolderdash", HireDate=DateTime.Parse("2013-07-08")},
-                new Employee{FirstName="Bunbury", LastName="Bunbury", HireDate=DateTime.Parse("2018-09-23")}
+                FirstName = "admin",
+                LastName = "admin",
+                UserName = "admin@admin.com",
+                NormalizedUserName = "ADMIN@ADMIN.COM",
+                Email = "admin@admin.com",
+                NormalizedEmail = "ADMIN@ADMIN.COM",
+                EmailConfirmed = true,
+                LockoutEnabled = false,
+                SecurityStamp = Guid.NewGuid().ToString("D")
             };
+            var passwordHash = new PasswordHasher<Employee>();
+            employee.PasswordHash = passwordHash.HashPassword(employee, "Admin8*");
+
+            employees.Add(employee);
+
             foreach (Employee e in employees)
             {
                 context.Employees.Add(e);
             }
             context.SaveChanges();
+
+            //======================================================================
+            //NOTE: My original create employee:
+
+            //context.Database.EnsureCreated();
+
+            //if (context.Employees.Any())
+            //{
+            //    return;
+            //}
+
+            //var employees = new Employee[]
+            //{
+            //    new Employee{FirstName="Patricia", LastName="Spinelli", HireDate=DateTime.Parse("2006-03-15")},
+            //    new Employee{FirstName="Bert", LastName="Bolderdash", HireDate=DateTime.Parse("2013-07-08")},
+            //    new Employee{FirstName="Bunbury", LastName="Bunbury", HireDate=DateTime.Parse("2018-09-23")}
+            //};
+            //foreach (Employee e in employees)
+            //{
+            //    context.Employees.Add(e);
+            //}
+            //context.SaveChanges();
 
             //======================================================================
 

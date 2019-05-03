@@ -36,7 +36,7 @@ namespace LabManager.Controllers
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.LabThings
-                //.Include(lt => lt.Employee)
+                .Include(lt => lt.Employee)
                 .Include(lt => lt.Category)
                 .Include(lt => lt.Manufacturer);
             return View(await applicationDbContext.ToListAsync());
@@ -49,6 +49,8 @@ namespace LabManager.Controllers
         public IActionResult Create()
         {
         //-------------------------------------------------------------------------------------------------------
+        //NOTE: Categories Dropdown:
+            
         //NOTE: The variable labThingCreateViewModel is used at the end of all navigation properties to add the nav prop to the view model:
             LabThingCreateViewModel labThingCreateViewModel = new LabThingCreateViewModel();
 
@@ -75,6 +77,7 @@ namespace LabManager.Controllers
             };
             labThingCreateViewModel.Category = CategoriesList;
             //-------------------------------------------------------------------------------------------------------
+            //NOTE: Manufacturers Dropdown:
 
             var ManufacturerData = _context.Manufacturers;
             List<SelectListItem> ManufacturersList = new List<SelectListItem>();
@@ -97,31 +100,34 @@ namespace LabManager.Controllers
 
             labThingCreateViewModel.Manufacturer = ManufacturersList;
             //-------------------------------------------------------------------------------------------------------------
+            //NOTE: Employee Dropdown:
 
-            //var EmployeeData = _context.Employees;
-            //List<SelectListItem> EmployeesList = new List<SelectListItem>();
+            var EmployeeData = _context.Employees;
+            List<SelectListItem> EmployeesList = new List<SelectListItem>();
 
-            //EmployeesList.Insert(0, new SelectListItem
-            //{
-            //    Text = "Select",
-            //    Value = ""
-            //});
+            EmployeesList.Insert(0, new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
 
-            //foreach (var e in EmployeeData)
-            //{
-            //    SelectListItem employeeItem = new SelectListItem
-            //    {
-            //        Value = e.ID.ToString(),
-            //        Text = e.FirstName
-            //    };
-            //    EmployeesList.Add(employeeItem);
-            //}
+            foreach (var e in EmployeeData)
+            {
+                SelectListItem employeeItem = new SelectListItem
+                {
+                    Value = e.Id.ToString(),
+                    Text = e.FirstName
+                };
+                EmployeesList.Add(employeeItem);
+            }
 
-            //labThingCreateViewModel.Employee = EmployeesList;
+            labThingCreateViewModel.Employee = EmployeesList;
 
             //----------------------------------------------------------------------------------------------------
             return View(labThingCreateViewModel);
         }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -130,7 +136,7 @@ namespace LabManager.Controllers
 
             //The Employee and EmployeeID fields must be disregarded in order to determine if the model state is valid
             ModelState.Remove("LabThing.Employee");
-            ModelState.Remove("LabThing.EmployeeID");
+            ModelState.Remove("LabThing.EmployeeId");
 
             //The user is instead obtained by the current authorized user
             var user = await GetCurrentUserAsync();
@@ -142,7 +148,9 @@ namespace LabManager.Controllers
                 _context.Add(ltViewModel.LabThing);
                 await _context.SaveChangesAsync();
                 //The routing occurs here instead of in the view because the LabThing id must be created before the redirect occurs
-                return RedirectToAction("Details", new { id = ltViewModel.LabThing });
+                return RedirectToAction("Index");
+                    
+                    //("Details", new { id = ltViewModel.LabThing });
             }
             //----------------------------------------------------------------------------------------------------
             //NOTE: Category dropdown:
@@ -194,6 +202,31 @@ namespace LabManager.Controllers
             };
 
             ltViewModel.Manufacturer = ManufacturersList;
+
+            //----------------------------------------------------------------------------------------------------
+            //NOTE: Employee dropdown:
+
+            var EmployeeData = _context.Employees;
+
+            List<SelectListItem> EmployeesList = new List<SelectListItem>();
+
+            //Include the select option in the employee list
+            EmployeesList.Insert(0, new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
+            foreach (var e in EmployeeData)
+            {
+                SelectListItem employeesList = new SelectListItem
+                {
+                    Value = e.Id.ToString(),
+                    Text = e.FirstName
+                };
+                EmployeesList.Add(employeesList);
+            };
+
+            ltViewModel.Employee = EmployeesList;
 
             //----------------------------------------------------------------------------------------------------
             return View(ltViewModel);
@@ -267,7 +300,7 @@ namespace LabManager.Controllers
             var labThing = await _context.LabThings
                 .Include(lt => lt.Category)
                 .Include(lt => lt.Manufacturer)
-                //.Include(lt => lt.Employee)
+                .Include(lt => lt.Employee)
                 .FirstOrDefaultAsync(x => x.ID == id);
             if (labThing == null)
             {

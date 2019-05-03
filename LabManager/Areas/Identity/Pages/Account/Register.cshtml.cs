@@ -40,10 +40,22 @@ namespace LabManager.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; internal set; }
+
+            [Required]
+            [Display(Name = "Last Name")]
+            public string LastName { get; internal set; }
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name ="Hire Date")]
+            public DateTime HireDate { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -67,7 +79,7 @@ namespace LabManager.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new Employee { UserName = Input.Email, Email = Input.Email };
+                var user = new Employee { FirstName = Input.FirstName, LastName = Input.LastName, HireDate=Input.HireDate, UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

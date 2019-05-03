@@ -247,6 +247,12 @@ namespace LabManager.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_LabThings_AspNetUsers_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_LabThings_Manufacturers_ManufacturerID",
                         column: x => x.ManufacturerID,
                         principalTable: "Manufacturers",
@@ -299,6 +305,11 @@ namespace LabManager.Migrations
                 column: "CategoryID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LabThings_EmployeeId",
+                table: "LabThings",
+                column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LabThings_ManufacturerID",
                 table: "LabThings",
                 column: "ManufacturerID");
@@ -334,10 +345,10 @@ namespace LabManager.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");

@@ -19,7 +19,7 @@ namespace LabManager.Models
         public DateTime MaintenanceDue { get; set; }
         public string Note { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
         public Employee Employee { get; set; }
         //[NotMapped]
         public Category Category { get; set; }
