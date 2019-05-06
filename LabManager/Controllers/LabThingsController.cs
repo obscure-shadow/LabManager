@@ -35,7 +35,7 @@ namespace LabManager.Controllers
         //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.LabThings
+            var applicationDbContext = _context.LabThing
                 .Include(lt => lt.Employee)
                 .Include(lt => lt.Category)
                 .Include(lt => lt.Manufacturer);
@@ -126,9 +126,7 @@ namespace LabManager.Controllers
             //----------------------------------------------------------------------------------------------------
             return View(labThingCreateViewModel);
         }
-
-
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LabThingCreateViewModel ltViewModel)
@@ -149,8 +147,6 @@ namespace LabManager.Controllers
                 await _context.SaveChangesAsync();
                 //The routing occurs here instead of in the view because the LabThing id must be created before the redirect occurs
                 return RedirectToAction("Index");
-                    
-                    //("Details", new { id = ltViewModel.LabThing });
             }
             //----------------------------------------------------------------------------------------------------
             //NOTE: Category dropdown:
@@ -231,61 +227,155 @@ namespace LabManager.Controllers
             //----------------------------------------------------------------------------------------------------
             return View(ltViewModel);
         }
-        
+
         //=========================================================================================
-        //NOTE: Original Edit methods:
         // GET: LabThings/Edit/5
+        //public async Task<IActionResult> Edit(int? ID)
+        //public async Task<IActionResult>Edit(int? ID)
+        //{
+        //if (id == null)
+        //{
+        //    return NotFound();
+        //}
+
+        //var labThing = await _context.LabThings.FindAsync(id);
+        //if (labThing == null)
+        //{
+        //    return NotFound();
+        //}
+        ////NOTE: Added ViewData:
+        //ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThing.CategoryID);
+        //ViewData["Manufacturer"] = new SelectList(_context.Manufacturers, "ManufacturerID", "Name", labThing.ManufacturerID);
+        //ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", labThing.EmployeeId);
+        //return View(labThing);
+        //return View();
+        //-------------------------------------------------------------------------------------------------------------
+
         public async Task<IActionResult> Edit(int? id)
         {
+
+            LabThingEditViewModel labThingEditViewModel = new LabThingEditViewModel();
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var labThing = await _context.LabThings.FindAsync(id);
+            var labThing = await _context.LabThing
+                //.Include(lt => lt.Category)
+                //.Include(lt => lt.Manufacturer)
+                //.Include(lt => lt.Employee)
+                //.AsNoTracking()
+                .FirstOrDefaultAsync(lt => lt.ID == id);
             if (labThing == null)
             {
                 return NotFound();
             }
-            //NOTE: Added ViewData:
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThing.CategoryID);
-            return View(labThing);
+            PopulateDropdownList(labThing.CategoryID);
+            PopulateDropdownList(labThing.ManufacturerID);
+            PopulateDropdownList(labThing.EmployeeId);
+
+
+            return View(labThingEditViewModel);
         }
+
+        //    var LabThingCreateViewModel = await _context.LabThing.FindAsync(id);
+        //    if (LabThingCreateViewModel == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    //NOTE: Added ViewData:
+        //    ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", LabThingCreateViewModel.CategoryID);
+        //    ViewData["Manufacturer"] = new SelectList(_context.Manufacturers, "ManufacturerID", "Name", LabThingCreateViewModel.ManufacturerID);
+        //    ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", LabThingCreateViewModel.EmployeeId);
+        //    return View(LabThingCreateViewModel);
+        //}
+
 
         //-------------------------------------------------------------------------------------------------------------
 
-        // POST: LabThings/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,SerialNo,ModelNo,AcquisitionDate,CalibratedOn,CalibrationDue,MaintenanceOn,MaintenanceDue,Note,EmployeeID,CategoryID,ManufacturerID")] LabThing labThing)
+        private void PopulateDropdownList(object selectedItem = null)
         {
-            if (id != labThing.ID)
-            {
-                return NotFound();
-            }
+            var categoriesQuery = from cat in _context.Categories
+                                  select cat;
+            ViewData["CategoryID"] = new SelectList(categoriesQuery.AsNoTracking(), "DepartmentID", "Name", selectedItem);
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(labThing);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LabThingExists(labThing.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(labThing);
+            //List<SelectListItem> CategoriesList = new List<SelectListItem>();
+
+            //foreach (var cat in categoriesQuery)
+            //{
+            //    SelectListItem selectedItem = new SelectListItem
+            //    {
+            //        Value = cat.ID.ToString(),
+            //        Text = cat.Name
+            //    };
+            //    CategoriesList.Add(selectedItem);
+            //};
+            //LabThingEditViewModel.Category = CategoriesList;
+
+
+            var manufacturersQuery = from m in _context.Manufacturers
+                                     select m;
+            ViewBag.ManufacturersID = new SelectList(manufacturersQuery.AsNoTracking(), "ManufacturersID", "Name", selectedItem);
+
+            var employeesQuery = from e in _context.Employees
+                                 select e;
+            ViewBag.EmployeesId = new SelectList(employeesQuery.AsNoTracking(), "EmployeesId", "FirstName", selectedItem);
         }
+
+        //-------------------------------------------------------------------------------------------------------------
+        // POST: LabThings/Edit/5
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("ID,Name,SerialNo,ModelNo,AcquisitionDate,CalibratedOn,CalibrationDue,MaintenanceOn,MaintenanceDue,Note,EmployeeId,CategoryID,ManufacturerID")] LabThing LabThingCreateViewModel)
+        //{
+        //    if (id != LabThingCreateViewModel.ID)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    ModelState.Remove("EmployeeId");
+        //    ModelState.Remove("Employee");
+
+        //    var currentLabThing = await _context.LabThings.FindAsync(id);
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            currentLabThing.CategoryID = LabThingCreateViewModel.CategoryID;
+        //            _context.Update(currentLabThing);
+        //            await _context.SaveChangesAsync();
+
+        //            currentLabThing.ManufacturerID = LabThingCreateViewModel.ManufacturerID;
+        //            _context.Update(currentLabThing);
+        //            await _context.SaveChangesAsync();
+
+        //            currentLabThing.EmployeeId = LabThingCreateViewModel.EmployeeId;
+        //            _context.Update(currentLabThing);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch(DbUpdateConcurrencyException)
+        //        {
+        //            if(!LabThingExists(LabThingCreateViewModel.ID))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //        ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", LabThingCreateViewModel.CategoryID);
+
+        //        ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ManufacturerID", "Name", LabThingCreateViewModel.ManufacturerID);
+
+        //        ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id", LabThingCreateViewModel.EmployeeId);
+
+        //        return View(LabThingCreateViewModel);
+        //}
 
         //==============================================================================
 
@@ -297,7 +387,7 @@ namespace LabManager.Controllers
                 return NotFound();
             }
 
-            var labThing = await _context.LabThings
+            var labThing = await _context.LabThing
                 .Include(lt => lt.Category)
                 .Include(lt => lt.Manufacturer)
                 .Include(lt => lt.Employee)
@@ -322,7 +412,7 @@ namespace LabManager.Controllers
                 return NotFound();
             }
 
-            var labThing = await _context.LabThings
+            var labThing = await _context.LabThing
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (labThing == null)
             {
@@ -337,15 +427,15 @@ namespace LabManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var labThing = await _context.LabThings.FindAsync(id);
-            _context.LabThings.Remove(labThing);
+            var labThing = await _context.LabThing.FindAsync(id);
+            _context.LabThing.Remove(labThing);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool LabThingExists(int id)
         {
-            return _context.LabThings.Any(e => e.ID == id);
+            return _context.LabThing.Any(e => e.ID == id);
         }
 
         //=========================================================================================

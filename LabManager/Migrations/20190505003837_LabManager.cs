@@ -219,7 +219,7 @@ namespace LabManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "LabThings",
+                name: "LabThing",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -239,21 +239,21 @@ namespace LabManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LabThings", x => x.ID);
+                    table.PrimaryKey("PK_LabThing", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_LabThings_Categories_CategoryID",
+                        name: "FK_LabThing_Categories_CategoryID",
                         column: x => x.CategoryID,
                         principalTable: "Categories",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LabThings_AspNetUsers_EmployeeId",
+                        name: "FK_LabThing_AspNetUsers_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_LabThings_Manufacturers_ManufacturerID",
+                        name: "FK_LabThing_Manufacturers_ManufacturerID",
                         column: x => x.ManufacturerID,
                         principalTable: "Manufacturers",
                         principalColumn: "ID",
@@ -300,18 +300,18 @@ namespace LabManager.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LabThings_CategoryID",
-                table: "LabThings",
+                name: "IX_LabThing_CategoryID",
+                table: "LabThing",
                 column: "CategoryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LabThings_EmployeeId",
-                table: "LabThings",
+                name: "IX_LabThing_EmployeeId",
+                table: "LabThing",
                 column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LabThings_ManufacturerID",
-                table: "LabThings",
+                name: "IX_LabThing_ManufacturerID",
+                table: "LabThing",
                 column: "ManufacturerID");
         }
 
@@ -339,7 +339,7 @@ namespace LabManager.Migrations
                 name: "ChemicalTypes");
 
             migrationBuilder.DropTable(
-                name: "LabThings");
+                name: "LabThing");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

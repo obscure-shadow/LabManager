@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LabManager.Models.ViewModels
 {
-    public class LabThingCreateViewModel
+    public class LabThingEditViewModel
     {
         public LabThing LabThing { get; set; }
 
@@ -14,6 +14,9 @@ namespace LabManager.Models.ViewModels
         public List<SelectListItem> Manufacturer { get; set; }
         public List<SelectListItem> Employee { get; set; }
 
-
+        //public string EmployeeId { get; set; }
+        //public int CategoryID { get; set; }
+        //public int ManufacturerID { get; set; }
     }
 }
+

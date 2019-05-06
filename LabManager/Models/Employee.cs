@@ -20,6 +20,8 @@ namespace LabManager.Models
         public string LastName { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name ="Hire Date")]
         public System.DateTime HireDate { get; set; }
 

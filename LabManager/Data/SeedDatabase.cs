@@ -141,6 +141,7 @@ namespace LabManager.Data
             {
                 FirstName = "admin",
                 LastName = "admin",
+                HireDate = DateTime.Parse("2000-01-01"),
                 UserName = "admin@admin.com",
                 NormalizedUserName = "ADMIN@ADMIN.COM",
                 Email = "admin@admin.com",
@@ -161,34 +162,11 @@ namespace LabManager.Data
             context.SaveChanges();
 
             //======================================================================
-            //NOTE: My original create employee:
-
-            //context.Database.EnsureCreated();
-
-            //if (context.Employees.Any())
-            //{
-            //    return;
-            //}
-
-            //var employees = new Employee[]
-            //{
-            //    new Employee{FirstName="Patricia", LastName="Spinelli", HireDate=DateTime.Parse("2006-03-15")},
-            //    new Employee{FirstName="Bert", LastName="Bolderdash", HireDate=DateTime.Parse("2013-07-08")},
-            //    new Employee{FirstName="Bunbury", LastName="Bunbury", HireDate=DateTime.Parse("2018-09-23")}
-            //};
-            //foreach (Employee e in employees)
-            //{
-            //    context.Employees.Add(e);
-            //}
-            //context.SaveChanges();
-
-            //======================================================================
-
             //NOTE: Seeds the database with LabThings
 
             context.Database.EnsureCreated();
 
-            if (context.LabThings.Any())
+            if (context.LabThing.Any())
             {
                 return;
             }
@@ -196,11 +174,11 @@ namespace LabManager.Data
             var labThing = new LabThing[]
             {
                 new LabThing{Name="Pipette", SerialNo="ABC12345NRX", ModelNo="1980", AcquisitionDate=DateTime.Parse("2001-01-01"), CalibratedOn=DateTime.Parse("2019-02-01"), CalibrationDue=DateTime.Parse("2020-02-01"), MaintenanceOn=DateTime.Parse("2019-02-01"), MaintenanceDue=DateTime.Parse("2020-02-01"), Note="N/A", EmployeeId="1", CategoryID=3, ManufacturerID=7},
-                new LabThing { Name = "Spectrometric Analyzer", SerialNo = "SN48206874", ModelNo = "AB24509", AcquisitionDate = DateTime.Parse("2015-07-09"), CalibratedOn = DateTime.Parse("2019-04-16"), CalibrationDue = DateTime.Parse("2019-05-16"), MaintenanceOn = DateTime.Parse("2019-01-01"), MaintenanceDue = DateTime.Parse("2020-01-01"), Note = "N/A", EmployeeId ="2", CategoryID =1, ManufacturerID =22}
+                new LabThing { Name = "Spectrometric Analyzer", SerialNo = "SN48206874", ModelNo = "AB24509", AcquisitionDate = DateTime.Parse("2015-07-09"), CalibratedOn = DateTime.Parse("2019-04-16"), CalibrationDue = DateTime.Parse("2019-05-16"), MaintenanceOn = DateTime.Parse("2019-01-01"), MaintenanceDue = DateTime.Parse("2020-01-01"), Note = "N/A", EmployeeId ="1", CategoryID = 1, ManufacturerID = 22}
     };
             foreach (LabThing lt in labThing)
             {
-                context.LabThings.Add(lt);
+                context.LabThing.Add(lt);
             }
             context.SaveChanges();
 
