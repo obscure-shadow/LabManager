@@ -26,8 +26,12 @@ namespace LabManager.Models
         [Display(Name = "Expiration Date:")]
         public DateTime ExpirationDate { get; set; }
 
+        [Display(Name="Certificate of Analysis (COA):")]
         public string COA { get; set; }
+
+        [Display(Name = "Opened By (Type Initials):")]
         public string OpenedBy { get; set; }
+
         public string Note { get; set; }
 
         //[NotMapped]
