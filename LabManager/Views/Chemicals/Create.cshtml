@@ -1,4 +1,4 @@
-﻿@model LabManager.Models.Chemical
+﻿@model LabManager.Models.ViewModels.ChemicalCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -13,55 +13,52 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Chemical.Name" class="control-label"></label>
+                <input asp-for="Chemical.Name" class="form-control" />
+                <span asp-validation-for="Chemical.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ReceivedDate" class="control-label"></label>
-                <input asp-for="ReceivedDate" class="form-control" />
-                <span asp-validation-for="ReceivedDate" class="text-danger"></span>
+                <label asp-for="Chemical.ReceivedDate" class="control-label"></label>
+                <input asp-for="Chemical.ReceivedDate" class="form-control" />
+                <span asp-validation-for="Chemical.ReceivedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OpenDate" class="control-label"></label>
-                <input asp-for="OpenDate" class="form-control" />
-                <span asp-validation-for="OpenDate" class="text-danger"></span>
+                <label asp-for="Chemical.OpenDate" class="control-label"></label>
+                <input asp-for="Chemical.OpenDate" class="form-control" />
+                <span asp-validation-for="Chemical.OpenDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExpirationDate" class="control-label"></label>
-                <input asp-for="ExpirationDate" class="form-control" />
-                <span asp-validation-for="ExpirationDate" class="text-danger"></span>
+                <label asp-for="Chemical.ExpirationDate" class="control-label"></label>
+                <input asp-for="Chemical.ExpirationDate" class="form-control" />
+                <span asp-validation-for="Chemical.ExpirationDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="COA" class="control-label"></label>
-                <input asp-for="COA" class="form-control" />
-                <span asp-validation-for="COA" class="text-danger"></span>
+                <label asp-for="Chemical.COA" class="control-label"></label>
+                <input asp-for="Chemical.COA" class="form-control" />
+                <span asp-validation-for="Chemical.COA" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OpenedBy" class="control-label"></label>
-                <input asp-for="OpenedBy" class="form-control" />
-                <span asp-validation-for="OpenedBy" class="text-danger"></span>
+                <label asp-for="Chemical.OpenedBy" class="control-label"></label>
+                <input asp-for="Chemical.OpenedBy" class="form-control" />
+                <span asp-validation-for="Chemical.OpenedBy" class="text-danger"></span>
+            </div>
+            @*********************************************************************************@
+            @*Dropdowns:*@
+
+            <div class="form-group">
+                <label asp-for="Chemical.ChemicalTypeID" class="control-label"></label>
+                <select asp-for="Chemical.ChemicalTypeID" class="form-control" asp-items="@Model.ChemicalType"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Note" class="control-label"></label>
-                <input asp-for="Note" class="form-control" />
-                <span asp-validation-for="Note" class="text-danger"></span>
+                <label asp-for="Chemical.ManufacturerID" class="control-label"></label>
+                <select asp-for="Chemical.ManufacturerID" class="form-control" asp-items="@Model.Manufacturer"></select>
             </div>
+
             <div class="form-group">
-                <label asp-for="EmployeeID" class="control-label"></label>
-                <input asp-for="EmployeeID" class="form-control" />
-                <span asp-validation-for="EmployeeID" class="text-danger"></span>
+                <label asp-for="Chemical.EmployeeId" class="control-label"></label>
+                <select asp-for="Chemical.EmployeeId" class="form-control" asp-items="@Model.Employee"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="ManufacturerID" class="control-label"></label>
-                <input asp-for="ManufacturerID" class="form-control" />
-                <span asp-validation-for="ManufacturerID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ChemicalTypeID" class="control-label"></label>
-                <input asp-for="ChemicalTypeID" class="form-control" />
-                <span asp-validation-for="ChemicalTypeID" class="text-danger"></span>
-            </div>
+            @*********************************************************************************@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

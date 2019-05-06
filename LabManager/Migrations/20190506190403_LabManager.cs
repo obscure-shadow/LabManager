@@ -65,28 +65,6 @@ namespace LabManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chemicals",
-                columns: table => new
-                {
-                    ID = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    ReceivedDate = table.Column<DateTime>(nullable: false),
-                    OpenDate = table.Column<DateTime>(nullable: false),
-                    ExpirationDate = table.Column<DateTime>(nullable: false),
-                    COA = table.Column<string>(nullable: true),
-                    OpenedBy = table.Column<string>(nullable: true),
-                    Note = table.Column<string>(nullable: true),
-                    EmployeeID = table.Column<int>(nullable: false),
-                    ManufacturerID = table.Column<int>(nullable: false),
-                    ChemicalTypeID = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Chemicals", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ChemicalTypes",
                 columns: table => new
                 {
@@ -219,6 +197,47 @@ namespace LabManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Chemicals",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    ReceivedDate = table.Column<DateTime>(nullable: false),
+                    OpenDate = table.Column<DateTime>(nullable: false),
+                    ExpirationDate = table.Column<DateTime>(nullable: false),
+                    COA = table.Column<string>(nullable: true),
+                    OpenedBy = table.Column<string>(nullable: true),
+                    Note = table.Column<string>(nullable: true),
+                    EmployeeId1 = table.Column<string>(nullable: true),
+                    EmployeeId = table.Column<int>(nullable: false),
+                    ManufacturerID = table.Column<int>(nullable: false),
+                    ChemicalTypeID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Chemicals", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Chemicals_ChemicalTypes_ChemicalTypeID",
+                        column: x => x.ChemicalTypeID,
+                        principalTable: "ChemicalTypes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Chemicals_AspNetUsers_EmployeeId1",
+                        column: x => x.EmployeeId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Chemicals_Manufacturers_ManufacturerID",
+                        column: x => x.ManufacturerID,
+                        principalTable: "Manufacturers",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LabThing",
                 columns: table => new
                 {
@@ -300,6 +319,21 @@ namespace LabManager.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Chemicals_ChemicalTypeID",
+                table: "Chemicals",
+                column: "ChemicalTypeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chemicals_EmployeeId1",
+                table: "Chemicals",
+                column: "EmployeeId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Chemicals_ManufacturerID",
+                table: "Chemicals",
+                column: "ManufacturerID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LabThing_CategoryID",
                 table: "LabThing",
                 column: "CategoryID");
@@ -336,13 +370,13 @@ namespace LabManager.Migrations
                 name: "Chemicals");
 
             migrationBuilder.DropTable(
-                name: "ChemicalTypes");
-
-            migrationBuilder.DropTable(
                 name: "LabThing");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "ChemicalTypes");
 
             migrationBuilder.DropTable(
                 name: "Categories");

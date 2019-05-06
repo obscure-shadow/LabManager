@@ -20,13 +20,11 @@ namespace LabManager.Controllers
         private readonly UserManager<Employee> _userManager;
 
         private readonly ApplicationDbContext _context;
-        //public LabThingsController(ApplicationDbContext context)
         public LabThingsController(ApplicationDbContext context, UserManager<Employee> userManager)
         {
             _userManager = userManager;
             _context = context;
         }
-        //private Task<Employee> GetCurrentUserAsync() => _context.GetUserAsync(HttpContext.User);
 
         private Task<Employee> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
@@ -260,7 +258,7 @@ namespace LabManager.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int? id)
-            //(int? id, [Bind("ID", "Name", "SerialNo", "ModelNo", "AcquisitionDate", "CalibratedOn", "CalibrationDue", "MaintenanceOn", "MaintenanceDue", "Note", "CategoryID", "ManufacturerID", "EmployeeId", labThing.ID)]);
+
         {
             if(id == null)
             {

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190505003837_LabManager")]
+    [Migration("20190506190403_LabManager")]
     partial class LabManager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,7 +44,9 @@ namespace LabManager.Migrations
 
                     b.Property<int>("ChemicalTypeID");
 
-                    b.Property<int>("EmployeeID");
+                    b.Property<int>("EmployeeId");
+
+                    b.Property<string>("EmployeeId1");
 
                     b.Property<DateTime>("ExpirationDate");
 
@@ -61,6 +63,12 @@ namespace LabManager.Migrations
                     b.Property<DateTime>("ReceivedDate");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ChemicalTypeID");
+
+                    b.HasIndex("EmployeeId1");
+
+                    b.HasIndex("ManufacturerID");
 
                     b.ToTable("Chemicals");
                 });
@@ -315,6 +323,23 @@ namespace LabManager.Migrations
                         .IsRequired();
 
                     b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("LabManager.Models.Chemical", b =>
+                {
+                    b.HasOne("LabManager.Models.ChemicalType", "ChemicalType")
+                        .WithMany()
+                        .HasForeignKey("ChemicalTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LabManager.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId1");
+
+                    b.HasOne("LabManager.Models.Manufacturer", "Manufacturer")
+                        .WithMany()
+                        .HasForeignKey("ManufacturerID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LabManager.Models.LabThing", b =>
