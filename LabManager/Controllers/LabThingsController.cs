@@ -230,7 +230,6 @@ namespace LabManager.Controllers
         //GET Edit/[id]
         public async Task<IActionResult> Edit(int? id)
         {
-            //LabThingEditViewModel labThingEditViewModel = new LabThingEditViewModel();
             
             if (id == null)
             {
@@ -241,11 +240,7 @@ namespace LabManager.Controllers
                 .Include(lt => lt.Category)
                 .Include(lt => lt.Manufacturer)
                 .Include(lt => lt.Employee)
-                //.AsNoTracking()
                 .FirstOrDefaultAsync(lt => lt.ID == id);
-
-            //labThingEditViewModel.LabThing = labThing;
-
 
             if (labThing == null)
             {
@@ -253,6 +248,10 @@ namespace LabManager.Controllers
             }
 
             ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name", labThing.CategoryID);
+
+            ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Name", labThing.ManufacturerID);
+
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", labThing.EmployeeId);
 
             return View(labThing);
         }
@@ -300,43 +299,7 @@ namespace LabManager.Controllers
 
             return View(labThingToUpdate);
         }
-            //labThingsEditViewModel.Category
 
-
-        //-------------------------------------------------------------------------------------------------------------
-
-        private void PopulateDropdownList(object selectedItem = null)
-        {
-            var categoriesData = from cat in _context.Categories
-                                 select cat;
-            ViewBag.CategoryID = new SelectList(categoriesData, "DepartmentID", "Name", selectedItem);
-            //List<SelectListItem> CategoriesList = new List<SelectListItem>();
-            //CategoriesList.Insert(0, new SelectListItem
-            //{
-            //    Text = "Select",
-            //    Value = ""
-            //});
-            //foreach (var cat in categoriesData)
-            //{
-            //    SelectListItem categoryItem = new SelectListItem
-            //    {
-            //        Value = cat.ID.ToString(),
-            //        Text = cat.Name
-            //    };
-            //    CategoriesList.Add(categoryItem);
-            //    Console.WriteLine(categoryItem);
-            //};
-
-            var manufacturersQuery = from m in _context.Manufacturers
-                                     select m;
-            ViewBag.ManufacturersID = new SelectList(manufacturersQuery.AsNoTracking(), "ManufacturersID", "Name", selectedItem);
-
-            var employeesQuery = from e in _context.Employees
-                                 select e;
-            ViewBag.EmployeesId = new SelectList(employeesQuery.AsNoTracking(), "EmployeesId", "FirstName", selectedItem);
-        }
-
-        //-------------------------------------------------------------------------------------------------------------
 
         //==============================================================================
 
