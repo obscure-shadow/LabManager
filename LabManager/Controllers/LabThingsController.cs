@@ -43,8 +43,6 @@ namespace LabManager.Controllers
         }
 
         //========================================================================================
-        //NOTE: Original Create method:
-
         //GET: LabThings/Create
         public IActionResult Create()
         {
@@ -229,90 +227,105 @@ namespace LabManager.Controllers
         }
 
         //=========================================================================================
-        // GET: LabThings/Edit/5
-        //public async Task<IActionResult> Edit(int? ID)
-        //public async Task<IActionResult>Edit(int? ID)
-        //{
-        //if (id == null)
-        //{
-        //    return NotFound();
-        //}
-
-        //var labThing = await _context.LabThings.FindAsync(id);
-        //if (labThing == null)
-        //{
-        //    return NotFound();
-        //}
-        ////NOTE: Added ViewData:
-        //ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThing.CategoryID);
-        //ViewData["Manufacturer"] = new SelectList(_context.Manufacturers, "ManufacturerID", "Name", labThing.ManufacturerID);
-        //ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", labThing.EmployeeId);
-        //return View(labThing);
-        //return View();
-        //-------------------------------------------------------------------------------------------------------------
-
+        //GET Edit/[id]
         public async Task<IActionResult> Edit(int? id)
         {
-
-            LabThingEditViewModel labThingEditViewModel = new LabThingEditViewModel();
-
+            //LabThingEditViewModel labThingEditViewModel = new LabThingEditViewModel();
+            
             if (id == null)
             {
                 return NotFound();
             }
 
             var labThing = await _context.LabThing
-                //.Include(lt => lt.Category)
-                //.Include(lt => lt.Manufacturer)
-                //.Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                .Include(lt => lt.Employee)
                 //.AsNoTracking()
                 .FirstOrDefaultAsync(lt => lt.ID == id);
+
+            //labThingEditViewModel.LabThing = labThing;
+
+
             if (labThing == null)
             {
                 return NotFound();
             }
-            PopulateDropdownList(labThing.CategoryID);
-            PopulateDropdownList(labThing.ManufacturerID);
-            PopulateDropdownList(labThing.EmployeeId);
 
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name", labThing.CategoryID);
 
-            return View(labThingEditViewModel);
+            return View(labThing);
         }
+        //-------------------------------------------------------------------------------------------------------------
+        //POST: Edit/[id]
+        [HttpPost, ActionName("Edit")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditPost(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
 
-        //    var LabThingCreateViewModel = await _context.LabThing.FindAsync(id);
-        //    if (LabThingCreateViewModel == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    //NOTE: Added ViewData:
-        //    ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", LabThingCreateViewModel.CategoryID);
-        //    ViewData["Manufacturer"] = new SelectList(_context.Manufacturers, "ManufacturerID", "Name", LabThingCreateViewModel.ManufacturerID);
-        //    ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", LabThingCreateViewModel.EmployeeId);
-        //    return View(LabThingCreateViewModel);
-        //}
+            var labThingToUpdate = await _context.LabThing.FindAsync(id);
+
+            if (labThingToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            var CategoryData = _context.Categories;
+
+            List<SelectListItem> CategoriesList = new List<SelectListItem>();
+
+            CategoriesList.Insert(0, new SelectListItem
+            {
+                Text = "Select",
+                Value = ""
+            });
+            foreach (var cat in CategoryData)
+            {
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThingToUpdate.CategoryID);
+                SelectListItem categoriesList = new SelectListItem();
+                //{
+                //    Value = cat.ID.ToString(),
+                //    Text = cat.Name
+                //};
+                CategoriesList.Add(categoriesList);
+            };
+
+            //labThingToUpdate.Category = CategoriesList;
+
+
+
+            return View(labThingToUpdate);
+        }
+            //labThingsEditViewModel.Category
 
 
         //-------------------------------------------------------------------------------------------------------------
 
         private void PopulateDropdownList(object selectedItem = null)
         {
-            var categoriesQuery = from cat in _context.Categories
-                                  select cat;
-            ViewData["CategoryID"] = new SelectList(categoriesQuery.AsNoTracking(), "DepartmentID", "Name", selectedItem);
-
+            var categoriesData = from cat in _context.Categories
+                                 select cat;
+            ViewBag.CategoryID = new SelectList(categoriesData, "DepartmentID", "Name", selectedItem);
             //List<SelectListItem> CategoriesList = new List<SelectListItem>();
-
-            //foreach (var cat in categoriesQuery)
+            //CategoriesList.Insert(0, new SelectListItem
             //{
-            //    SelectListItem selectedItem = new SelectListItem
+            //    Text = "Select",
+            //    Value = ""
+            //});
+            //foreach (var cat in categoriesData)
+            //{
+            //    SelectListItem categoryItem = new SelectListItem
             //    {
             //        Value = cat.ID.ToString(),
             //        Text = cat.Name
             //    };
-            //    CategoriesList.Add(selectedItem);
+            //    CategoriesList.Add(categoryItem);
+            //    Console.WriteLine(categoryItem);
             //};
-            //LabThingEditViewModel.Category = CategoriesList;
-
 
             var manufacturersQuery = from m in _context.Manufacturers
                                      select m;
@@ -324,58 +337,6 @@ namespace LabManager.Controllers
         }
 
         //-------------------------------------------------------------------------------------------------------------
-        // POST: LabThings/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ID,Name,SerialNo,ModelNo,AcquisitionDate,CalibratedOn,CalibrationDue,MaintenanceOn,MaintenanceDue,Note,EmployeeId,CategoryID,ManufacturerID")] LabThing LabThingCreateViewModel)
-        //{
-        //    if (id != LabThingCreateViewModel.ID)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    ModelState.Remove("EmployeeId");
-        //    ModelState.Remove("Employee");
-
-        //    var currentLabThing = await _context.LabThings.FindAsync(id);
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            currentLabThing.CategoryID = LabThingCreateViewModel.CategoryID;
-        //            _context.Update(currentLabThing);
-        //            await _context.SaveChangesAsync();
-
-        //            currentLabThing.ManufacturerID = LabThingCreateViewModel.ManufacturerID;
-        //            _context.Update(currentLabThing);
-        //            await _context.SaveChangesAsync();
-
-        //            currentLabThing.EmployeeId = LabThingCreateViewModel.EmployeeId;
-        //            _context.Update(currentLabThing);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch(DbUpdateConcurrencyException)
-        //        {
-        //            if(!LabThingExists(LabThingCreateViewModel.ID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction("Index");
-        //    }
-        //        ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", LabThingCreateViewModel.CategoryID);
-
-        //        ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ManufacturerID", "Name", LabThingCreateViewModel.ManufacturerID);
-
-        //        ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "Id", LabThingCreateViewModel.EmployeeId);
-
-        //        return View(LabThingCreateViewModel);
-        //}
 
         //==============================================================================
 

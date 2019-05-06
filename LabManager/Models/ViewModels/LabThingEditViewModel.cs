@@ -14,9 +14,9 @@ namespace LabManager.Models.ViewModels
         public List<SelectListItem> Manufacturer { get; set; }
         public List<SelectListItem> Employee { get; set; }
 
-        //public string EmployeeId { get; set; }
-        //public int CategoryID { get; set; }
-        //public int ManufacturerID { get; set; }
+        public int CategoryID { get; set; }
+        public int ManufacturerID { get; set; }
+        public string EmployeeId { get; set; }
     }
 }
 

@@ -1,9 +1,9 @@
 ﻿@*@model LabManager.Models.ViewModels.LabThingEditViewModel*@
-@*@@model LabManager.Models.LabThing*@
+@model LabManager.Models.LabThing
 @*@model IEnumerable<LabManager.Models.LabThing>*@
 
 
-@*@{
+@{
     ViewData["Title"] = "Edit";
 
 }
@@ -19,9 +19,8 @@
                 <input type="hidden" asp-for="ID" />
 
                 <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <label asp-for="ID" class="control-label"></label>
+                    <div>@Html.DisplayFor(model=> model.ID)</div>
                 </div>
                 <div class="form-group">
                     <label asp-for="SerialNo" class="control-label"></label>
@@ -62,26 +61,26 @@
                     <label asp-for="Note" class="control-label"></label>
                     <input asp-for="Note" class="form-control" />
                     <span asp-validation-for="Note" class="text-danger"></span>
-                </div>*@
+                </div>
                 @*********************************************************************************@
                 @*Dropdowns:*@
 
-                @*<div class="form-group">
+                <div class="form-group">
                     <label asp-for="Category" class="control-label"></label>
-                    <select asp-for="CategoryID" class="form-control" asp-items="@Model.ID"></select>
+                    <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.CategoryID"></select>
                 </div>
                 <div class="form-group">
                     <label asp-for="Manufacturer" class="control-label"></label>
-                    <select asp-for="ManufacturerID" class="form-control" asp-items="ViewBag.Manufacturer.ID"></select>
+                    @*<select asp-for="ManufacturerID" class="form-control" asp-items="ViewBag.Manufacturer.ID"></select>*@
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Employee" class="control-label"></label>
-                    <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.Employee.Id"></select>
-                </div>*@
+                    @*<select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.Employee.Id"></select>*@
+                </div>
                 @*********************************************************************************@
 
-                @*<div class="form-group">
+                <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
             </form>
@@ -94,16 +93,16 @@
 
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }*@
+    }
 
 @***************************************************************************
 *@
 
-@model LabManager.Models.ViewModels.LabThingEditViewModel
+@*@model LabManager.Models.ViewModels.LabThingEditViewModel*@
 @*@model LabManager.Models.LabThing*@
 @*@model IEnumerable<LabManager.Models.LabThing>*@
 
-@{
+@*@{
     ViewData["Title"] = "Edit";
 
 }
@@ -160,27 +159,27 @@
                 <label asp-for="LabThing.Note" class="control-label"></label>
                 <input asp-for="LabThing.Note" class="form-control" />
                 <span asp-validation-for="LabThing.Note" class="text-danger"></span>
-            </div>
+            </div>*@
 
             @*********************************************************************************@
             @*Dropdowns:*@
 
+            @*<div class="form-group">
+                <label asp-for="CategoryID" class="control-label"></label>
+                <select asp-for="CategoryID" class="form-control" asp-items="@Model.Category"></select>
+            </div>
             <div class="form-group">
-                <label asp-for="LabThing.CategoryID" class="control-label"></label>
-                <select asp-for="LabThing.CategoryID" class="form-control" asp-items="@Model.Category"></select>
-            @*</div>*@
-            @*<div class="form-group">*@
                 <label asp-for="LabThing.ManufacturerID" class="control-label"></label>
                 <select asp-for="LabThing.ManufacturerID" class="form-control" asp-items="@Model.Manufacturer"></select>
-            @*</div>*@
-
-            @*<div class="form-group">*@
-                <label asp-for="LabThing.EmployeeId" class="control-label"></label>
-                <select asp-for="LabThing.EmployeeId" class="form-control" asp-items="@Model.Employee"></select>
             </div>
-            @*********************************************************************************@
 
             <div class="form-group">
+                <label asp-for="LabThing.EmployeeId" class="control-label"></label>
+                <select asp-for="LabThing.EmployeeId" class="form-control" asp-items="@Model.Employee"></select>
+            </div>*@
+            @*********************************************************************************@
+
+            @*<div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -193,4 +192,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+}*@
