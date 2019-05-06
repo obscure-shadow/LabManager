@@ -260,42 +260,35 @@ namespace LabManager.Controllers
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditPost(int? id)
+            //(int? id, [Bind("ID", "Name", "SerialNo", "ModelNo", "AcquisitionDate", "CalibratedOn", "CalibrationDue", "MaintenanceOn", "MaintenanceDue", "Note", "CategoryID", "ManufacturerID", "EmployeeId", labThing.ID)]);
         {
             if(id == null)
             {
                 return NotFound();
             }
 
-            var labThingToUpdate = await _context.LabThing.FindAsync(id);
+            var labThingToUpdate = await _context.LabThing.FirstOrDefaultAsync(lt => lt.ID == id);
 
-            if (labThingToUpdate == null)
+            if (await TryUpdateModelAsync<LabThing>(labThingToUpdate, 
+                "",
+                lt => lt.CategoryID, lt => lt.ManufacturerID, lt => lt.EmployeeId))
             {
-                return NotFound();
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Unable to save changes.");
+                }
+                return RedirectToAction(nameof(Index));
             }
 
-            var CategoryData = _context.Categories;
+            ViewData["CategoryID"] = new SelectList(_context.Categories, "ID", "Name", labThingToUpdate.CategoryID);
 
-            List<SelectListItem> CategoriesList = new List<SelectListItem>();
+            ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Name", labThingToUpdate.ManufacturerID);
 
-            CategoriesList.Insert(0, new SelectListItem
-            {
-                Text = "Select",
-                Value = ""
-            });
-            foreach (var cat in CategoryData)
-            {
-            ViewData["CategoryID"] = new SelectList(_context.Categories, "CategoryID", "Name", labThingToUpdate.CategoryID);
-                SelectListItem categoriesList = new SelectListItem();
-                //{
-                //    Value = cat.ID.ToString(),
-                //    Text = cat.Name
-                //};
-                CategoriesList.Add(categoriesList);
-            };
-
-            //labThingToUpdate.Category = CategoriesList;
-
-
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", labThingToUpdate.EmployeeId);
 
             return View(labThingToUpdate);
         }
