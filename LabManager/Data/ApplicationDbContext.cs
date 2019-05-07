@@ -13,19 +13,24 @@ namespace LabManager.Data
             : base(options)
         {
         }
-
+        //NOTE: Employee is ApplicationUser:
         public DbSet<Employee> Employees { get; set; }
+
         public DbSet<Category> Categories { get; set; }
         public DbSet<Chemical> Chemicals { get; set; }
         public DbSet<ChemicalType> ChemicalTypes { get; set; }
         public DbSet<Manufacturer> Manufacturers { get; set; }
-        public DbSet<LabThing> LabThings { get; set; }
-        //public DbSet<LabThing> LabThings { get; set; }
-        //NOTE: DbSet for LabThing was created in the Data/LabManagerContext.cs when the LabManager Controller was scaffolded.
+        public DbSet<LabThing> LabThing { get; set; }
 
-        //NOTE: Confirm whether this is necessary (compare to BangazonSite project):
-        protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Employee>().ToTable("Employee");
+            modelBuilder.Entity<Category>().ToTable("Category");
+            modelBuilder.Entity<Chemical>().ToTable("Chemical");
+            modelBuilder.Entity<ChemicalType>().ToTable("ChemicalType");
+            modelBuilder.Entity<Manufacturer>().ToTable("Manufacturer");
+            modelBuilder.Entity<LabThing>().ToTable("LabThing");
+
             base.OnModelCreating(modelBuilder);
         }
 

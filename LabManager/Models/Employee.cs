@@ -18,12 +18,9 @@ namespace LabManager.Models
         public string LastName { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name ="Hire Date")]
         public System.DateTime HireDate { get; set; }
-
-
-        // Set up PK -> FK relationships to other objects
-        //public virtual ICollection<LabThing> LabThings { get; set; }
-        //public virtual ICollection<Chemical> Chemicals { get; set; }
     }
 }

@@ -34,13 +34,13 @@
                 @Html.DisplayNameFor(model => model.Note)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeID)
+                @Html.DisplayNameFor(model => model.Employee)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ManufacturerID)
+                @Html.DisplayNameFor(model => model.Manufacturer)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ChemicalTypeID)
+                @Html.DisplayNameFor(model => model.ChemicalType)
             </th>
             <th></th>
         </tr>
@@ -70,13 +70,13 @@
                 @Html.DisplayFor(modelItem => item.Note)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeID)
+                @Html.DisplayFor(modelItem => item.Employee.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ManufacturerID)
+                @Html.DisplayFor(modelItem => item.Manufacturer.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ChemicalTypeID)
+                @Html.DisplayFor(modelItem => item.ChemicalType.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |

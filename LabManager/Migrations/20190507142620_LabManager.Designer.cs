@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190430194733_LabManager")]
+    [Migration("20190507142620_LabManager")]
     partial class LabManager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,7 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("LabManager.Models.Chemical", b =>
@@ -44,7 +44,7 @@ namespace LabManager.Migrations
 
                     b.Property<int>("ChemicalTypeID");
 
-                    b.Property<int>("EmployeeID");
+                    b.Property<string>("EmployeeId");
 
                     b.Property<DateTime>("ExpirationDate");
 
@@ -62,7 +62,13 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Chemicals");
+                    b.HasIndex("ChemicalTypeID");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ManufacturerID");
+
+                    b.ToTable("Chemical");
                 });
 
             modelBuilder.Entity("LabManager.Models.ChemicalType", b =>
@@ -75,7 +81,7 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ChemicalTypes");
+                    b.ToTable("ChemicalType");
                 });
 
             modelBuilder.Entity("LabManager.Models.LabThing", b =>
@@ -92,7 +98,7 @@ namespace LabManager.Migrations
 
                     b.Property<int>("CategoryID");
 
-                    b.Property<int>("EmployeeID");
+                    b.Property<string>("EmployeeId");
 
                     b.Property<DateTime>("MaintenanceDue");
 
@@ -110,7 +116,13 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("LabThings");
+                    b.HasIndex("CategoryID");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ManufacturerID");
+
+                    b.ToTable("LabThing");
                 });
 
             modelBuilder.Entity("LabManager.Models.Manufacturer", b =>
@@ -123,7 +135,7 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Manufacturers");
+                    b.ToTable("Manufacturer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -308,7 +320,43 @@ namespace LabManager.Migrations
                     b.Property<string>("LastName")
                         .IsRequired();
 
+                    b.ToTable("Employee");
+
                     b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("LabManager.Models.Chemical", b =>
+                {
+                    b.HasOne("LabManager.Models.ChemicalType", "ChemicalType")
+                        .WithMany()
+                        .HasForeignKey("ChemicalTypeID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LabManager.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("LabManager.Models.Manufacturer", "Manufacturer")
+                        .WithMany()
+                        .HasForeignKey("ManufacturerID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("LabManager.Models.LabThing", b =>
+                {
+                    b.HasOne("LabManager.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("LabManager.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+
+                    b.HasOne("LabManager.Models.Manufacturer", "Manufacturer")
+                        .WithMany()
+                        .HasForeignKey("ManufacturerID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

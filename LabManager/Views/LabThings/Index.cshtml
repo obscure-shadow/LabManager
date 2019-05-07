@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<LabManager.Models.LabThing>
 
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -40,62 +41,66 @@
                 @Html.DisplayNameFor(model => model.Note)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeID)
+                @Html.DisplayNameFor(model => model.Employee)
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.CategoryID)
-            </th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
             <th>
-                @Html.DisplayNameFor(model => model.ManufacturerID)
+                @Html.DisplayNameFor(model => model.Manufacturer)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SerialNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModelNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AcquisitionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CalibratedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CalibrationDue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaintenanceOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaintenanceDue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmployeeID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ManufacturerID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SerialNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModelNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcquisitionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CalibratedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CalibrationDue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaintenanceOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaintenanceDue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.FirstName)
+                </td>
+          
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
