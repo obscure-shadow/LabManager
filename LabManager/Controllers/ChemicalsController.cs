@@ -135,7 +135,7 @@ namespace LabManager.Controllers
                 chemicalCreateViewModel.Chemical.Employee = user;
                 _context.Add(chemicalCreateViewModel.Chemical);
                 await _context.SaveChangesAsync();
-                //The routing occurs here instead of in the view because the LabThing id must be created before the redirect occurs
+                //The routing occurs here instead of in the view because the Chemicals id must be created before the redirect occurs
                 return RedirectToAction("Index");
             }
 
@@ -214,8 +214,97 @@ namespace LabManager.Controllers
             //----------------------------------------------------------------------------------------------------
             return View(chemicalCreateViewModel);
         }
+        
+//========================================================================================
+        // GET: Chemicals/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var chemical = await _context.Chemicals
+                .Include(chem => chem.ChemicalType)
+                .Include(chem => chem.Manufacturer)
+                .Include(chem => chem.Employee)
+                .FirstOrDefaultAsync(chem => chem.ID == id);
+
+            if (chemical == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["ChemicalTypeID"] = new SelectList(_context.ChemicalTypes, "ID", "Name", chemical.ChemicalTypeID);
+
+            ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Name", chemical.ManufacturerID);
+
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", chemical.EmployeeId);
+
+            return View(chemical);
+        }
+        //-------------------------------------------------------------------------------------------------------
+
+        // POST: Chemicals/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind("ID,Name,ReceivedDate,OpenDate,ExpirationDate,COA,OpenedBy,Note,EmployeeID,ManufacturerID,ChemicalTypeID")] Chemical chemical)
+
+        {
+            if (id != chemical.ID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                //try
+                //{
+                //    _context.Update(chemical);
+                //    await _context.SaveChangesAsync();
+                //}
+                //catch (DbUpdateConcurrencyException)
+                //{
+                //    if(!ChemicalExists(chemical.ID))
+                //    {
+                //        return NotFound();
+                //    }
+                //    else
+                //    {
+                //        throw;
+                //    }
+                //}
+            ViewData["ChemicalTypeID"] = new SelectList(_context.ChemicalTypes, "ID", "Name", chemical.ChemicalTypeID);
+
+            ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Name", chemical.ManufacturerID);
+
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", chemical.EmployeeId);
+
+                return View(chemical);
+            }
+                return RedirectToAction(nameof(Index));
+
+            //var chemicalToUpdate = await _context.Chemicals.FirstOrDefaultAsync(chem => chem.ID == id);
+
+            //if (await TryUpdateModelAsync(chemicalToUpdate,
+            //    "",
+            //    chem => chem.ChemicalTypeID, chem => chem.ManufacturerID, chem => chem.EmployeeId))
+            //{
+            //try
+            //{
+            //_context.Update(chemical);
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateException)
+            //{
+            //    ModelState.AddModelError("", "Unable to save changes.");
+            //}
+            //return RedirectToAction("Index");
+            //}
 
 
+            //return View(chemical);
+        }
         //========================================================================================
         // GET: Chemicals/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -226,7 +315,10 @@ namespace LabManager.Controllers
             }
 
             var chemical = await _context.Chemicals
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .Include(chem => chem.ChemicalType)
+                .Include(chem => chem.Manufacturer)
+                .Include(chem => chem.Employee)
+                .FirstOrDefaultAsync(x => x.ID == id);
             if (chemical == null)
             {
                 return NotFound();
@@ -234,59 +326,7 @@ namespace LabManager.Controllers
 
             return View(chemical);
         }
-//========================================================================================
 
-        // GET: Chemicals/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chemical = await _context.Chemicals.FindAsync(id);
-            if (chemical == null)
-            {
-                return NotFound();
-            }
-            return View(chemical);
-        }
-//-------------------------------------------------------------------------------------------------------
-
-        // POST: Chemicals/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ReceivedDate,OpenDate,ExpirationDate,COA,OpenedBy,Note,EmployeeId,ManufacturerID,ChemicalTypeID")] Chemical chemical)
-        {
-            if (id != chemical.ID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(chemical);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ChemicalExists(chemical.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(chemical);
-        }
 //========================================================================================
 
         // GET: Chemicals/Delete/5

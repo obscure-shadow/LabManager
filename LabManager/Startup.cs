@@ -40,19 +40,16 @@ namespace LabManager
      //==================================================================================================
      //NOTE: Dependency injection
 
+            //services.AddDbContext<ApplicationDbContext>(options =>
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             //NOTE: Changed <IdentityUser> below to <Employee>
             services.AddDefaultIdentity<Employee>()
-
-            //services.AddDbContext<LabThing>(options =>
-            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
     //==================================================================================================
 
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +63,6 @@ namespace LabManager
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 

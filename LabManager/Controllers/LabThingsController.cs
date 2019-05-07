@@ -30,6 +30,7 @@ namespace LabManager.Controllers
 
         //=========================================================================================
         // GET: LabThings
+
         //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
         public async Task<IActionResult> Index()
         {
@@ -118,8 +119,6 @@ namespace LabManager.Controllers
             }
 
             labThingCreateViewModel.Employee = EmployeesList;
-
-            //----------------------------------------------------------------------------------------------------
             return View(labThingCreateViewModel);
         }
         
@@ -352,9 +351,6 @@ namespace LabManager.Controllers
         {
             return _context.LabThing.Any(e => e.ID == id);
         }
-
-        //=========================================================================================
-        //=========================================================================================
 
         //=========================================================================================
     }

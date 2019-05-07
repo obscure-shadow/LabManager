@@ -52,7 +52,7 @@ namespace LabManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "Category",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -61,11 +61,11 @@ namespace LabManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.ID);
+                    table.PrimaryKey("PK_Category", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ChemicalTypes",
+                name: "ChemicalType",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -74,11 +74,11 @@ namespace LabManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChemicalTypes", x => x.ID);
+                    table.PrimaryKey("PK_ChemicalType", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Manufacturers",
+                name: "Manufacturer",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -87,7 +87,7 @@ namespace LabManager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Manufacturers", x => x.ID);
+                    table.PrimaryKey("PK_Manufacturer", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -197,7 +197,7 @@ namespace LabManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Chemicals",
+                name: "Chemical",
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
@@ -209,30 +209,29 @@ namespace LabManager.Migrations
                     COA = table.Column<string>(nullable: true),
                     OpenedBy = table.Column<string>(nullable: true),
                     Note = table.Column<string>(nullable: true),
-                    EmployeeId1 = table.Column<string>(nullable: true),
-                    EmployeeId = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<string>(nullable: true),
                     ManufacturerID = table.Column<int>(nullable: false),
                     ChemicalTypeID = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Chemicals", x => x.ID);
+                    table.PrimaryKey("PK_Chemical", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Chemicals_ChemicalTypes_ChemicalTypeID",
+                        name: "FK_Chemical_ChemicalType_ChemicalTypeID",
                         column: x => x.ChemicalTypeID,
-                        principalTable: "ChemicalTypes",
+                        principalTable: "ChemicalType",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Chemicals_AspNetUsers_EmployeeId1",
-                        column: x => x.EmployeeId1,
+                        name: "FK_Chemical_AspNetUsers_EmployeeId",
+                        column: x => x.EmployeeId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Chemicals_Manufacturers_ManufacturerID",
+                        name: "FK_Chemical_Manufacturer_ManufacturerID",
                         column: x => x.ManufacturerID,
-                        principalTable: "Manufacturers",
+                        principalTable: "Manufacturer",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -260,9 +259,9 @@ namespace LabManager.Migrations
                 {
                     table.PrimaryKey("PK_LabThing", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_LabThing_Categories_CategoryID",
+                        name: "FK_LabThing_Category_CategoryID",
                         column: x => x.CategoryID,
-                        principalTable: "Categories",
+                        principalTable: "Category",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -272,9 +271,9 @@ namespace LabManager.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_LabThing_Manufacturers_ManufacturerID",
+                        name: "FK_LabThing_Manufacturer_ManufacturerID",
                         column: x => x.ManufacturerID,
-                        principalTable: "Manufacturers",
+                        principalTable: "Manufacturer",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -319,18 +318,18 @@ namespace LabManager.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chemicals_ChemicalTypeID",
-                table: "Chemicals",
+                name: "IX_Chemical_ChemicalTypeID",
+                table: "Chemical",
                 column: "ChemicalTypeID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chemicals_EmployeeId1",
-                table: "Chemicals",
-                column: "EmployeeId1");
+                name: "IX_Chemical_EmployeeId",
+                table: "Chemical",
+                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chemicals_ManufacturerID",
-                table: "Chemicals",
+                name: "IX_Chemical_ManufacturerID",
+                table: "Chemical",
                 column: "ManufacturerID");
 
             migrationBuilder.CreateIndex(
@@ -367,7 +366,7 @@ namespace LabManager.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Chemicals");
+                name: "Chemical");
 
             migrationBuilder.DropTable(
                 name: "LabThing");
@@ -376,16 +375,16 @@ namespace LabManager.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "ChemicalTypes");
+                name: "ChemicalType");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Category");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Manufacturers");
+                name: "Manufacturer");
         }
     }
 }

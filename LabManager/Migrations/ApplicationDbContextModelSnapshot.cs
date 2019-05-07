@@ -29,7 +29,7 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("LabManager.Models.Chemical", b =>
@@ -42,9 +42,7 @@ namespace LabManager.Migrations
 
                     b.Property<int>("ChemicalTypeID");
 
-                    b.Property<int>("EmployeeId");
-
-                    b.Property<string>("EmployeeId1");
+                    b.Property<string>("EmployeeId");
 
                     b.Property<DateTime>("ExpirationDate");
 
@@ -64,11 +62,11 @@ namespace LabManager.Migrations
 
                     b.HasIndex("ChemicalTypeID");
 
-                    b.HasIndex("EmployeeId1");
+                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("ManufacturerID");
 
-                    b.ToTable("Chemicals");
+                    b.ToTable("Chemical");
                 });
 
             modelBuilder.Entity("LabManager.Models.ChemicalType", b =>
@@ -81,7 +79,7 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("ChemicalTypes");
+                    b.ToTable("ChemicalType");
                 });
 
             modelBuilder.Entity("LabManager.Models.LabThing", b =>
@@ -135,7 +133,7 @@ namespace LabManager.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Manufacturers");
+                    b.ToTable("Manufacturer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -320,6 +318,8 @@ namespace LabManager.Migrations
                     b.Property<string>("LastName")
                         .IsRequired();
 
+                    b.ToTable("Employee");
+
                     b.HasDiscriminator().HasValue("Employee");
                 });
 
@@ -332,7 +332,7 @@ namespace LabManager.Migrations
 
                     b.HasOne("LabManager.Models.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId1");
+                        .HasForeignKey("EmployeeId");
 
                     b.HasOne("LabManager.Models.Manufacturer", "Manufacturer")
                         .WithMany()

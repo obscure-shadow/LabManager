@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace LabManager.Data
 {
-    public class SeedDatabase
+    public static class SeedDatabase
     {
         public static void Initialize(ApplicationDbContext context)
         {
 
             //======================================================================
             //NOTE: Seeds the database with Categories
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
 
-            if (context.Categories.Any())
+            if (context.LabThing.Any())
             {
                 return;
             }
@@ -38,12 +38,12 @@ namespace LabManager.Data
 
             //NOTE: Seeds the database with ChemicalTypes
 
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
 
-            if (context.ChemicalTypes.Any())
-            {
-                return;
-            }
+            //if (context.ChemicalTypes.Any())
+            //{
+            //    return;
+            //}
 
             var chemicalType = new ChemicalType[]
             {
@@ -61,12 +61,12 @@ namespace LabManager.Data
 
             //NOTE: Seeds the database with Manufacturers
 
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
 
-            if (context.Manufacturers.Any())
-            {
-                return;
-            }
+            //if (context.Manufacturers.Any())
+            //{
+            //    return;
+            //}
 
             var manufacturer = new Manufacturer[]
             {
@@ -104,36 +104,15 @@ namespace LabManager.Data
             context.SaveChanges();
 
             //======================================================================
-
             //NOTE: Seeds the database with Employees
-
-
-            //FROM BANGAZON:
-            //ApplicationUser user = new ApplicationUser
-            //{
-            //    FirstName = "admin",
-            //    LastName = "admin",
-            //    StreetAddress = "123 Infinity Way",
-            //    UserName = "admin@admin.com",
-            //    NormalizedUserName = "ADMIN@ADMIN.COM",
-            //    Email = "admin@admin.com",
-            //    NormalizedEmail = "ADMIN@ADMIN.COM",
-            //    EmailConfirmed = true,
-            //    LockoutEnabled = false,
-            //    SecurityStamp = Guid.NewGuid().ToString("D")
-            //};
-            //var passwordHash = new PasswordHasher<ApplicationUser>();
-            //user.PasswordHash = passwordHash.HashPassword(user, "Admin8*");
-            //modelBuilder.Entity<ApplicationUser>().HasData(user);
-            //======================================================================
             // Modified employee:
 
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
 
-            if (context.Employees.Any())
-            {
-                return;
-            }
+            //if (context.Employees.Any())
+            //{
+            //    return;
+            //}
 
             var employees = new List<Employee>();
 
@@ -152,7 +131,7 @@ namespace LabManager.Data
             };
             var passwordHash = new PasswordHasher<Employee>();
             employee.PasswordHash = passwordHash.HashPassword(employee, "Admin8*");
-
+            
             employees.Add(employee);
 
             foreach (Employee e in employees)
@@ -164,17 +143,18 @@ namespace LabManager.Data
             //======================================================================
             //NOTE: Seeds the database with LabThings
 
-            context.Database.EnsureCreated();
+            //context.Database.EnsureCreated();
 
-            if (context.LabThing.Any())
-            {
-                return;
-            }
+            //if (context.LabThing.Any())
+            //{
+            //    return;
+            //}
 
             var labThing = new LabThing[]
             {
-                new LabThing{Name="Pipette", SerialNo="ABC12345NRX", ModelNo="1980", AcquisitionDate=DateTime.Parse("2001-01-01"), CalibratedOn=DateTime.Parse("2019-02-01"), CalibrationDue=DateTime.Parse("2020-02-01"), MaintenanceOn=DateTime.Parse("2019-02-01"), MaintenanceDue=DateTime.Parse("2020-02-01"), Note="N/A", EmployeeId="1", CategoryID=3, ManufacturerID=7},
-                new LabThing { Name = "Spectrometric Analyzer", SerialNo = "SN48206874", ModelNo = "AB24509", AcquisitionDate = DateTime.Parse("2015-07-09"), CalibratedOn = DateTime.Parse("2019-04-16"), CalibrationDue = DateTime.Parse("2019-05-16"), MaintenanceOn = DateTime.Parse("2019-01-01"), MaintenanceDue = DateTime.Parse("2020-01-01"), Note = "N/A", EmployeeId ="1", CategoryID = 1, ManufacturerID = 22}
+                new LabThing{Name="Pipette", SerialNo="ABC12345NRX", ModelNo="1980", AcquisitionDate=DateTime.Parse("2001-01-01"), CalibratedOn=DateTime.Parse("2019-02-01"), CalibrationDue=DateTime.Parse("2020-02-01"), MaintenanceOn=DateTime.Parse("2019-02-01"), MaintenanceDue=DateTime.Parse("2020-02-01"), Note="N/A", CategoryID=3, ManufacturerID=7},
+
+                new LabThing {Name = "Spectrometric Analyzer", SerialNo = "SN48206874", ModelNo = "AB24509", AcquisitionDate = DateTime.Parse("2015-07-09"), CalibratedOn = DateTime.Parse("2019-04-16"), CalibrationDue = DateTime.Parse("2019-05-16"), MaintenanceOn = DateTime.Parse("2019-01-01"), MaintenanceDue = DateTime.Parse("2020-01-01"), Note = "N/A", CategoryID = 1, ManufacturerID = 22}
     };
             foreach (LabThing lt in labThing)
             {
@@ -182,7 +162,27 @@ namespace LabManager.Data
             }
             context.SaveChanges();
 
+            //======================================================================
+            //NOTE: Seeds the database with Chemicals
 
+            //context.Database.EnsureCreated();
+
+            //if (context.Chemicals.Any())
+            //{
+            //    return;
+            //}
+
+            var chemical = new Chemical[]
+            {
+                new Chemical{Name="Sulfuric Acid, H2SO4", ReceivedDate=DateTime.Parse("2018-01-01"), OpenDate=DateTime.Parse("2019-02-01"), ExpirationDate=DateTime.Parse("2020-02-01"), COA="<link>", Note="N/A", ChemicalTypeID=3, ManufacturerID=7},
+
+                new Chemical{Name = "Sodium Hydroxide, NaOH", ReceivedDate=DateTime.Parse("2019-01-01"), OpenDate=DateTime.Parse("2019-01-05"), ExpirationDate=DateTime.Parse("2021-01-01"), COA="<link>", Note="N/A", ChemicalTypeID=1, ManufacturerID=1}
+            };
+            foreach (Chemical chem in chemical)
+            {
+                context.Chemicals.Add(chem);
+            }
+            context.SaveChanges();
         }
     }
 }
