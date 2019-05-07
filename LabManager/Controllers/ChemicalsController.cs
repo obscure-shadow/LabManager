@@ -248,7 +248,7 @@ namespace LabManager.Controllers
         // POST: Chemicals/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ID,Name,ReceivedDate,OpenDate,ExpirationDate,COA,OpenedBy,Note,EmployeeID,ManufacturerID,ChemicalTypeID")] Chemical chemical)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,ReceivedDate,OpenDate,ExpirationDate,COA,OpenedBy,Note,EmployeeId,ManufacturerID,ChemicalTypeID")] Chemical chemical)
 
         {
             if (id != chemical.ID)
@@ -258,52 +258,32 @@ namespace LabManager.Controllers
 
             if (ModelState.IsValid)
             {
-                //try
-                //{
-                //    _context.Update(chemical);
-                //    await _context.SaveChangesAsync();
-                //}
-                //catch (DbUpdateConcurrencyException)
-                //{
-                //    if(!ChemicalExists(chemical.ID))
-                //    {
-                //        return NotFound();
-                //    }
-                //    else
-                //    {
-                //        throw;
-                //    }
-                //}
-            ViewData["ChemicalTypeID"] = new SelectList(_context.ChemicalTypes, "ID", "Name", chemical.ChemicalTypeID);
+                try
+                {
+                    _context.Update(chemical);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ChemicalExists(chemical.ID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+
+                ViewData["ChemicalTypeID"] = new SelectList(_context.ChemicalTypes, "ID", "Name", chemical.ChemicalTypeID);
 
             ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Name", chemical.ManufacturerID);
 
             ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", chemical.EmployeeId);
 
                 return View(chemical);
-            }
-                return RedirectToAction(nameof(Index));
-
-            //var chemicalToUpdate = await _context.Chemicals.FirstOrDefaultAsync(chem => chem.ID == id);
-
-            //if (await TryUpdateModelAsync(chemicalToUpdate,
-            //    "",
-            //    chem => chem.ChemicalTypeID, chem => chem.ManufacturerID, chem => chem.EmployeeId))
-            //{
-            //try
-            //{
-            //_context.Update(chemical);
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (DbUpdateException)
-            //{
-            //    ModelState.AddModelError("", "Unable to save changes.");
-            //}
-            //return RedirectToAction("Index");
-            //}
-
-
-            //return View(chemical);
         }
         //========================================================================================
         // GET: Chemicals/Details/5

@@ -9,8 +9,6 @@ namespace LabManager.Models
     {
         public Employee() { }
 
-        //public int ID { get; set; }
-
         [Required]
         [Display(Name ="First Name")]
         public string FirstName { get; set; }
@@ -24,10 +22,5 @@ namespace LabManager.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name ="Hire Date")]
         public System.DateTime HireDate { get; set; }
-
-
-        // Set up PK -> FK relationships to other objects
-        //public virtual ICollection<LabThing> LabThings { get; set; }
-        //public virtual ICollection<Chemical> Chemicals { get; set; }
     }
 }
