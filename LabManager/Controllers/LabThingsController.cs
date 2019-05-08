@@ -268,7 +268,7 @@ namespace LabManager.Controllers
 
             if (await TryUpdateModelAsync<LabThing>(labThingToUpdate, 
                 "",
-                lt => lt.CategoryID, lt => lt.ManufacturerID, lt => lt.EmployeeId))
+lt => lt.Name, lt => lt.SerialNo, lt => lt.ModelNo, lt => lt.AcquisitionDate, lt => lt.CalibratedOn, lt => lt.CalibrationDue, lt => lt.MaintenanceOn, lt=> lt.MaintenanceDue, lt => lt.Note, lt => lt.CategoryID, lt => lt.ManufacturerID, lt => lt.EmployeeId))
             {
                 try
                 {
