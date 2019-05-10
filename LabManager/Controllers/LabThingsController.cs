@@ -32,13 +32,174 @@ namespace LabManager.Controllers
         // GET: LabThings
 
         //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString)
         {
-            var applicationDbContext = _context.LabThing
-                .Include(lt => lt.Employee)
-                .Include(lt => lt.Category)
-                .Include(lt => lt.Manufacturer);
-            return View(await applicationDbContext.ToListAsync());
+        //**********************************************************************************************
+            //NOTE: Filters:
+            //This filter works; it is attached to the "Name" of the LabThing. When the LabThing name is clicked, the entire list of labthings are ordered in descending order.
+
+            ViewData["Name_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+
+            ViewData["SerialNo_Desc"] = String.IsNullOrEmpty(sortOrder) ? "SerialNo_desc" : "";
+
+            ViewData["ModelNo_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ModelNo_desc" : "";
+
+            ViewData["AcquisitionDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "AcquisitionDate_desc" : "";
+
+            ViewData["CalibratedOn_Desc"] = String.IsNullOrEmpty(sortOrder) ? "CalibratedOn_desc" : "";
+
+            ViewData["CalibrationDue_Desc"] = String.IsNullOrEmpty(sortOrder) ? "CalibrationDue_desc" : "";
+
+            ViewData["MaintenanceOn_Desc"] = String.IsNullOrEmpty(sortOrder) ? "MaintenanceOn_desc" : "";
+
+            ViewData["MaintenanceDue_Desc"] = String.IsNullOrEmpty(sortOrder) ? "MaintenanceDue_desc" : "";
+
+            ViewData["Note_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Note_desc" : "";
+            //Gets the LabThings from the database
+            var labThing = from lt in _context.LabThing
+                       select lt;
+
+            switch (sortOrder){
+                // SORT BY NAME:
+                case "Name_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.Name);
+                    break;
+                case "Name":
+                    labThing = labThing.OrderByDescending(lt => lt.Name);
+                    break;
+                default:
+                    labThing = labThing.OrderBy(lt => lt.Name);
+                    break;
+
+                //SORT BY SERIALNO:
+                case "SerialNo_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.SerialNo);
+                    break;
+                case "SerialNo":
+                    labThing = labThing.OrderByDescending(lt => lt.SerialNo);
+                    break;
+
+                //SORT BY MODELNO:
+                case "ModelNo_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.ModelNo);
+                    break;
+                case "ModelNo":
+                    labThing = labThing.OrderByDescending(lt => lt.ModelNo);
+                    break;
+
+                //SORT BY ACQUISITIONDATE:
+                case "AcquisitionDate_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.AcquisitionDate);
+                    break;
+                case "AcquisitionDate":
+                    labThing = labThing.OrderByDescending(lt => lt.AcquisitionDate);
+                    break;
+
+                //SORT BY CALIBRATEDON:
+                case "CalibratedOn_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.CalibratedOn);
+                    break;
+                case "CalibratedOn":
+                    labThing = labThing.OrderByDescending(lt => lt.CalibratedOn);
+                    break;
+
+                //SORT BY CALIBRATIONDUE:
+                case "CalibrationDue_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.CalibrationDue);
+                    break;
+                case "CalibrationDue":
+                    labThing = labThing.OrderByDescending(lt => lt.CalibrationDue);
+                    break;
+
+                //SORT BY MAINTENANCEON:
+                case "MaintenanceOn_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.MaintenanceOn);
+                    break;
+                case "MaintenanceOn":
+                    labThing = labThing.OrderByDescending(lt => lt.MaintenanceOn);
+                    break;
+
+                //SORT BY MAINTENANCEDUE:
+                case "MaintenanceDue_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.MaintenanceDue);
+                    break;
+                case "MaintenanceDue":
+                    labThing = labThing.OrderByDescending(lt => lt.MaintenanceDue);
+                    break;
+
+                //SORT BY NOTE:
+                case "Note_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.Note);
+                    break;
+                case "Note":
+                    labThing = labThing.OrderByDescending(lt => lt.Note);
+                    break;
+
+            }
+            return View(await labThing.ToListAsync());
+            //**********************************************************************************************
+
+
+
+
+
+            //ViewData["CurrentSort"] = sortOrder;
+
+            //ViewData["NameSortDescParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewData["NameSortAscParm"] = string.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
+
+            //ViewData["EmployeeSortDescParm"] = sortOrder == "Employee" ? "employee_desc" : "Employee";
+            //ViewData["EmployeeSortAscParm"] = sortOrder == "Employee" ? "employee_asc" : "Employee";
+
+            //ViewData["CategorySortParm"] = sortOrder == "Category" ? "category_desc" : "Category";
+            //ViewData["ManufacturerSortParm"] = sortOrder == "Manufacturer" ? "manufacturer_desc" : "Manufacture";
+
+
+            //searchString = currentFilter;
+
+            //ViewData["CurrentFilter"] = searchString;
+
+            //var labthing = from lt in _context.LabThing
+            //               select lt;
+            //if(!string.IsNullOrEmpty(searchString))
+            //{
+            //NOTE: If a search term is entered in the search box and the user does not remove it and click search again, the search term will stay "locked in" indefinitely. This else statement needs to be more user-friendly and the search term should "refresh back to null" after a search is performed.
+            //    labthing = labthing.Where(lt => lt.Name.Contains(searchString));
+            //    return View(labthing);
+            //}
+
+            //switch (sortOrder)
+            //{
+            //    case "name_desc": labthing = labthing.OrderByDescending(lt => lt.Name);
+            //        break;
+            //    case "name_asc":
+            //        labthing = labthing.OrderBy(lt => lt.Name);
+            //        break;
+
+            //    case "employee_desc": labthing = labthing.OrderByDescending(lt => lt.Employee.FirstName);
+            //        break;
+            //    case "employee_asc":
+            //        labthing = labthing.OrderBy(lt => lt.Employee.FirstName);
+            //        break;
+
+            //    case "category_desc":
+            //        labthing = labthing.OrderByDescending(lt => lt.Category.Name);
+            //        break;
+            //}
+
+            //int pageSize = 3;
+            //return View(await LabThing.CreateAsync(labthing, pageNumber ?? 1, pageSize));
+            //return View(await labthing.ToListAsync());
+
+
+
+
+            //var applicationDbContext = _context.LabThing
+            //    .Include(lt => lt.Employee)
+            //    .Include(lt => lt.Category)
+            //    .Include(lt => lt.Manufacturer);
+            //return View(await applicationDbContext.ToListAsync());
+            //return View(await labthing.CreateAsync(labthing));
         }
 
         //========================================================================================

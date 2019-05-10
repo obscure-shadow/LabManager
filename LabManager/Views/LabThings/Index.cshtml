@@ -10,97 +10,163 @@
 <p>
     <a asp-action="Create">Create New LabThing</a>
 </p>
+@************************************************************************************************@
+@*Search box and filter for Chemical Index() *@
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Inventory List</a>
+        </p>
+    </div>
+</form>
+@************************************************************************************************@
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SerialNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModelNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AcquisitionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CalibratedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CalibrationDue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaintenanceOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaintenanceDue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee)
-            </th>
+
+            @*This using statement is connected to the LabThing Filters:*@
+
+            @using (Html.BeginForm("Index", "LabThing", FormMethod.Get))
+            {
+                @*This creates a link on a LabThing "Name"  *@
+                <th>
+                    @Html.ActionLink("Name", "Index", new { SortOrder = ViewBag.Name_Desc })
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.SerialNo)*@
+                    @Html.ActionLink("SerialNo", "Index", new { SortOrder = ViewBag.SerialNo_Desc})
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ModelNo)*@
+                    @Html.ActionLink("ModelNo", "Index", new { SortOrder = ViewBag.ModelNo_Desc })
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.AcquisitionDate)*@
+                    @Html.ActionLink("AcquisitionDate", "Index", new { SortOrder = ViewBag.AcquisitionDate_Desc })
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.CalibratedOn)*@
+                    @Html.ActionLink("CalibratedOn", "Index", new { SortOrder = ViewBag.CalibratedOn_Desc })
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.CalibrationDue)*@
+                    @Html.ActionLink("CalibrationDue", "Index", new { SortOrder = ViewBag.CalibrationDue_Desc })
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.MaintenanceOn)*@
+                    @Html.ActionLink("MaintenanceOn", "Index", new { SortOrder = ViewBag.MaintenanceOn_Desc })
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.MaintenanceDue)*@
+                    @Html.ActionLink("MaintenanceDue", "Index", new { SortOrder = ViewBag.MaintenanceDue_Desc })
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Note)*@
+                    @Html.ActionLink("Note", "Index", new { SortOrder = ViewBag.Note_Desc })
+                </th>
 
             <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
+                <div>
+                    @*@Html.DisplayNameFor(model => model.Employee)*@
+                    @Html.ActionLink("FirstName", "Index", new { SortOrder = ViewBag.Name })
+
+                    <div>
+                        @*<a asp-action="Index" asp-route-sortOrder="@ViewData["EmployeeSortAscParm"]" asp-route-currentFilter="@ViewData["EmployeeSortAscParm"]">*@
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        @*</a>*@
+                        @*<a asp-action="Index" asp-route-sortOrder="@ViewData["EmployeeSortDescParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">*@
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortAscendingIcon" />
+                        @*</a>*@
+                    </div>
+                </div>
+            </th>
+            }
+
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Manufacturer)
             </th>
             <th></th>
+
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SerialNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModelNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AcquisitionDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CalibratedOn)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CalibrationDue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaintenanceOn)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaintenanceDue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Employee.FirstName)
-                </td>
-          
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
+        <tr>
+            <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SerialNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcquisitionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalibratedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalibrationDue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaintenanceOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaintenanceDue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Manufacturer.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.FirstName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">
+                    <img src="~/images/baseline_edit_black_sm.png" alt="EditIcon"/></a> |
+                <a asp-action="Details" asp-route-id="@item.ID">
+                    <img src="~/images/baseline_info_black_sm.png" alt="DetailsIcon"/>
+                </a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">
+                    <img src="~/images/baseline_delete_black_sm.png" alt="TrashIcon"/>
+                    </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
+@************************************************************************************************@
+
+@*@{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }*@
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]">
+    </a>
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]">
+    </a>
