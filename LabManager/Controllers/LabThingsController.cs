@@ -33,6 +33,7 @@ namespace LabManager.Controllers
 
         //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString)
+            //NOTE: currently, sortOrder is the only parameter being used. More features to come.
         {
 
             //**********************************************************************************************
@@ -61,10 +62,13 @@ namespace LabManager.Controllers
 
             ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "";
 
+            ViewData["Manufacturer_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Manufacturer_desc" : "";
+
+            ViewData["Category_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Category_desc" : "";
+
             //---------------------------------------------------------------------------------------------
 
             //Gets the LabThings from the database
-            //var applicationDbContext = _context.LabThing
             var labThing = from lt in _context.LabThing
                         .Include(lt => lt.Employee)
                         .Include(lt => lt.Category)
@@ -149,6 +153,9 @@ namespace LabManager.Controllers
                     break;
 
                 //SORT BY EMPLOYEE:
+
+                // Using "OrderBYDescending" as shown below does not work; however, using "OrderBy" on the lines below this block does work:
+                
                 //case "Employee_desc":
                 //    labThing = labThing.OrderByDescending(lt => lt.Employee);
                 //    break;
@@ -163,71 +170,26 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderBy(lt => lt.Employee.FirstName);
                     break;
 
+
+                //SORT BY MANUFACTURER:
+
+                case "Manufacturer_desc":
+                    labThing = labThing.OrderByDescending(lt => lt.Manufacturer);
+                    break;
+                case "Manufacturer":
+                    labThing = labThing.OrderByDescending(lt => lt.Manufacturer);
+                    break;
+
+                //SORT BY CATEGORY:
+                case "Category_desc":
+                    labThing = labThing.OrderBy(lt => lt.Category);
+                    break;
+                case "Category":
+                    labThing = labThing.OrderBy(lt => lt.Category);
+                    break;
+
             }
             return View(await labThing.ToListAsync());
-            //**********************************************************************************************
-
-
-
-
-
-            //ViewData["CurrentSort"] = sortOrder;
-
-            //ViewData["NameSortDescParm"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //ViewData["NameSortAscParm"] = string.IsNullOrEmpty(sortOrder) ? "name_asc" : "";
-
-            //ViewData["EmployeeSortDescParm"] = sortOrder == "Employee" ? "employee_desc" : "Employee";
-            //ViewData["EmployeeSortAscParm"] = sortOrder == "Employee" ? "employee_asc" : "Employee";
-
-            //ViewData["CategorySortParm"] = sortOrder == "Category" ? "category_desc" : "Category";
-            //ViewData["ManufacturerSortParm"] = sortOrder == "Manufacturer" ? "manufacturer_desc" : "Manufacture";
-
-
-            //searchString = currentFilter;
-
-            //ViewData["CurrentFilter"] = searchString;
-
-            //var labthing = from lt in _context.LabThing
-            //               select lt;
-            //if(!string.IsNullOrEmpty(searchString))
-            //{
-            //NOTE: If a search term is entered in the search box and the user does not remove it and click search again, the search term will stay "locked in" indefinitely. This else statement needs to be more user-friendly and the search term should "refresh back to null" after a search is performed.
-            //    labthing = labthing.Where(lt => lt.Name.Contains(searchString));
-            //    return View(labthing);
-            //}
-
-            //switch (sortOrder)
-            //{
-            //    case "name_desc": labthing = labthing.OrderByDescending(lt => lt.Name);
-            //        break;
-            //    case "name_asc":
-            //        labthing = labthing.OrderBy(lt => lt.Name);
-            //        break;
-
-            //    case "employee_desc": labthing = labthing.OrderByDescending(lt => lt.Employee.FirstName);
-            //        break;
-            //    case "employee_asc":
-            //        labthing = labthing.OrderBy(lt => lt.Employee.FirstName);
-            //        break;
-
-            //    case "category_desc":
-            //        labthing = labthing.OrderByDescending(lt => lt.Category.Name);
-            //        break;
-            //}
-
-            //int pageSize = 3;
-            //return View(await LabThing.CreateAsync(labthing, pageNumber ?? 1, pageSize));
-            //return View(await labthing.ToListAsync());
-
-
-
-
-            //var applicationDbContext = _context.LabThing
-            //    .Include(lt => lt.Employee)
-            //    .Include(lt => lt.Category)
-            //    .Include(lt => lt.Manufacturer);
-            //return View(await applicationDbContext.ToListAsync());
-            //return View(await labthing.CreateAsync(labthing));
         }
 
         //========================================================================================

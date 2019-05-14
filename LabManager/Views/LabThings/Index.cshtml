@@ -90,36 +90,33 @@
 
                     @*@Html.DisplayNameFor(model => model.Employee)*@
                     @******************************************************************@
-                    @*@Html.ActionLink("FirstName", "Index", "Employee", new { SortOrder = ViewBag.Employee_Desc })*@
 
-                    @*The corresponding ViewData code from the controller for this ActionLink is this: ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : ""; *@
-
-
-                    @*Using ActionLink with the Employee controller changes the URL to the following but also produces an error: https://localhost:5001/Employee?SortOrder=Employee_desc*@
-                    @******************************************************************@
 
 
 
                     @******************************************************************@
 
-
+                @* This uses the "up" and "down" arrows from Material Icons; use these instead of linked headings to sort the list of items (in an upcoming feature): *@
 
                     @*<div>
-        <a asp-action="Index" asp-route-sortOrder="@ViewData["Employee_Desc"]">
-            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
-        </a>*@
+                                        <a asp-action="Index" asp-route-sortOrder="@ViewData["Employee_Desc"]">
+                                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                                        </a>*@
 
 
                     @*<a asp-action="Index" asp-route-sortOrder="@ViewData["EmployeeSortDescParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">*@
                     @*<img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortAscendingIcon" />*@
                     @*</a>*@
+                    @******************************************************************@
             }
 
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Category)*@
+                    @Html.ActionLink("Category", "Index", new { sortOrder = ViewBag.Category_Desc })
+                </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manufacturer)
+                @*@Html.DisplayNameFor(model => model.Manufacturer)*@
+                @Html.ActionLink("Manufacturer", "Index", new { sortOrder = ViewBag.Manufacturer_Desc })
             </th>
             <th></th>
 
