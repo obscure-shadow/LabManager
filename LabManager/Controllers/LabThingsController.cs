@@ -56,8 +56,6 @@ namespace LabManager.Controllers
 
             ViewData["MaintenanceDue_Desc"] = String.IsNullOrEmpty(sortOrder) ? "MaintenanceDue_desc" : "";
 
-            ViewData["Note_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Note_desc" : "";
-
             //--------------------------Drop-down sorting:---------------------------------------------
 
             ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "";

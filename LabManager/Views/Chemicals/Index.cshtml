@@ -27,38 +27,52 @@
 <table class="table">
     <thead>
         <tr>
+
+            @using (Html.BeginForm("Index", "LabThing", FormMethod.Get))
+            {
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @*@Html.DisplayNameFor(model => model.Name)*@
+                @Html.ActionLink("Name", "Index", new { SortOrder = ViewBag.Name_Desc })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReceivedDate)
+                @*@Html.DisplayNameFor(model => model.ReceivedDate)*@
+                @Html.ActionLink("Received Date", "Index", new { SortOrder = ViewBag.ReceivedDate_Desc })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OpenDate)
+                @*@Html.DisplayNameFor(model => model.OpenDate)*@
+                @Html.ActionLink("Open Date", "Index", new { SortOrder = ViewBag.OpenDate_Desc })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ExpirationDate)
+                @*@Html.DisplayNameFor(model => model.ExpirationDate)*@
+                @Html.ActionLink("Expiration Date", "Index", new { SortOrder = ViewBag.ExpirationDate_Desc })
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.COA)
+                @*@Html.ActionLink("COA", "Index", new { SortOrder = ViewBag.Name_Desc })*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OpenedBy)
+                @*@Html.DisplayNameFor(model => model.OpenedBy)*@
+                @Html.ActionLink("Opened By", "Index", new { SortOrder = ViewBag.OpenedBy_Desc })
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manufacturer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChemicalType)
-            </th>
-            <th></th>
-        </tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Note)
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Employee)*@
+                    @Html.ActionLink("Employee", "Index", new { sortOrder = ViewBag.Employee_Desc })
+
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Manufacturer)*@
+                    @Html.ActionLink("Manufacturer", "Index", new { sortOrder = ViewBag.Manufacturer_Desc })
+                </th>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.ChemicalType)*@
+                    @Html.ActionLink("ChemicalType", "Index", new { sortOrder = ViewBag.ChemicalType_Desc })
+                </th>
+                <th></th>
+            }
+            </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)

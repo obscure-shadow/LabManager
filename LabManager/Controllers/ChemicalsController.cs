@@ -30,13 +30,119 @@ namespace LabManager.Controllers
         private Task<Employee> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         //=========================================================================================
         // GET: Chemicals
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var applicationDbContext = _context.Chemicals
+
+            ViewData["Name_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+
+            ViewData["ReceivedDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ReceivedDate_desc" : "";
+
+            ViewData["OpenDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenDate_desc" : "";
+
+            ViewData["ExpirationDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ExpirationDate_desc" : "";
+
+            ViewData["COA_Desc"] = String.IsNullOrEmpty(sortOrder) ? "COA_desc" : "";
+
+            ViewData["OpenedBy_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenedBy_desc" : "";
+
+            ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "";
+
+            ViewData["Manufacturer_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Manufacturer_desc" : "";
+
+            ViewData["ChemicalType_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ChemicalType_desc" : "";
+
+
+            //Gets chemicals from database:
+            var chemical = from chem in _context.Chemicals
                 .Include(chem => chem.Employee)
                 .Include(chem => chem.ChemicalType)
-                .Include(chem => chem.Manufacturer);
-            return View(await applicationDbContext.ToListAsync());
+                .Include(chem => chem.Manufacturer)
+                select chem;
+
+
+            switch (sortOrder)
+            {
+                // SORT BY NAME:
+                case "Name_desc":
+                    chemical = chemical.OrderByDescending(chem => chem.Name);
+                    break;
+                case "Name":
+                    chemical = chemical.OrderByDescending(chem => chem.Name);
+                    break;
+                default:
+                    chemical = chemical.OrderBy(chem => chem.Name);
+                    break;
+
+                // SORT BY ReceivedDate:
+                case "ReceivedDate_desc":
+                    chemical = chemical.OrderByDescending(chem => chem.ReceivedDate);
+                    break;
+                case "ReceivedDate":
+                    chemical = chemical.OrderBy(chem => chem.ReceivedDate);
+                    break;
+
+                // SORT BY OPENDATE:
+                case "OpenDate_desc":
+                    chemical = chemical.OrderByDescending(chem => chem.OpenDate);
+                    break;
+                case "OpenDate":
+                    chemical = chemical.OrderBy(chem => chem.OpenDate);
+                    break;
+
+                // SORT BY EXPIRATIONDATE:
+                case "ExpirationDate_desc":
+                    chemical = chemical.OrderByDescending(chem => chem.ExpirationDate);
+                    break;
+                case "ExpirationDate":
+                    chemical = chemical.OrderBy(chem => chem.ExpirationDate);
+                    break;
+
+
+                // Currently there is no need to use a COA sort.
+                // SORT BY COA:
+                //case "COA_desc":
+                //    chemical = chemical.OrderByDescending(chem => chem.COA);
+                //    break;
+                //case "COA":
+                //    chemical = chemical.OrderBy(chem => chem.COA);
+                //    break;
+
+                // SORT BY OPENEDBY:
+                case "OpenedBy_desc":
+                    chemical = chemical.OrderByDescending(chem => chem.OpenedBy);
+                    break;
+                case "OpenedBy":
+                    chemical = chemical.OrderBy(chem => chem.OpenedBy);
+                    break;
+
+                // SORT BY EMPLOYEE:
+                case "Employee_desc":
+                    chemical = chemical.OrderByDescending(chem => chem.Employee.FirstName);
+                    break;
+                case "Employee":
+                    chemical = chemical.OrderBy(chem => chem.Employee.FirstName);
+                    break;
+
+                //SORT BY MANUFACTURER:
+
+                case "Manufacturer_desc":
+                    chemical = chemical.OrderByDescending(chem => chem.Manufacturer);
+                    break;
+                case "Manufacturer":
+                    chemical = chemical.OrderBy(chem => chem.Manufacturer);
+                    break;
+
+                //SORT BY CHEMICALTYPE:
+
+                case "ChemicalType_desc":
+                    chemical = chemical.OrderByDescending(chem => chem.ChemicalType);
+                    break;
+                case "ChemicalType":
+                    chemical = chemical.OrderBy(chem => chem.ChemicalType);
+                    break;
+            }
+
+                    return View(await chemical.ToListAsync());
         }
         //========================================================================================
         // GET: Chemicals/Create
