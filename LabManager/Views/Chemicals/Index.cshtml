@@ -34,6 +34,7 @@
                 @Html.DisplayNameFor(model => model.Name)
                 @*@Html.ActionLink("Name", "Index", new { SortOrder = ViewBag.Name_Desc })*@
 
+                <div>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">
                     <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                 </a>
@@ -42,53 +43,109 @@
                 <a asp-action="Index" , asp-route-sortOrder="@ViewData["Name_Desc"]">
                     <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                 </a>
+                </div>
 
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ReceivedDate)
                 @*@Html.ActionLink("Received Date", "Index", new { SortOrder = ViewBag.ReceivedDate_Desc })*@
-
+                <div>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["ReceivedDate"]">
+                    <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                </a>
+                <a asp-action="Index" , asp-route-sortOrder="@ViewData["ReceivedDate_Desc"]">
+                    <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                </a>
+                </div>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OpenDate)
+                @*@Html.ActionLink("Open Date", "Index", new { SortOrder = ViewBag.OpenDate_Desc })*@
+
+                <div>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["OpenDate"]">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+
+
+                    <a asp-action="Index" , asp-route-sortOrder="@ViewData["OpenDate_Desc"]">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExpirationDate)
+                @*@Html.ActionLink("Expiration Date", "Index", new { SortOrder = ViewBag.ExpirationDate_Desc })*@
+                <div>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ExpirationDate"]">
                     <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                 </a>
 
 
-                <a asp-action="Index" , asp-route-sortOrder="@ViewData["ReceivedDate_Desc"]">
+                <a asp-action="Index" , asp-route-sortOrder="@ViewData["ExpirationDate_Desc"]">
                     <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                 </a>
-
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.OpenDate)*@
-                @Html.ActionLink("Open Date", "Index", new { SortOrder = ViewBag.OpenDate_Desc })
-            </th>
-            <th>
-                @*@Html.DisplayNameFor(model => model.ExpirationDate)*@
-                @Html.ActionLink("Expiration Date", "Index", new { SortOrder = ViewBag.ExpirationDate_Desc })
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.COA)
                 @*@Html.ActionLink("COA", "Index", new { SortOrder = ViewBag.Name_Desc })*@
             </th>
             <th>
-                @*@Html.DisplayNameFor(model => model.OpenedBy)*@
-                @Html.ActionLink("Opened By", "Index", new { SortOrder = ViewBag.OpenedBy_Desc })
+                @Html.DisplayNameFor(model => model.OpenedBy)
+                @*@Html.ActionLink("Opened By", "Index", new { SortOrder = ViewBag.OpenedBy_Desc })*@
+                <div>
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["OpenedBy"]">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="@ViewData["OpenedBy_Desc"]">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Note)
                 </th>
                 <th>
-                    @*@Html.DisplayNameFor(model => model.Employee)*@
-                    @Html.ActionLink("Employee", "Index", new { sortOrder = ViewBag.Employee_Desc })
+                    @Html.DisplayNameFor(model => model.Employee)
+                    @*@Html.ActionLink("Employee", "Index", new { sortOrder = ViewBag.Employee_Desc })*@
+                    <div>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["Employee"]">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+                        <a asp-action="Index" , asp-route-sortOrder="@ViewData["Employee_Desc"]">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
 
                 </th>
                 <th>
-                    @*@Html.DisplayNameFor(model => model.Manufacturer)*@
-                    @Html.ActionLink("Manufacturer", "Index", new { sortOrder = ViewBag.Manufacturer_Desc })
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+                    @*@Html.ActionLink("Manufacturer", "Index", new { sortOrder = ViewBag.Manufacturer_Desc })*@
+                    <div>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["Manufacturer"]">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+
+
+                        <a asp-action="Index" , asp-route-sortOrder="@ViewData["Manufacturer_Desc"]">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
                 </th>
                 <th>
-                    @*@Html.DisplayNameFor(model => model.ChemicalType)*@
-                    @Html.ActionLink("ChemicalType", "Index", new { sortOrder = ViewBag.ChemicalType_Desc })
+                    @Html.DisplayNameFor(model => model.ChemicalType)
+                    @*@Html.ActionLink("ChemicalType", "Index", new { sortOrder = ViewBag.ChemicalType_Desc })*@
+                    <div>
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["ChemicalType"]">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+                        <a asp-action="Index" , asp-route-sortOrder="@ViewData["ChemicalType_Desc"]">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
                 </th>
                 <th></th>
             }
