@@ -34,7 +34,8 @@ namespace LabManager.Controllers
         //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString)
         {
-        //**********************************************************************************************
+
+            //**********************************************************************************************
             //NOTE: Filters:
             //This filter works; it is attached to the "Name" of the LabThing. When the LabThing name is clicked, the entire list of labthings are ordered in descending order.
 
@@ -55,9 +56,21 @@ namespace LabManager.Controllers
             ViewData["MaintenanceDue_Desc"] = String.IsNullOrEmpty(sortOrder) ? "MaintenanceDue_desc" : "";
 
             ViewData["Note_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Note_desc" : "";
+
+            //--------------------------Drop-down sorting:---------------------------------------------
+
+            ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "";
+
+            //---------------------------------------------------------------------------------------------
+
             //Gets the LabThings from the database
+            //var applicationDbContext = _context.LabThing
             var labThing = from lt in _context.LabThing
-                       select lt;
+                        .Include(lt => lt.Employee)
+                        .Include(lt => lt.Category)
+                        .Include(lt => lt.Manufacturer)
+                           select lt;
+
 
             switch (sortOrder){
                 // SORT BY NAME:
@@ -133,6 +146,21 @@ namespace LabManager.Controllers
                     break;
                 case "Note":
                     labThing = labThing.OrderByDescending(lt => lt.Note);
+                    break;
+
+                //SORT BY EMPLOYEE:
+                //case "Employee_desc":
+                //    labThing = labThing.OrderByDescending(lt => lt.Employee);
+                //    break;
+                //case "Employee":
+                //    labThing = labThing.OrderByDescending(lt => lt.Employee);
+                //    break;
+
+                case "Employee_desc":
+                    labThing = labThing.OrderBy(lt => lt.Employee.FirstName);
+                    break;
+                case "Employee":
+                    labThing = labThing.OrderBy(lt => lt.Employee.FirstName);
                     break;
 
             }

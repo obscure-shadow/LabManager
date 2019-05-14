@@ -30,15 +30,23 @@
 
             @*This using statement is connected to the LabThing Filters:*@
 
+            @*What ActionLink Does:*@
+            @*@Html.ActionLink("link text", "someaction", "somecontroller", new { id = "123" }, null)*@
+
+            @*What URL Action Does:*@
+            @*Url.Action("someaction", "somecontroller", new { id = "123" })*@
+
             @using (Html.BeginForm("Index", "LabThing", FormMethod.Get))
             {
                 @*This creates a link on a LabThing "Name"  *@
-                <th>
-                    @Html.ActionLink("Name", "Index", new { SortOrder = ViewBag.Name_Desc })
-                </th>
+            <th>
+                @Html.ActionLink("Name", "Index", new { SortOrder = ViewBag.Name_Desc })
+
+                @*When the "Name" link is clicked, the items are sorted in descending order (as opposed to the default ascending order) and the URL changes from https://localhost:5001/LabThings to: https://localhost:5001/LabThings?SortOrder=Name_desc*@
+            </th>
                 <th>
                     @*@Html.DisplayNameFor(model => model.SerialNo)*@
-                    @Html.ActionLink("SerialNo", "Index", new { SortOrder = ViewBag.SerialNo_Desc})
+                    @Html.ActionLink("Serial No", "Index", new { SortOrder = ViewBag.SerialNo_Desc })
                 </th>
                 <th>
                     @*@Html.DisplayNameFor(model => model.ModelNo)*@
@@ -46,6 +54,7 @@
                 </th>
                 <th>
                     @*@Html.DisplayNameFor(model => model.AcquisitionDate)*@
+
                     @Html.ActionLink("AcquisitionDate", "Index", new { SortOrder = ViewBag.AcquisitionDate_Desc })
                 </th>
                 <th>
@@ -65,25 +74,45 @@
                     @Html.ActionLink("MaintenanceDue", "Index", new { SortOrder = ViewBag.MaintenanceDue_Desc })
                 </th>
                 <th>
-                    @*@Html.DisplayNameFor(model => model.Note)*@
-                    @Html.ActionLink("Note", "Index", new { SortOrder = ViewBag.Note_Desc })
+                    @Html.DisplayNameFor(model => model.Note)
                 </th>
 
-            <th>
-                <div>
+                <th>
                     @*@Html.DisplayNameFor(model => model.Employee)*@
-                    @Html.ActionLink("FirstName", "Index", new { SortOrder = ViewBag.Name })
+                    @Html.ActionLink("Employee", "Index", new {sortOrder = ViewBag.Employee_Desc })
+                </th>
 
-                    <div>
-                        @*<a asp-action="Index" asp-route-sortOrder="@ViewData["EmployeeSortAscParm"]" asp-route-currentFilter="@ViewData["EmployeeSortAscParm"]">*@
-                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
-                        @*</a>*@
-                        @*<a asp-action="Index" asp-route-sortOrder="@ViewData["EmployeeSortDescParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">*@
-                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortAscendingIcon" />
-                        @*</a>*@
-                    </div>
-                </div>
-            </th>
+                    @*What ActionLink Does:*@
+                    @*@Html.ActionLink("link text", "someaction", "somecontroller", new { id = "123" }, null)*@
+
+                    @*What URL Action Does:*@
+                    @*Url.Action("someaction", "somecontroller", new { id = "123" })*@
+
+                    @*@Html.DisplayNameFor(model => model.Employee)*@
+                    @******************************************************************@
+                    @*@Html.ActionLink("FirstName", "Index", "Employee", new { SortOrder = ViewBag.Employee_Desc })*@
+
+                    @*The corresponding ViewData code from the controller for this ActionLink is this: ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : ""; *@
+
+
+                    @*Using ActionLink with the Employee controller changes the URL to the following but also produces an error: https://localhost:5001/Employee?SortOrder=Employee_desc*@
+                    @******************************************************************@
+
+
+
+                    @******************************************************************@
+
+
+
+                    @*<div>
+        <a asp-action="Index" asp-route-sortOrder="@ViewData["Employee_Desc"]">
+            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+        </a>*@
+
+
+                    @*<a asp-action="Index" asp-route-sortOrder="@ViewData["EmployeeSortDescParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">*@
+                    @*<img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortAscendingIcon" />*@
+                    @*</a>*@
             }
 
             <th>
@@ -155,11 +184,6 @@
     </tbody>
 </table>
 @************************************************************************************************@
-
-@*@{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }*@
 
     <a asp-action="Index"
        asp-route-sortOrder="@ViewData["CurrentSort"]"
