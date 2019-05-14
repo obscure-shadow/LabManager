@@ -24,9 +24,9 @@ namespace LabManager.Data
 
             var categories = new Category[]
             {
+                new Category{Name="Equipment"},
                 new Category{Name="Instruments"},
                 new Category{Name="Supplies"},
-                new Category{Name="Equipment"},
                 new Category{Name="Other"}
             };
             foreach (Category c in categories)

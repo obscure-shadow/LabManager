@@ -51,7 +51,7 @@ namespace LabManager.Controllers
 
             ViewData["OpenDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenDate_desc" : "OpenDate";
 
-            ViewData["ExpirationDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ExpirationDate_desc" : "ExpirationDate";
+            ViewData["ExpirationDate_Desc"] = sortOrder == "ExpirationDate_desc" ? "ExpirationDate_desc" : "ExpirationDate";
 
             //NOTE: Not using COA sorting.
             //ViewData["COA_Desc"] = String.IsNullOrEmpty(sortOrder) ? "COA_desc" : "";
@@ -82,9 +82,9 @@ namespace LabManager.Controllers
                 case "Name":
                     chemical = chemical.OrderByDescending(chem => chem.Name);
                     break;
-                default:
-                    chemical = chemical.OrderBy(chem => chem.Name);
-                    break;
+                //default:
+                //    chemical = chemical.OrderBy(chem => chem.Name);
+                //    break;
 
                 // SORT BY ReceivedDate:
                 case "ReceivedDate_desc":

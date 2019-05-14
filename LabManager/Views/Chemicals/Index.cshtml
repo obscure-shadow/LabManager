@@ -24,17 +24,17 @@
 @************************************************************************************************@
 
 
-<table class="table">
+<table class="chemicals-list">
     <thead>
-        <tr>
+        <tr class="chemicals-table-row">
 
             @using (Html.BeginForm("Index", "Chemicals", FormMethod.Get))
             {
-            <th>
+            <th class="chemicals-table-header">
                 @Html.DisplayNameFor(model => model.Name)
                 @*@Html.ActionLink("Name", "Index", new { SortOrder = ViewBag.Name_Desc })*@
 
-                <div>
+                <div class="align-items-center">
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["Name"]">
                     <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                 </a>
@@ -49,11 +49,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.ReceivedDate)
                 @*@Html.ActionLink("Received Date", "Index", new { SortOrder = ViewBag.ReceivedDate_Desc })*@
-                <div>
+                <div class="align-items-center">
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["ReceivedDate"]">
                     <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                 </a>
-                <a asp-action="Index" , asp-route-sortOrder="@ViewData["ReceivedDate_Desc"]">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ReceivedDate_Desc"]">
                     <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                 </a>
                 </div>
@@ -63,13 +63,13 @@
                 @Html.DisplayNameFor(model => model.OpenDate)
                 @*@Html.ActionLink("Open Date", "Index", new { SortOrder = ViewBag.OpenDate_Desc })*@
 
-                <div>
+                <div class="align-items-center">
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["OpenDate"]">
                         <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                     </a>
 
 
-                    <a asp-action="Index" , asp-route-sortOrder="@ViewData["OpenDate_Desc"]">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["OpenDate_Desc"]">
                         <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                     </a>
                 </div>
@@ -84,7 +84,7 @@
                 </a>
 
 
-                <a asp-action="Index" , asp-route-sortOrder="@ViewData["ExpirationDate_Desc"]">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ExpirationDate_Desc"]">
                     <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                 </a>
                 </div>
@@ -100,7 +100,7 @@
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["OpenedBy"]">
                         <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                     </a>
-                    <a asp-action="Index" , asp-route-sortOrder="@ViewData["OpenedBy_Desc"]">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["OpenedBy_Desc"]">
                         <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                     </a>
                 </div>
@@ -115,7 +115,7 @@
                         <a asp-action="Index" asp-route-sortOrder="@ViewData["Employee"]">
                             <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                         </a>
-                        <a asp-action="Index" , asp-route-sortOrder="@ViewData["Employee_Desc"]">
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["Employee_Desc"]">
                             <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                         </a>
                     </div>
@@ -128,9 +128,7 @@
                         <a asp-action="Index" asp-route-sortOrder="@ViewData["Manufacturer"]">
                             <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                         </a>
-
-
-                        <a asp-action="Index" , asp-route-sortOrder="@ViewData["Manufacturer_Desc"]">
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["Manufacturer_Desc"]">
                             <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                         </a>
                     </div>
@@ -142,7 +140,7 @@
                         <a asp-action="Index" asp-route-sortOrder="@ViewData["ChemicalType"]">
                             <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
                         </a>
-                        <a asp-action="Index" , asp-route-sortOrder="@ViewData["ChemicalType_Desc"]">
+                        <a asp-action="Index" asp-route-sortOrder="@ViewData["ChemicalType_Desc"]">
                             <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
                         </a>
                     </div>
@@ -196,22 +194,3 @@
 </table>
 @************************************************************************************************@
 
-@*@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Previous
-</a>
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @nextDisabled">
-    Next
-</a>*@
