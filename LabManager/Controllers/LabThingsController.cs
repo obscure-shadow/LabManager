@@ -42,27 +42,27 @@ namespace LabManager.Controllers
 
             ViewData["Name_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
 
-            ViewData["SerialNo_Desc"] = String.IsNullOrEmpty(sortOrder) ? "SerialNo_desc" : "";
+            ViewData["SerialNo_Desc"] = String.IsNullOrEmpty(sortOrder) ? "SerialNo_desc" : "SerialNo";
 
-            ViewData["ModelNo_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ModelNo_desc" : "";
+            ViewData["ModelNo_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ModelNo_desc" : "ModelNo";
 
-            ViewData["AcquisitionDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "AcquisitionDate_desc" : "";
+            ViewData["AcquisitionDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "AcquisitionDate_desc" : "AcquisitionDate";
 
-            ViewData["CalibratedOn_Desc"] = String.IsNullOrEmpty(sortOrder) ? "CalibratedOn_desc" : "";
+            ViewData["CalibratedOn_Desc"] = String.IsNullOrEmpty(sortOrder) ? "CalibratedOn_desc" : "CalibratedOn";
 
-            ViewData["CalibrationDue_Desc"] = String.IsNullOrEmpty(sortOrder) ? "CalibrationDue_desc" : "";
+            ViewData["CalibrationDue_Desc"] = String.IsNullOrEmpty(sortOrder) ? "CalibrationDue_desc" : "CalibrationDue";
 
-            ViewData["MaintenanceOn_Desc"] = String.IsNullOrEmpty(sortOrder) ? "MaintenanceOn_desc" : "";
+            ViewData["MaintenanceOn_Desc"] = String.IsNullOrEmpty(sortOrder) ? "MaintenanceOn_desc" : "MaintenanceOn";
 
-            ViewData["MaintenanceDue_Desc"] = String.IsNullOrEmpty(sortOrder) ? "MaintenanceDue_desc" : "";
+            ViewData["MaintenanceDue_Desc"] = String.IsNullOrEmpty(sortOrder) ? "MaintenanceDue_desc" : "MaintenanceDue";
 
             //--------------------------Drop-down sorting:---------------------------------------------
 
-            ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "";
+            ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "Employee";
 
-            ViewData["Manufacturer_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Manufacturer_desc" : "";
+            ViewData["Manufacturer_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Manufacturer_desc" : "Manufacturer";
 
-            ViewData["Category_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Category_desc" : "";
+            ViewData["Category_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Category_desc" : "Category";
 
             //---------------------------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderByDescending(lt => lt.SerialNo);
                     break;
                 case "SerialNo":
-                    labThing = labThing.OrderByDescending(lt => lt.SerialNo);
+                    labThing = labThing.OrderBy(lt => lt.SerialNo);
                     break;
 
                 //SORT BY MODELNO:
@@ -99,7 +99,7 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderByDescending(lt => lt.ModelNo);
                     break;
                 case "ModelNo":
-                    labThing = labThing.OrderByDescending(lt => lt.ModelNo);
+                    labThing = labThing.OrderBy(lt => lt.ModelNo);
                     break;
 
                 //SORT BY ACQUISITIONDATE:
@@ -107,7 +107,7 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderByDescending(lt => lt.AcquisitionDate);
                     break;
                 case "AcquisitionDate":
-                    labThing = labThing.OrderByDescending(lt => lt.AcquisitionDate);
+                    labThing = labThing.OrderBy(lt => lt.AcquisitionDate);
                     break;
 
                 //SORT BY CALIBRATEDON:
@@ -115,7 +115,7 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderByDescending(lt => lt.CalibratedOn);
                     break;
                 case "CalibratedOn":
-                    labThing = labThing.OrderByDescending(lt => lt.CalibratedOn);
+                    labThing = labThing.OrderBy(lt => lt.CalibratedOn);
                     break;
 
                 //SORT BY CALIBRATIONDUE:
@@ -123,7 +123,7 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderByDescending(lt => lt.CalibrationDue);
                     break;
                 case "CalibrationDue":
-                    labThing = labThing.OrderByDescending(lt => lt.CalibrationDue);
+                    labThing = labThing.OrderBy(lt => lt.CalibrationDue);
                     break;
 
                 //SORT BY MAINTENANCEON:
@@ -131,7 +131,7 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderByDescending(lt => lt.MaintenanceOn);
                     break;
                 case "MaintenanceOn":
-                    labThing = labThing.OrderByDescending(lt => lt.MaintenanceOn);
+                    labThing = labThing.OrderBy(lt => lt.MaintenanceOn);
                     break;
 
                 //SORT BY MAINTENANCEDUE:
@@ -139,16 +139,16 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderByDescending(lt => lt.MaintenanceDue);
                     break;
                 case "MaintenanceDue":
-                    labThing = labThing.OrderByDescending(lt => lt.MaintenanceDue);
+                    labThing = labThing.OrderBy(lt => lt.MaintenanceDue);
                     break;
 
                 //SORT BY NOTE:
-                case "Note_desc":
-                    labThing = labThing.OrderByDescending(lt => lt.Note);
-                    break;
-                case "Note":
-                    labThing = labThing.OrderByDescending(lt => lt.Note);
-                    break;
+                //case "Note_desc":
+                //    labThing = labThing.OrderByDescending(lt => lt.Note);
+                //    break;
+                //case "Note":
+                //    labThing = labThing.OrderByDescending(lt => lt.Note);
+                //    break;
 
                 //SORT BY EMPLOYEE:
 
@@ -162,7 +162,7 @@ namespace LabManager.Controllers
                 //    break;
 
                 case "Employee_desc":
-                    labThing = labThing.OrderBy(lt => lt.Employee.FirstName);
+                    labThing = labThing.OrderByDescending(lt => lt.Employee.FirstName);
                     break;
                 case "Employee":
                     labThing = labThing.OrderBy(lt => lt.Employee.FirstName);
@@ -175,12 +175,12 @@ namespace LabManager.Controllers
                     labThing = labThing.OrderByDescending(lt => lt.Manufacturer);
                     break;
                 case "Manufacturer":
-                    labThing = labThing.OrderByDescending(lt => lt.Manufacturer);
+                    labThing = labThing.OrderBy(lt => lt.Manufacturer);
                     break;
 
                 //SORT BY CATEGORY:
                 case "Category_desc":
-                    labThing = labThing.OrderBy(lt => lt.Category);
+                    labThing = labThing.OrderByDescending(lt => lt.Category);
                     break;
                 case "Category":
                     labThing = labThing.OrderBy(lt => lt.Category);

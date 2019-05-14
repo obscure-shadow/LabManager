@@ -35,21 +35,34 @@ namespace LabManager.Controllers
 
             ViewData["Name_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
 
-            ViewData["ReceivedDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ReceivedDate_desc" : "";
 
-            ViewData["OpenDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenDate_desc" : "";
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-            ViewData["ExpirationDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ExpirationDate_desc" : "";
+            //NOTE: Trying out a few different things to ensure the links sort correctly, regardless of their initial state:
 
-            ViewData["COA_Desc"] = String.IsNullOrEmpty(sortOrder) ? "COA_desc" : "";
+            //Originally used this:
+            //ViewData["ReceivedDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ReceivedDate_desc" : "";
 
-            ViewData["OpenedBy_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenedBy_desc" : "";
+            //Austin used this:
+            ViewData["ReceivedDate_Desc"] = sortOrder == "ReceivedDate" ? "ReceivedDate_desc" : "ReceivedDate";
 
-            ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "";
+            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-            ViewData["Manufacturer_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Manufacturer_desc" : "";
 
-            ViewData["ChemicalType_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ChemicalType_desc" : "";
+            ViewData["OpenDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenDate_desc" : "OpenDate";
+
+            ViewData["ExpirationDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ExpirationDate_desc" : "ExpirationDate";
+
+            //NOTE: Not using COA sorting.
+            //ViewData["COA_Desc"] = String.IsNullOrEmpty(sortOrder) ? "COA_desc" : "";
+
+            ViewData["OpenedBy_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenedBy_desc" : "OpenedBy";
+
+            ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "Employee";
+
+            ViewData["Manufacturer_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Manufacturer_desc" : "Manufacturer";
+
+            ViewData["ChemicalType_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ChemicalType_desc" : "ChemicalType";
 
 
             //Gets chemicals from database:
@@ -135,10 +148,10 @@ namespace LabManager.Controllers
                 //SORT BY CHEMICALTYPE:
 
                 case "ChemicalType_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.ChemicalType);
+                    chemical = chemical.OrderByDescending(chem => chem.ChemicalType.Name);
                     break;
                 case "ChemicalType":
-                    chemical = chemical.OrderBy(chem => chem.ChemicalType);
+                    chemical = chemical.OrderBy(chem => chem.ChemicalType.Name);
                     break;
             }
 
