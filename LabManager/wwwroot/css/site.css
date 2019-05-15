@@ -10,11 +10,11 @@ a.navbar-brand {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+  font-size: 12px;
 }
 @media (min-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
@@ -58,9 +58,9 @@ body {
   /*---------------------------------------------------*/
   /* Chemicals List (Table) */
 
-.chemicals-table 
+/*.chemicals-table 
 {
-    width: 70%;
+    width: 90%;
     border: dashed;
 }
 
@@ -72,5 +72,5 @@ body {
 .chemicals-table-header
 {
 
-}
+}*/
 

@@ -33,7 +33,14 @@ namespace LabManager.Controllers
         public async Task<IActionResult> Index(string sortOrder)
         {
 
-            ViewData["Name_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Name_desc" : "";
+            //Gets chemicals from database:
+            var chemical = from chem in _context.Chemicals
+                .Include(chem => chem.Employee)
+                .Include(chem => chem.ChemicalType)
+                .Include(chem => chem.Manufacturer)
+                           select chem;
+
+            ViewData["Name_Desc"] = sortOrder == "Name" ? "Name_desc" : "Name";
 
 
             //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -49,28 +56,28 @@ namespace LabManager.Controllers
             //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 
-            ViewData["OpenDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenDate_desc" : "OpenDate";
+            ViewData["OpenDate_Desc"] = sortOrder == "OpenDate" ? "OpenDate_desc" : "OpenDate";
 
             ViewData["ExpirationDate_Desc"] = sortOrder == "ExpirationDate_desc" ? "ExpirationDate_desc" : "ExpirationDate";
 
             //NOTE: Not using COA sorting.
             //ViewData["COA_Desc"] = String.IsNullOrEmpty(sortOrder) ? "COA_desc" : "";
 
-            ViewData["OpenedBy_Desc"] = String.IsNullOrEmpty(sortOrder) ? "OpenedBy_desc" : "OpenedBy";
+            ViewData["OpenedBy_Desc"] = sortOrder == "OpenedBy" ? "OpenedBy_desc" : "OpenedBy";
 
-            ViewData["Employee_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Employee_desc" : "Employee";
+            ViewData["Employee_Desc"] = sortOrder == "Employee" ? "Employee_desc" : "Employee";
 
-            ViewData["Manufacturer_Desc"] = String.IsNullOrEmpty(sortOrder) ? "Manufacturer_desc" : "Manufacturer";
+            ViewData["Manufacturer_Desc"] = sortOrder == "Manufacturer" ? "Manufacturer_desc" : "Manufacturer";
 
-            ViewData["ChemicalType_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ChemicalType_desc" : "ChemicalType";
+            ViewData["ChemicalType_Desc"] = sortOrder == "ChemicalType" ? "ChemicalType_desc" : "ChemicalType";
 
 
-            //Gets chemicals from database:
-            var chemical = from chem in _context.Chemicals
-                .Include(chem => chem.Employee)
-                .Include(chem => chem.ChemicalType)
-                .Include(chem => chem.Manufacturer)
-                select chem;
+            ////Gets chemicals from database:
+            //var chemical = from chem in _context.Chemicals
+            //    .Include(chem => chem.Employee)
+            //    .Include(chem => chem.ChemicalType)
+            //    .Include(chem => chem.Manufacturer)
+            //    select chem;
 
 
             switch (sortOrder)
@@ -80,7 +87,7 @@ namespace LabManager.Controllers
                     chemical = chemical.OrderByDescending(chem => chem.Name);
                     break;
                 case "Name":
-                    chemical = chemical.OrderByDescending(chem => chem.Name);
+                    chemical = chemical.OrderBy(chem => chem.Name);
                     break;
                 //default:
                 //    chemical = chemical.OrderBy(chem => chem.Name);
@@ -121,12 +128,13 @@ namespace LabManager.Controllers
                 //    break;
 
                 // SORT BY OPENEDBY:
-                case "OpenedBy_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.OpenedBy);
-                    break;
-                case "OpenedBy":
-                    chemical = chemical.OrderBy(chem => chem.OpenedBy);
-                    break;
+                //This is redundant; no need for an OpenedBy sort
+                //case "OpenedBy_desc":
+                //    chemical = chemical.OrderByDescending(chem => chem.OpenedBy);
+                //    break;
+                //case "OpenedBy":
+                //    chemical = chemical.OrderBy(chem => chem.OpenedBy);
+                //    break;
 
                 // SORT BY EMPLOYEE:
                 case "Employee_desc":
@@ -139,10 +147,10 @@ namespace LabManager.Controllers
                 //SORT BY MANUFACTURER:
 
                 case "Manufacturer_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.Manufacturer);
+                    chemical = chemical.OrderByDescending(chem => chem.Manufacturer.Name);
                     break;
                 case "Manufacturer":
-                    chemical = chemical.OrderBy(chem => chem.Manufacturer);
+                    chemical = chemical.OrderBy(chem => chem.Manufacturer.Name);
                     break;
 
                 //SORT BY CHEMICALTYPE:
