@@ -30,140 +30,194 @@ namespace LabManager.Controllers
         private Task<Employee> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         //=========================================================================================
         // GET: Chemicals
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string sortOrderAsc)
         {
+            // if sortOrder is null, run the initial call
+            // if sortOrder = Name_Desc, make a call to the db (var chemical...) with an orderby chem.Name desc before select chem. 
+            // else, if sortOrder = Name, do the same with an orderby Name
+            //Repeat a million times.
 
-            //Gets chemicals from database:
-            var chemical = from chem in _context.Chemicals
+            if (sortOrder == null)
+            {
+                //Gets chemicals from database:
+                var chemical = from chem in _context.Chemicals
+                    .Include(chem => chem.Employee)
+                    .Include(chem => chem.ChemicalType)
+                    .Include(chem => chem.Manufacturer)
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+
+            } else if (sortOrder == "Name")
+            {
+                ViewData["Name"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                    .Include(chem => chem.Employee)
+                    .Include(chem => chem.ChemicalType)
+                    .Include(chem => chem.Manufacturer)
+                               orderby chem.Name
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+                
+            }
+            else if (sortOrder == "Name_Desc")
+            {
+                ViewData["Name_Desc"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
                 .Include(chem => chem.Employee)
                 .Include(chem => chem.ChemicalType)
                 .Include(chem => chem.Manufacturer)
-                           select chem;
+                               orderby chem.Name descending
+                               select chem;
 
-            ViewData["Name_Desc"] = sortOrder == "Name" ? "Name_desc" : "Name";
+                return View(await chemical.ToListAsync());
 
-
-            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-            //NOTE: Trying out a few different things to ensure the links sort correctly, regardless of their initial state:
-
-            //Originally used this:
-            //ViewData["ReceivedDate_Desc"] = String.IsNullOrEmpty(sortOrder) ? "ReceivedDate_desc" : "";
-
-            //Austin used this:
-            ViewData["ReceivedDate_Desc"] = sortOrder == "ReceivedDate" ? "ReceivedDate_desc" : "ReceivedDate";
-
-            //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-            ViewData["OpenDate_Desc"] = sortOrder == "OpenDate" ? "OpenDate_desc" : "OpenDate";
-
-            ViewData["ExpirationDate_Desc"] = sortOrder == "ExpirationDate_desc" ? "ExpirationDate_desc" : "ExpirationDate";
-
-            //NOTE: Not using COA sorting.
-            //ViewData["COA_Desc"] = String.IsNullOrEmpty(sortOrder) ? "COA_desc" : "";
-
-            ViewData["OpenedBy_Desc"] = sortOrder == "OpenedBy" ? "OpenedBy_desc" : "OpenedBy";
-
-            ViewData["Employee_Desc"] = sortOrder == "Employee" ? "Employee_desc" : "Employee";
-
-            ViewData["Manufacturer_Desc"] = sortOrder == "Manufacturer" ? "Manufacturer_desc" : "Manufacturer";
-
-            ViewData["ChemicalType_Desc"] = sortOrder == "ChemicalType" ? "ChemicalType_desc" : "ChemicalType";
-
-
-            ////Gets chemicals from database:
-            //var chemical = from chem in _context.Chemicals
-            //    .Include(chem => chem.Employee)
-            //    .Include(chem => chem.ChemicalType)
-            //    .Include(chem => chem.Manufacturer)
-            //    select chem;
-
-
-            switch (sortOrder)
-            {
-                // SORT BY NAME:
-                case "Name_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.Name);
-                    break;
-                case "Name":
-                    chemical = chemical.OrderBy(chem => chem.Name);
-                    break;
-                //default:
-                //    chemical = chemical.OrderBy(chem => chem.Name);
-                //    break;
-
-                // SORT BY ReceivedDate:
-                case "ReceivedDate_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.ReceivedDate);
-                    break;
-                case "ReceivedDate":
-                    chemical = chemical.OrderBy(chem => chem.ReceivedDate);
-                    break;
-
-                // SORT BY OPENDATE:
-                case "OpenDate_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.OpenDate);
-                    break;
-                case "OpenDate":
-                    chemical = chemical.OrderBy(chem => chem.OpenDate);
-                    break;
-
-                // SORT BY EXPIRATIONDATE:
-                case "ExpirationDate_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.ExpirationDate);
-                    break;
-                case "ExpirationDate":
-                    chemical = chemical.OrderBy(chem => chem.ExpirationDate);
-                    break;
-
-
-                // Currently there is no need to use a COA sort.
-                // SORT BY COA:
-                //case "COA_desc":
-                //    chemical = chemical.OrderByDescending(chem => chem.COA);
-                //    break;
-                //case "COA":
-                //    chemical = chemical.OrderBy(chem => chem.COA);
-                //    break;
-
-                // SORT BY OPENEDBY:
-                //This is redundant; no need for an OpenedBy sort
-                //case "OpenedBy_desc":
-                //    chemical = chemical.OrderByDescending(chem => chem.OpenedBy);
-                //    break;
-                //case "OpenedBy":
-                //    chemical = chemical.OrderBy(chem => chem.OpenedBy);
-                //    break;
-
-                // SORT BY EMPLOYEE:
-                case "Employee_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.Employee.FirstName);
-                    break;
-                case "Employee":
-                    chemical = chemical.OrderBy(chem => chem.Employee.FirstName);
-                    break;
-
-                //SORT BY MANUFACTURER:
-
-                case "Manufacturer_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.Manufacturer.Name);
-                    break;
-                case "Manufacturer":
-                    chemical = chemical.OrderBy(chem => chem.Manufacturer.Name);
-                    break;
-
-                //SORT BY CHEMICALTYPE:
-
-                case "ChemicalType_desc":
-                    chemical = chemical.OrderByDescending(chem => chem.ChemicalType.Name);
-                    break;
-                case "ChemicalType":
-                    chemical = chemical.OrderBy(chem => chem.ChemicalType.Name);
-                    break;
-            }
+            } else if (sortOrder == "ReceivedDate")
+                {
+                    ViewData["ReceivedDate"] = sortOrder;
+                    var chemical = from chem in _context.Chemicals
+                        .Include(chem => chem.Employee)
+                        .Include(chem => chem.ChemicalType)
+                        .Include(chem => chem.Manufacturer)
+                                   orderby chem.ReceivedDate
+                                   select chem;
 
                     return View(await chemical.ToListAsync());
+
+            } else if (sortOrder == "ReceivedDate_Desc")
+                {
+                    ViewData["ReceivedDate_Desc"] = sortOrder;
+                    var chemical = from chem in _context.Chemicals
+                    .Include(chem => chem.Employee)
+                    .Include(chem => chem.ChemicalType)
+                    .Include(chem => chem.Manufacturer)
+                                   orderby chem.ReceivedDate descending
+                                   select chem;
+
+                    return View(await chemical.ToListAsync());
+
+                } else if (sortOrder == "OpenDate")
+                {
+                    ViewData["OpenDate"] = sortOrder;
+                    var chemical = from chem in _context.Chemicals
+                        .Include(chem => chem.Employee)
+                        .Include(chem => chem.ChemicalType)
+                        .Include(chem => chem.Manufacturer)
+                        orderby chem.OpenDate
+                        select chem;
+
+                return View(await chemical.ToListAsync());
+
+                } else if (sortOrder == "OpenDate_Desc")
+                {
+                    ViewData["OpenDate_Desc"] = sortOrder;
+                    var chemical = from chem in _context.Chemicals
+                        .Include(chem => chem.Employee)
+                        .Include(chem => chem.ChemicalType)
+                        .Include(chem => chem.Manufacturer)
+                    orderby chem.OpenDate descending
+                    select chem;
+
+                    return View(await chemical.ToListAsync());
+
+                } else if (sortOrder == "ExpirationDate")
+            {
+                ViewData["ExpirationDate"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                    .Include(chem => chem.Employee)
+                    .Include(chem => chem.ChemicalType)
+                    .Include(chem => chem.Manufacturer)
+                               orderby chem.ExpirationDate
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+
+            } else if (sortOrder == "ExpirationDate_Desc")
+            {
+                ViewData["ExpirationDate_Desc"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                .Include(chem => chem.Employee)
+                .Include(chem => chem.ChemicalType)
+                .Include(chem => chem.Manufacturer)
+                               orderby chem.ExpirationDate descending
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+
+            } else if (sortOrder == "Employee")
+            {
+                ViewData["Employee"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                    .Include(chem => chem.Employee)
+                    .Include(chem => chem.ChemicalType)
+                    .Include(chem => chem.Manufacturer)
+                               orderby chem.Employee.FirstName
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+
+            } else if (sortOrder == "Employee_Desc")
+            {
+                ViewData["Employee_Desc"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                .Include(chem => chem.Employee)
+                .Include(chem => chem.ChemicalType)
+                .Include(chem => chem.Manufacturer)
+                               orderby chem.Employee.FirstName descending
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+            } else if (sortOrder == "Manufacturer")
+            {
+                ViewData["Manufacturer"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                    .Include(chem => chem.Employee)
+                    .Include(chem => chem.ChemicalType)
+                    .Include(chem => chem.Manufacturer)
+                               orderby chem.Manufacturer.Name
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+
+            } else if (sortOrder == "Manufacturer_Desc")
+            {
+                ViewData["Manufacturer_Desc"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                .Include(chem => chem.Employee)
+                .Include(chem => chem.ChemicalType)
+                .Include(chem => chem.Manufacturer)
+                               orderby chem.Manufacturer.Name descending
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+
+            } else if (sortOrder == "ChemicalType")
+            {
+                ViewData["ChemicalType"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                    .Include(chem => chem.Employee)
+                    .Include(chem => chem.ChemicalType)
+                    .Include(chem => chem.Manufacturer)
+                               orderby chem.ChemicalType.Name
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+
+            } else if (sortOrder == "ChemicalType_Desc")
+            {
+                ViewData["ChemicalType_Desc"] = sortOrder;
+                var chemical = from chem in _context.Chemicals
+                .Include(chem => chem.Employee)
+                .Include(chem => chem.ChemicalType)
+                .Include(chem => chem.Manufacturer)
+                               orderby chem.ChemicalType.Name descending
+                               select chem;
+
+                return View(await chemical.ToListAsync());
+            }
+
+            return View();
         }
         //========================================================================================
         // GET: Chemicals/Create
