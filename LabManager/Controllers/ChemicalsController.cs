@@ -30,7 +30,7 @@ namespace LabManager.Controllers
         private Task<Employee> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
         //=========================================================================================
         // GET: Chemicals
-        public async Task<IActionResult> Index(string sortOrder, string sortOrderAsc)
+        public async Task<IActionResult> Index(string sortOrder)
         {
             // if sortOrder is null, run the initial call
             // if sortOrder = Name_Desc, make a call to the db (var chemical...) with an orderby chem.Name desc before select chem. 
@@ -60,8 +60,7 @@ namespace LabManager.Controllers
 
                 return View(await chemical.ToListAsync());
                 
-            }
-            else if (sortOrder == "Name_Desc")
+            } else if (sortOrder == "Name_Desc")
             {
                 ViewData["Name_Desc"] = sortOrder;
                 var chemical = from chem in _context.Chemicals
