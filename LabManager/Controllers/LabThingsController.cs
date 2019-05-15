@@ -32,7 +32,7 @@ namespace LabManager.Controllers
         // GET: LabThings
 
         //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
-        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString)
+        public async Task<IActionResult> Index(string sortOrder)
             //NOTE: currently, sortOrder is the only parameter being used. More features to come.
         {
 
