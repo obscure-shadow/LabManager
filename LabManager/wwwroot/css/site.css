@@ -151,3 +151,13 @@ body {
     display: -ms-inline-flexbox;
     display: inline-flex;
 }
+
+.text-center
+{
+    display: flex;
+}
+
+.inventory-container
+{
+    align-items: baseline center;
+}

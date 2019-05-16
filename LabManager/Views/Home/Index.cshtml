@@ -5,16 +5,17 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome To LabManager!</h1>
-
-    <a class="chemicals-link">
-        <img src="~/images/beaker.png" />
-        V
+    <div class="inventory-container">
+        @*Chemicals link: *@
+    <a class="chemicals-link" asp-action="Index" asp-controller="Chemicals">
+        <img src="~/images/chemistry.png"/>
     </a>
 
-</div>
+    @*LabThings link: *@
+        <a class="labthings-link" asp-action="Index" asp-controller="LabThings">
+            <img src="~/images/centrifuge.png"/>
+        </a>
 
-<p>
-    Image Credits:
-    @*beaker.png:*@
-    <div>Icons made by <a href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">DinosoftLabs</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-</p>
+    </div>
+
+</div>
