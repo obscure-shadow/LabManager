@@ -78,6 +78,13 @@ body {
 /*---------------------------------------------------*/
 /* LabThing List (Table) */
 
+/*.table
+{
+    max-height: 300px;
+    max-width: 100px;
+    min-height: 100px;
+}*/
+
 .labthing-table
 {
     table-layout: fixed;
@@ -136,4 +143,11 @@ body {
 
 .labthing-table-manufacturer-header {
     width: 10%;
+}
+
+.labthing-table-button-group
+{
+    position: relative;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
 }

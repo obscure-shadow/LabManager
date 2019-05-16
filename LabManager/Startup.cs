@@ -50,6 +50,19 @@ namespace LabManager
 
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+    //==================================================================================================
+
+            //NOTE: This configures the route to allow the "home" page to become the login screen:
+            services.AddMvc().AddRazorPagesOptions(options => {
+                options.Conventions.AddAreaPageRoute("Identity", "/Account/Login", "");
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            
+            //NOTE: I'm not sure what this section does; it does not appear to add or remove from the basic functionality provided by the services directly above. I added it in an attempt to authorize the home view and enable re-routing on login:
+            services.AddMvc()
+.AddRazorPagesOptions(options =>
+{
+    options.Conventions.AuthorizePage("/Home/Index");
+});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +90,14 @@ namespace LabManager
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                //NOTE: start the user off with the login screen at URL: https://localhost:5001/Identity/Account/Login
+
+                //NOTE: See the MVC routes services that was added to the config method above
+                //routes.MapRoute(
+                //        name: "accountlogin",
+                //        template: "Identity",
+                //        defaults: new { controller = "Account", action = "Login" });
             });
         }
     }
