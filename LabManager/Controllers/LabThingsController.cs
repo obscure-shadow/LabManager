@@ -31,14 +31,291 @@ namespace LabManager.Controllers
         //=========================================================================================
         // GET: LabThings
 
-        //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var applicationDbContext = _context.LabThing
+        //NOTE: Gets a labthing from _context (database) and includes navigation properties category, manufacturer, and employee.
+
+        if (sortOrder == null)
+            {
+                //Gets LabThing from database
+                var labthing = from lt in _context.LabThing
+                               .Include(lt => lt.Employee)
+                               .Include(lt => lt.Category)
+                               .Include(lt => lt.Manufacturer)
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "Name")
+            {
+                ViewData["Name"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                             orderby lt.Name
+                             select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "Name_Desc")
+            {
+                ViewData["Name_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
                 .Include(lt => lt.Employee)
                 .Include(lt => lt.Category)
-                .Include(lt => lt.Manufacturer);
-            return View(await applicationDbContext.ToListAsync());
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.Name descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "SerialNo")
+            {
+                ViewData["SerialNo"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.SerialNo
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            }
+            else if (sortOrder == "SerialNo_Desc")
+            {
+                ViewData["SerialNo_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.SerialNo descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "ModelNo")
+            {
+                ViewData["ModelNo"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.ModelNo
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            }
+            else if (sortOrder == "ModelNo_Desc")
+            {
+                ViewData["ModelNo_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.ModelNo descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "AcquisitionDate")
+            {
+                ViewData["AcquisitionDate"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.AcquisitionDate
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            }
+            else if (sortOrder == "AcquisitionDate_Desc")
+            {
+                ViewData["AcquisitionDate_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.AcquisitionDate descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "CalibratedOn")
+            {
+                ViewData["CalibratedOn"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.CalibratedOn
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            }
+            else if (sortOrder == "CalibratedOn_Desc")
+            {
+                ViewData["CalibratedOn_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.CalibratedOn descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "CalibrationDue")
+            {
+                ViewData["CalibrationDue"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.CalibrationDue
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "CalibrationDue_Desc")
+            {
+                ViewData["CalibrationDue_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.CalibrationDue descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "MaintenanceOn")
+            {
+                ViewData["MaintenanceOn"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.MaintenanceOn
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "MaintenanceOn_Desc")
+            {
+                ViewData["MaintenanceOn_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.MaintenanceOn descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "MaintenanceDue")
+            {
+                ViewData["MaintenanceDue"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.MaintenanceDue
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "MaintenanceDue_Desc")
+            {
+                ViewData["MaintenanceDue_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.MaintenanceDue descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "Employee")
+            {
+                ViewData["Employee"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.Employee.FirstName
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "Employee_Desc")
+            {
+                ViewData["Employee_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.Employee.FirstName descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "Manufacturer")
+            {
+                ViewData["Manufacturer"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.Manufacturer.Name
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "Manufacturer_Desc")
+            {
+                ViewData["Manufacturer_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.Manufacturer.Name descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "Category")
+            {
+                ViewData["Category"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                    .Include(lt => lt.Employee)
+                    .Include(lt => lt.Category)
+                    .Include(lt => lt.Manufacturer)
+                               orderby lt.Category.Name
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+
+            } else if (sortOrder == "Category_Desc")
+            {
+                ViewData["Category_Desc"] = sortOrder;
+                var labthing = from lt in _context.LabThing
+                .Include(lt => lt.Employee)
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                               orderby lt.Category.Name descending
+                               select lt;
+
+                return View(await labthing.ToListAsync());
+            }
+
+            return View();
         }
 
         //========================================================================================
@@ -268,7 +545,7 @@ namespace LabManager.Controllers
 
             if (await TryUpdateModelAsync<LabThing>(labThingToUpdate, 
                 "",
-                lt => lt.CategoryID, lt => lt.ManufacturerID, lt => lt.EmployeeId))
+lt => lt.Name, lt => lt.SerialNo, lt => lt.ModelNo, lt => lt.AcquisitionDate, lt => lt.CalibratedOn, lt => lt.CalibrationDue, lt => lt.MaintenanceOn, lt=> lt.MaintenanceDue, lt => lt.Note, lt => lt.CategoryID, lt => lt.ManufacturerID, lt => lt.EmployeeId))
             {
                 try
                 {

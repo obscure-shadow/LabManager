@@ -9,20 +9,76 @@
 <p>
     <a asp-action="Create">Add New Chemical</a>
 </p>
-<table class="table">
+@************************************************************************************************@
+@*Search box and filter for Chemical Index() *@
+
+@*<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Inventory List</a>
+        </p>
+    </div>
+</form>*@
+@************************************************************************************************@
+
+<table class="chemicals-list">
     <thead>
-        <tr>
-            <th>
+        <tr class="chemicals-table-row">
+
+            @using (Html.BeginForm("Index", "Chemicals", FormMethod.Get))
+            {
+            <th class="chemicals-table-header">
                 @Html.DisplayNameFor(model => model.Name)
+
+                <div class="align-items-center">
+                <a asp-action="Index" asp-route-sortOrder="Name">
+                    <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                </a>
+                <a asp-action="Index" , asp-route-sortOrder="Name_Desc">
+                    <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                </a>
+                </div>
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ReceivedDate)
+                @*@Html.ActionLink("Received Date", "Index", new { SortOrder = ViewBag.ReceivedDate_Desc })*@
+                <div class="align-items-center">
+                <a asp-action="Index" asp-route-sortOrder="ReceivedDate">
+                    <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                </a>
+                <a asp-action="Index" asp-route-sortOrder="ReceivedDate_Desc">
+                    <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                </a>
+                </div>
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OpenDate)
+                @*@Html.ActionLink("Open Date", "Index", new { SortOrder = ViewBag.OpenDate_Desc })*@
+
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="OpenDate">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" asp-route-sortOrder="OpenDate_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ExpirationDate)
+                <div>
+                <a asp-action="Index" asp-route-sortOrder="ExpirationDate">
+                    <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                </a>
+                <a asp-action="Index" asp-route-sortOrder="ExpirationDate_Desc">
+                    <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                </a>
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.COA)
@@ -30,60 +86,89 @@
             <th>
                 @Html.DisplayNameFor(model => model.OpenedBy)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manufacturer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ChemicalType)
-            </th>
-            <th></th>
-        </tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Note)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Employee)
+                    <div>
+                        <a asp-action="Index" asp-route-sortOrder="Employee">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+                        <a asp-action="Index" asp-route-sortOrder="Employee_Desc">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+
+                    <div>
+                        <a asp-action="Index" asp-route-sortOrder="Manufacturer">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+                        <a asp-action="Index" asp-route-sortOrder="Manufacturer_Desc">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ChemicalType)
+                    <div>
+                        <a asp-action="Index" asp-route-sortOrder ="ChemicalType">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+                        <a asp-action="Index" asp-route-sortOrder="ChemicalType_Desc">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
+                </th>
+                <th></th>
+            }
+            </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReceivedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpenDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ExpirationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.COA)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OpenedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Employee.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Manufacturer.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ChemicalType.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceivedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpenDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExpirationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.COA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpenedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChemicalType.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@************************************************************************************************@

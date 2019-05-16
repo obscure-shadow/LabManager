@@ -10,97 +10,233 @@
 <p>
     <a asp-action="Create">Create New LabThing</a>
 </p>
-<table class="table">
+@************************************************************************************************@
+@*Search box and filter for LabThing Index() *@
+
+@*<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Search: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Inventory List</a>
+        </p>
+    </div>
+</form>*@
+@************************************************************************************************@
+
+<table class="labthing-list">
     <thead>
-        <tr>
-            <th>
+        <tr class="labthing-table-row">
+
+            @using (Html.BeginForm("Index", "LabThing", FormMethod.Get))
+            {
+            <th class="labthing-table-header">
                 @Html.DisplayNameFor(model => model.Name)
+
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="Name">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="Name_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.SerialNo)
+
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="SerialNo">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="SerialNo_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ModelNo)
+
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="ModelNo">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="ModelNo_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AcquisitionDate)
+
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="AcquisitionDate">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="AcquisitionDate_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CalibratedOn)
+
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="CalibratedOn">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="CalibratedOn_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CalibrationDue)
+
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="CalibrationDue">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="CalibrationDue_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MaintenanceOn)
+
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="MaintenanceOn">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="MaintenanceOn_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.MaintenanceDue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee)
-            </th>
 
-            <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Manufacturer)
+                <div class="align-items-center">
+                    <a asp-action="Index" asp-route-sortOrder="MaintenanceDue">
+                        <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                    </a>
+                    <a asp-action="Index" , asp-route-sortOrder="MaintenanceDue_Desc">
+                        <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                    </a>
+                </div>
             </th>
-            <th></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Note)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Employee)
+
+                    <div class="align-items-center">
+                        <a asp-action="Index" asp-route-sortOrder="Employee">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+                        <a asp-action="Index" , asp-route-sortOrder="Employee_Desc">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
+                </th>
+
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+
+                    <div class="align-items-center">
+                        <a asp-action="Index" asp-route-sortOrder="Category">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+                        <a asp-action="Index" , asp-route-sortOrder="Category_Desc">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Manufacturer)
+
+                    <div class="align-items-center">
+                        <a asp-action="Index" asp-route-sortOrder="Manufacturer">
+                            <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
+                        </a>
+                        <a asp-action="Index" , asp-route-sortOrder="Manufacturer_Desc">
+                            <img src="~/images/baseline_arrow_drop_down_black_18dp.png" alt="SortDescendingIcon" />
+                        </a>
+                    </div>
+                </th>
+            }
         </tr>
     </thead>
+
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SerialNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ModelNo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AcquisitionDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CalibratedOn)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CalibrationDue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaintenanceOn)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MaintenanceDue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Employee.FirstName)
-                </td>
-          
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
+        <tr>
+            <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SerialNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AcquisitionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalibratedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CalibrationDue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaintenanceOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaintenanceDue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.Manufacturer.Name)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-                </td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.FirstName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Manufacturer.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">
+                    <img src="~/images/baseline_edit_black_sm.png" alt="EditIcon"/></a> |
+                <a asp-action="Details" asp-route-id="@item.ID">
+                    <img src="~/images/baseline_info_black_sm.png" alt="DetailsIcon"/>
+                </a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">
+                    <img src="~/images/baseline_delete_black_sm.png" alt="TrashIcon"/>
+                    </a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
+@************************************************************************************************@
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]">
+    </a>
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]">
+    </a>
