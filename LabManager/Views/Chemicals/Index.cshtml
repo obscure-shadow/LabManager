@@ -103,7 +103,7 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Manufacturer)
-                    @*@Html.ActionLink("Manufacturer", "Index", new { sortOrder = ViewBag.Manufacturer_Desc })*@
+
                     <div>
                         <a asp-action="Index" asp-route-sortOrder="Manufacturer">
                             <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
