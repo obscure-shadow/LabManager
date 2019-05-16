@@ -87,9 +87,6 @@
                 @Html.DisplayNameFor(model => model.OpenedBy)
             </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Note)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.Employee)
                     <div>
                         <a asp-action="Index" asp-route-sortOrder="Employee">
@@ -149,9 +146,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.OpenedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Employee.FirstName)

@@ -74,3 +74,66 @@ body {
 
 }*/
 
+
+/*---------------------------------------------------*/
+/* LabThing List (Table) */
+
+.labthing-table
+{
+    table-layout: fixed;
+    width: 100%;
+}
+
+/*.labthing-table-row
+{
+
+}*/
+
+.labthing-table-name-header
+{
+    width: 20%;
+}
+
+.labthing-table-serialno-header {
+    width: 5%;
+}
+
+.labthing-table-modelno-header {
+    width: 5%;
+}
+
+.labthing-table-acquisitiondate-header {
+    width: 5%;
+}
+
+.labthing-table-calibratedon-header {
+    width: 5%;
+}
+
+.labthing-table-calibrationdue-header {
+    width: 5%;
+}
+
+.labthing-table-maintenanceon-header {
+    width: 5%;
+}
+
+.labthing-table-maintenancedue-header {
+    width: 5%;
+}
+
+.labthing-table-note-header {
+    width: 10%;
+}
+
+.labthing-table-employee-header {
+    width: 10%;
+}
+
+.labthing-table-category-header {
+    width: 10%;
+}
+
+.labthing-table-manufacturer-header {
+    width: 10%;
+}
