@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>LabThing</h1>
+<h1>Lab Items</h1>
 
 <p>
-    <a asp-action="Create">Create New LabThing</a>
+    <a asp-action="Create">Create New Laboratory Item</a>
 </p>
 @************************************************************************************************@
 @*Search box and filter for LabThing Index() *@
@@ -42,7 +42,7 @@
                     </a>
                 </div>
             </th>
-            <th class="labthing-table-serialno-header">
+            <th class="labthing-table-serialno-header m-5">
                 @Html.DisplayNameFor(model => model.SerialNo)
 
                 <div class="align-items-center">
@@ -209,13 +209,14 @@
             </td>
             <td class="labthing-table-button-group">
                 <a asp-action="Edit" asp-route-id="@item.ID">
-                    <img src="~/images/baseline_edit_black_sm.png" alt="EditIcon"/></a> |
+                    <img src="~/images/baseline_edit_black_sm.png" alt="EditIcon"/>
+                </a> |
                 <a asp-action="Details" asp-route-id="@item.ID">
                     <img src="~/images/baseline_info_black_sm.png" alt="DetailsIcon"/>
                 </a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">
                     <img src="~/images/baseline_delete_black_sm.png" alt="TrashIcon"/>
-                    </a>
+                </a>
             </td>
         </tr>
         }
