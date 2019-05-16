@@ -42,7 +42,7 @@
                 </div>
 
             </th>
-            <th class="m-5">
+            <th class="m-7">
                 @Html.DisplayNameFor(model => model.ReceivedDate)
                 @*@Html.ActionLink("Received Date", "Index", new { SortOrder = ViewBag.ReceivedDate_Desc })*@
                 <div class="align-items-center">
@@ -80,13 +80,13 @@
                 </a>
                 </div>
             </th>
-            <th>
+            <th class="m-2">
                 @Html.DisplayNameFor(model => model.COA)
             </th>
-            <th>
+            <th class="m-1">
                 @Html.DisplayNameFor(model => model.OpenedBy)
             </th>
-                <th>
+                <th class="m-5">
                     @Html.DisplayNameFor(model => model.Employee)
                     <div>
                         <a asp-action="Index" asp-route-sortOrder="Employee">
