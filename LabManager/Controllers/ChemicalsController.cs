@@ -484,6 +484,12 @@ namespace LabManager.Controllers
                 return NotFound();
             }
 
+            ViewData["ChemicalTypeID"] = new SelectList(_context.ChemicalTypes, "ID", "Name", chemical.ChemicalTypeID);
+
+            ViewData["ManufacturerID"] = new SelectList(_context.Manufacturers, "ID", "Name", chemical.ManufacturerID);
+
+            ViewData["EmployeeId"] = new SelectList(_context.Employees, "Id", "FirstName", chemical.EmployeeId);
+
             return View(chemical);
         }
 
@@ -498,6 +504,9 @@ namespace LabManager.Controllers
             }
 
             var chemical = await _context.Chemicals
+                .Include(chem => chem.ChemicalType)
+                .Include(chem => chem.Manufacturer)
+                .Include(chem => chem.Employee)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (chemical == null)
             {

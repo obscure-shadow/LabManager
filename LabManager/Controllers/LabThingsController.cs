@@ -604,6 +604,9 @@ lt => lt.Name, lt => lt.SerialNo, lt => lt.ModelNo, lt => lt.AcquisitionDate, lt
             }
 
             var labThing = await _context.LabThing
+                .Include(lt => lt.Category)
+                .Include(lt => lt.Manufacturer)
+                .Include(lt => lt.Employee)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (labThing == null)
             {

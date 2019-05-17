@@ -113,8 +113,8 @@ body {
 
 @media (min-width: 768px) {
 .inventory-container
-{
-    width: 600px;
-    margin: 0 auto;
-}
+    {
+        width: 600px;
+        margin: 0 auto;
+    }
 }
