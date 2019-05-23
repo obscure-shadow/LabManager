@@ -21,8 +21,16 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
+                @if (User.Identity.IsAuthenticated)
+                {
 
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LabManager</a>
+                }
+
+
+                @*<a class="navbar-brand" asp-area="" asp-controller="Account" asp-action="Login">LabManager</a>*@
+
+                @*asp-route-returnUrl="@Url.Action("/Home/Index")"*@
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -33,18 +41,13 @@
 
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>*@
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="LabThings" asp-action="Index">Lab Items Inventory</a>
-                        </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Chemicals" asp-action="Index">Chemicals Inventory</a>
-                        </li>*@
-                        @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>*@
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Dashboard">Home</a>
+                        </li>
+
+                        }
                     </ul>
                 </div>
             </div>
@@ -66,10 +69,9 @@
             @*beaker.png:*@
             @*Icons made by <a href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">DinosoftLabs</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>*@
 
-            @*chemistry.png*@
+            @*chemistry.png and centrifuge.png image credits: *@
             Icons made by: <a href="https://www.freepik.com/" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
                 and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
-            @*centrifuge.png*@
         </div>
     </footer>
 

@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Welcome To Your Dashboard!</h1>
+    <div class="inventory-container d-flex justify-content-between flex-wrap">
+
+        <div class="chemicals-container mr-10">
+            @*Chemicals link: *@
+            <a class="chemicals-link" asp-action="Index" asp-controller="Chemicals">
+                <img src="~/images/chemistry.png" />
+            </a>
+            <h3>Chemicals Inventory</h3>
+        </div>
+
+        <div class="labthing-container mr-10">
+            @*LabThings link: *@
+            <a class="labthings-link" asp-action="Index" asp-controller="LabThings">
+                <img src="~/images/centrifuge.png" />
+            </a>
+            <h3>Laboratory Items Inventory</h3>
+        </div>
+    </div>
+
+
+</div>
