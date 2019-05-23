@@ -6,19 +6,23 @@
 
 }
 
-<h1>Edit LabThing</h1>
+<h1>Edit Lab Item</h1>
 
-<h4>LabThing</h4>
+@*<h4>Lab Item</h4>*@
     <hr />
     <div class="row">
         <div class="col-md-4">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="ID" />
-
                 <div class="form-group">
-                    <label asp-for="ID" class="control-label"></label>
-                    <div>@Html.DisplayFor(model=> model.Name)</div>
+            <label asp-for="ID" class="control-label"></label>
+            <div>@Html.DisplayFor(model=> model.Name)</div>
+        </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="SerialNo" class="control-label"></label>

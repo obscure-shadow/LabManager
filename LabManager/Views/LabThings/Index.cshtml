@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>LabThing</h1>
+<h1>Lab Items</h1>
 
 <p>
-    <a asp-action="Create">Create New LabThing</a>
+    <a asp-action="Create">Create New Laboratory Item</a>
 </p>
 @************************************************************************************************@
 @*Search box and filter for LabThing Index() *@
@@ -24,13 +24,13 @@
 </form>*@
 @************************************************************************************************@
 
-<table class="labthing-list">
+<table class="labthing-table">
     <thead>
         <tr class="labthing-table-row">
 
             @using (Html.BeginForm("Index", "LabThing", FormMethod.Get))
             {
-            <th class="labthing-table-header">
+            <th class="labthing-table-name-header">
                 @Html.DisplayNameFor(model => model.Name)
 
                 <div class="align-items-center">
@@ -42,7 +42,7 @@
                     </a>
                 </div>
             </th>
-            <th>
+            <th class="labthing-table-serialno-header m-5">
                 @Html.DisplayNameFor(model => model.SerialNo)
 
                 <div class="align-items-center">
@@ -54,7 +54,7 @@
                     </a>
                 </div>
             </th>
-            <th>
+            <th class="labthing-table-modelno-header">
                 @Html.DisplayNameFor(model => model.ModelNo)
 
                 <div class="align-items-center">
@@ -66,7 +66,7 @@
                     </a>
                 </div>
             </th>
-            <th>
+            <th class="labthing-table-acquisitiondate-header">
                 @Html.DisplayNameFor(model => model.AcquisitionDate)
 
                 <div class="align-items-center">
@@ -78,7 +78,7 @@
                     </a>
                 </div>
             </th>
-            <th>
+            <th class="labthing-table-calibratedon-header">
                 @Html.DisplayNameFor(model => model.CalibratedOn)
 
                 <div class="align-items-center">
@@ -90,7 +90,7 @@
                     </a>
                 </div>
             </th>
-            <th>
+            <th class="labthing-table-calibrationdue-header">
                 @Html.DisplayNameFor(model => model.CalibrationDue)
 
                 <div class="align-items-center">
@@ -102,7 +102,7 @@
                     </a>
                 </div>
             </th>
-            <th>
+            <th class="labthing-table-maintenanceon-header">
                 @Html.DisplayNameFor(model => model.MaintenanceOn)
 
                 <div class="align-items-center">
@@ -114,7 +114,7 @@
                     </a>
                 </div>
             </th>
-            <th>
+            <th class="labthing-table-maintenancedue-header">
                 @Html.DisplayNameFor(model => model.MaintenanceDue)
 
                 <div class="align-items-center">
@@ -126,11 +126,7 @@
                     </a>
                 </div>
             </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Note)
-                </th>
-
-                <th>
+                <th class="labthing-table-employee-header">
                     @Html.DisplayNameFor(model => model.Employee)
 
                     <div class="align-items-center">
@@ -144,7 +140,7 @@
                 </th>
 
 
-                <th>
+                <th class="labthing-table-category-header">
                     @Html.DisplayNameFor(model => model.Category)
 
                     <div class="align-items-center">
@@ -156,7 +152,7 @@
                         </a>
                     </div>
                 </th>
-                <th>
+                <th class="labthing-table-manufacturer-header">
                     @Html.DisplayNameFor(model => model.Manufacturer)
 
                     <div class="align-items-center">
@@ -172,58 +168,55 @@
         </tr>
     </thead>
 
-    <tbody>
+    <tbody class="table-body">
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
+        <tr class="labthing-table-row">
+        <td class="table-data">
             @Html.DisplayFor(modelItem => item.Name)
         </td>
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.SerialNo)
             </td>
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.ModelNo)
             </td>
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.AcquisitionDate)
             </td>
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.CalibratedOn)
             </td>
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.CalibrationDue)
             </td>
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.MaintenanceOn)
             </td>
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.MaintenanceDue)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.Employee.FirstName)
             </td>
 
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
 
-            <td>
+            <td class="table-data">
                 @Html.DisplayFor(modelItem => item.Manufacturer.Name)
             </td>
-            <td>
+            <td class="labthing-table-button-group">
                 <a asp-action="Edit" asp-route-id="@item.ID">
-                    <img src="~/images/baseline_edit_black_sm.png" alt="EditIcon"/></a> |
+                    <img src="~/images/baseline_edit_black_sm.png" alt="EditIcon"/>
+                </a> |
                 <a asp-action="Details" asp-route-id="@item.ID">
                     <img src="~/images/baseline_info_black_sm.png" alt="DetailsIcon"/>
                 </a> |
                 <a asp-action="Delete" asp-route-id="@item.ID">
                     <img src="~/images/baseline_delete_black_sm.png" alt="TrashIcon"/>
-                    </a>
+                </a>
             </td>
         </tr>
         }

@@ -49,7 +49,6 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  white-space: nowrap;
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
@@ -74,3 +73,48 @@ body {
 
 }*/
 
+
+/*---------------------------------------------------*/
+/* LabThing List (Table) */
+
+/*.table
+{
+    max-height: 300px;
+    max-width: 100px;
+    min-height: 100px;
+}*/
+
+.labthing-table
+{
+    table-layout: fixed;
+    width: 100%;
+}
+
+.chemicals-table 
+{
+    table-layout: fixed;
+    width: 100%;
+}
+
+.labthing-table-button-group
+{
+    position: relative;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+.chemical-table-button-group 
+{
+    position: relative;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+}
+
+
+@media (min-width: 768px) {
+.inventory-container
+    {
+        width: 600px;
+        margin: 0 auto;
+    }
+}

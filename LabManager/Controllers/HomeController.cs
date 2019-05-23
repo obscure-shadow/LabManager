@@ -1,16 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using LabManager.Models;
 
 namespace LabManager.Controllers
 {
+
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        public IActionResult Home()
+        {
+            return View();
+        }
+
+        public IActionResult Dashboard()
         {
             return View();
         }

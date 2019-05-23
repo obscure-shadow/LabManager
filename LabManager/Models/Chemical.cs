@@ -30,10 +30,12 @@ namespace LabManager.Models
         [Display(Name="Certificate of Analysis (COA):")]
         public string COA { get; set; }
 
-        [Display(Name = "Opened By (Type Initials):")]
+        [Display(Name = "Opened By:")]
         public string OpenedBy { get; set; }
 
         public string Note { get; set; }
+
+        //NOTE: Add LOT NUMBER
 
         //[NotMapped]
         public Employee Employee { get; set; }

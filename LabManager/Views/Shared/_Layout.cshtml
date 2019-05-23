@@ -21,8 +21,11 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
+                @if (User.Identity.IsAuthenticated)
+                {
 
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LabManager</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Dashboard">LabManager</a>
+                }
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -33,18 +36,10 @@
 
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="LabThings" asp-action="Index">Lab Items Inventory</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Chemicals" asp-action="Index">Chemicals Inventory</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                    @*@if (User.Identity.IsAuthenticated)
+                    {
+                        NOTE: place other links here if you want them to appear on login next to Account/Manage and Logout links.
+                    }*@
                     </ul>
                 </div>
             </div>
@@ -60,6 +55,15 @@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2019 - LabManager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        <div>
+            Image Credits:
+            @*beaker.png:*@
+            @*Icons made by <a href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">DinosoftLabs</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>*@
+
+            @*chemistry.png and centrifuge.png image credits: *@
+            Icons made by: <a href="https://www.freepik.com/" title="Freepik">Freepik</a> and <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+                and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>
         </div>
     </footer>
 

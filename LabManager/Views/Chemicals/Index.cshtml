@@ -23,13 +23,13 @@
 </form>*@
 @************************************************************************************************@
 
-<table class="chemicals-list">
+<table class="chemicals-table">
     <thead>
         <tr class="chemicals-table-row">
 
             @using (Html.BeginForm("Index", "Chemicals", FormMethod.Get))
             {
-            <th class="chemicals-table-header">
+            <th class="chemicals-table-header m-5">
                 @Html.DisplayNameFor(model => model.Name)
 
                 <div class="align-items-center">
@@ -42,7 +42,7 @@
                 </div>
 
             </th>
-            <th>
+            <th class="m-7">
                 @Html.DisplayNameFor(model => model.ReceivedDate)
                 @*@Html.ActionLink("Received Date", "Index", new { SortOrder = ViewBag.ReceivedDate_Desc })*@
                 <div class="align-items-center">
@@ -80,16 +80,13 @@
                 </a>
                 </div>
             </th>
-            <th>
+            @*<th class="m-2">
                 @Html.DisplayNameFor(model => model.COA)
-            </th>
-            <th>
+            </th>*@
+            <th class="m-1">
                 @Html.DisplayNameFor(model => model.OpenedBy)
             </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Note)
-                </th>
-                <th>
+                <th class="m-5">
                     @Html.DisplayNameFor(model => model.Employee)
                     <div>
                         <a asp-action="Index" asp-route-sortOrder="Employee">
@@ -144,14 +141,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ExpirationDate)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.COA)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.OpenedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Note)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Employee.FirstName)
@@ -162,10 +156,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ChemicalType.Name)
                 </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <td class="chemical-table-button-group">
+                    <a asp-action="Edit" asp-route-id="@item.ID"><img src="~/images/baseline_edit_black_sm.png" alt="EditIcon" /></a> |
+                    <a asp-action="Details" asp-route-id="@item.ID"><img src="~/images/baseline_info_black_sm.png" alt="DetailsIcon" /></a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID"><img src="~/images/baseline_delete_black_sm.png" alt="TrashIcon" /></a>
                 </td>
             </tr>
         }
