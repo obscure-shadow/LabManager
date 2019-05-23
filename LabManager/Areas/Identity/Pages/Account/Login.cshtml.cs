@@ -69,7 +69,7 @@ namespace LabManager.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             //returnUrl = returnUrl ?? Url.Content("~/Home/Index");
-            returnUrl = returnUrl ?? Url.Content("~/Home");
+            returnUrl = returnUrl ?? Url.Content("~/Home/Dashboard");
 
             if (ModelState.IsValid)
             {

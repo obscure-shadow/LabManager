@@ -24,13 +24,8 @@
                 @if (User.Identity.IsAuthenticated)
                 {
 
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LabManager</a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Dashboard">LabManager</a>
                 }
-
-
-                @*<a class="navbar-brand" asp-area="" asp-controller="Account" asp-action="Login">LabManager</a>*@
-
-                @*asp-route-returnUrl="@Url.Action("/Home/Index")"*@
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -41,13 +36,10 @@
 
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                    @if (User.Identity.IsAuthenticated)
+                    @*@if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Dashboard">Home</a>
-                        </li>
-
-                        }
+                        NOTE: place other links here if you want them to appear on login next to Account/Manage and Logout links.
+                    }*@
                     </ul>
                 </div>
             </div>
