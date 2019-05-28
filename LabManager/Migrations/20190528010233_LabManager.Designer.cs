@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190514221812_LabManager")]
+    [Migration("20190528010233_LabManager")]
     partial class LabManager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace LabManager.Migrations
 
                     b.Property<string>("Note");
 
-                    b.Property<DateTime>("OpenDate");
+                    b.Property<DateTime?>("OpenDate");
 
                     b.Property<string>("OpenedBy");
 

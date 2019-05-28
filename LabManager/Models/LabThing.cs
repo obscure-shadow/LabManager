@@ -40,7 +40,7 @@ namespace LabManager.Models
         [Display(Name = "Last Maintenance On:")]
         public DateTime MaintenanceOn { get; set; }
 
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Maintenance Due:")]
         public DateTime MaintenanceDue { get; set; }

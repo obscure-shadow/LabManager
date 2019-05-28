@@ -204,7 +204,7 @@ namespace LabManager.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     ReceivedDate = table.Column<DateTime>(nullable: false),
-                    OpenDate = table.Column<DateTime>(nullable: false),
+                    OpenDate = table.Column<DateTime>(nullable: true),
                     ExpirationDate = table.Column<DateTime>(nullable: false),
                     COA = table.Column<string>(nullable: true),
                     OpenedBy = table.Column<string>(nullable: true),
