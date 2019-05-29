@@ -27,6 +27,14 @@ namespace LabManager.Data
             modelBuilder.Entity<Employee>().ToTable("Employee");
             modelBuilder.Entity<Category>().ToTable("Category");
             modelBuilder.Entity<Chemical>().ToTable("Chemical");
+
+            // Set default values for dates:
+            //{
+            //    modelBuilder.Entity<Chemical>()
+            //        .Property(c => c.ReceivedDate)
+            //        .HasDefaultValue(DateTime.Now);
+            //}
+
             modelBuilder.Entity<ChemicalType>().ToTable("ChemicalType");
             modelBuilder.Entity<Manufacturer>().ToTable("Manufacturer");
             modelBuilder.Entity<LabThing>().ToTable("LabThing");

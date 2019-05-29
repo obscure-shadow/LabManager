@@ -12,33 +12,43 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*Required*@
             <div class="form-group">
                 <label asp-for="Chemical.Name" class="control-label"></label>
                 <input asp-for="Chemical.Name" class="form-control" />
                 <span asp-validation-for="Chemical.Name" class="text-danger"></span>
             </div>
+            @*Required*@
             <div class="form-group">
                 <label asp-for="Chemical.ReceivedDate" class="control-label"></label>
-                <input asp-for="Chemical.ReceivedDate" class="form-control" />
+                <input asp-for="Chemical.ReceivedDate" value="" class="form-control" />
                 <span asp-validation-for="Chemical.ReceivedDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Chemical.OpenDate" class="control-label"></label>
+                <label asp-for="Chemical.OpenDate" class="control-label">
+                </label>
                 <input asp-for="Chemical.OpenDate" class="form-control" />
                 <span asp-validation-for="Chemical.OpenDate" class="text-danger"></span>
             </div>
+
+            @*Required*@
             <div class="form-group">
                 <label asp-for="Chemical.ExpirationDate" class="control-label"></label>
                 <input asp-for="Chemical.ExpirationDate" class="form-control" />
                 <span asp-validation-for="Chemical.ExpirationDate" class="text-danger"></span>
             </div>
+
+            @*Required*@
             <div class="form-group">
                 <label asp-for="Chemical.COA" class="control-label"></label>
                 <input asp-for="Chemical.COA" class="form-control" />
                 <span asp-validation-for="Chemical.COA" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Chemical.OpenedBy" class="control-label"></label>
+                <label asp-for="Chemical.OpenedBy" class="control-label">
+                </label>
                 <input asp-for="Chemical.OpenedBy" class="form-control" />
                 <span asp-validation-for="Chemical.OpenedBy" class="text-danger"></span>
             </div>

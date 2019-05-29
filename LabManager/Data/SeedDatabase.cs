@@ -120,7 +120,7 @@ namespace LabManager.Data
             {
                 FirstName = "admin",
                 LastName = "admin",
-                HireDate = DateTime.Parse("2000-01-01"),
+                //HireDate = DateTime.Parse("2000-01-01"),
                 UserName = "admin@admin.com",
                 NormalizedUserName = "ADMIN@ADMIN.COM",
                 Email = "admin@admin.com",

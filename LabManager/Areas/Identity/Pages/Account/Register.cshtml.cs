@@ -49,11 +49,11 @@ namespace LabManager.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
-            [Required]
-            [DataType(DataType.Date)]
-            [DisplayFormat(DataFormatString = "{yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-            [Display(Name ="Hire Date")]
-            public DateTime HireDate { get; set; }
+            //[Required]
+            //[DataType(DataType.Date)]
+            //[DisplayFormat(DataFormatString = "{yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+            //[Display(Name ="Hire Date")]
+            //public DateTime HireDate { get; set; }
 
             [Required]
             [EmailAddress]
@@ -83,7 +83,9 @@ namespace LabManager.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new Employee { FirstName = Input.FirstName, LastName = Input.LastName, HireDate=Input.HireDate, UserName = Input.Email, Email = Input.Email };
+                var user = new Employee { FirstName = Input.FirstName, LastName = Input.LastName,
+                    //HireDate =Input.HireDate,
+                    UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

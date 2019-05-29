@@ -52,7 +52,7 @@ namespace LabManager.Migrations
 
                     b.Property<string>("Note");
 
-                    b.Property<DateTime>("OpenDate");
+                    b.Property<DateTime?>("OpenDate");
 
                     b.Property<string>("OpenedBy");
 
