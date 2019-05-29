@@ -35,7 +35,8 @@ namespace LabManager.Controllers
             // if sortOrder is null, run the initial call
             // if sortOrder = Name_Desc, make a call to the db (var chemical...) with an orderby chem.Name desc before select chem. 
             // else, if sortOrder = Name, do the same with an orderby Name
-            //Repeat a million times.
+
+            // NOTE: Create a factory function for this!
 
             if (sortOrder == null)
             {
@@ -301,7 +302,7 @@ namespace LabManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ChemicalCreateViewModel chemicalCreateViewModel)
         {
-            //NOTE: Bind was automatically scaffolded with the controller for this create method but I am not using it:
+            //NOTE: Bind was automatically scaffolded with the controller:
                 //Create([Bind("ID,Name,ReceivedDate,OpenDate,ExpirationDate,COA,OpenedBy,Note,EmployeeID,ManufacturerID,ChemicalTypeID")] Chemical chemical)
 
             ModelState.Remove("Chemical.Employee");

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LabManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190528010233_LabManager")]
+    [Migration("20190529042614_LabManager")]
     partial class LabManager
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

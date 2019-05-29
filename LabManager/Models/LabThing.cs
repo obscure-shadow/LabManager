@@ -9,6 +9,21 @@ namespace LabManager.Models
 {
     public class LabThing
     {
+        // Please see the Chemical.cs model for an explanation of the constructor below and updates to the DateTime properties in this model.
+
+        //public LabThing()
+        //{
+        //    AcquisitionDate = DateTime.Now;
+        //    CalibratedOn = DateTime.Now;
+        //    CalibrationDue = DateTime.Now;
+        //    MaintenanceOn = DateTime.Now;
+        //    MaintenanceDue = DateTime.Now;
+        //}
+
+
+        //----------------------------------------------------------------------------------------------------------
+        // Properties:
+
         public int ID { get; set; }
 
         [Display(Name = "Lab Item:")]
@@ -20,27 +35,32 @@ namespace LabManager.Models
         [Display(Name = "Model Number:")]
         public string ModelNo { get; set; }
 
+        // Acquisition
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}", ApplyFormatInEditMode =true)]
         [Display(Name = "Acquisition Date:")]
         public DateTime AcquisitionDate { get; set; }
 
+        // Calibration
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Last Calibrated On:")]
+        [Display(Name = "Calibrated On:")]
         public DateTime CalibratedOn { get; set; }
 
+        // CalibrationDue
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Calibration Due:")]
         public DateTime CalibrationDue { get; set; }
 
+        // Maintenance
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Last Maintenance On:")]
+        [Display(Name = "Maintenance On:")]
         public DateTime MaintenanceOn { get; set; }
 
-        [DataType(DataType.DateTime)]
+        // MaintenanceDue
+        [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Maintenance Due:")]
         public DateTime MaintenanceDue { get; set; }

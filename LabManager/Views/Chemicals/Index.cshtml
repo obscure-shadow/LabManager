@@ -44,7 +44,6 @@
             </th>
             <th class="m-7">
                 @Html.DisplayNameFor(model => model.ReceivedDate)
-                @*@Html.ActionLink("Received Date", "Index", new { SortOrder = ViewBag.ReceivedDate_Desc })*@
                 <div class="align-items-center">
                 <a asp-action="Index" asp-route-sortOrder="ReceivedDate">
                     <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />
@@ -57,8 +56,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OpenDate)
-                @*@Html.ActionLink("Open Date", "Index", new { SortOrder = ViewBag.OpenDate_Desc })*@
-
                 <div class="align-items-center">
                     <a asp-action="Index" asp-route-sortOrder="OpenDate">
                         <img src="~/images/baseline_arrow_drop_up_black_18dp.png" alt="SortAscendingIcon" />

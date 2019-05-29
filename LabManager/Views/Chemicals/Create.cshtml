@@ -21,12 +21,13 @@
             @*Required*@
             <div class="form-group">
                 <label asp-for="Chemical.ReceivedDate" class="control-label"></label>
-                <input asp-for="Chemical.ReceivedDate" class="form-control" />
+                <input asp-for="Chemical.ReceivedDate" value="" class="form-control" />
                 <span asp-validation-for="Chemical.ReceivedDate" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Chemical.OpenDate" class="control-label"></label>
+                <label asp-for="Chemical.OpenDate" class="control-label">
+                </label>
                 <input asp-for="Chemical.OpenDate" class="form-control" />
                 <span asp-validation-for="Chemical.OpenDate" class="text-danger"></span>
             </div>
@@ -46,7 +47,8 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Chemical.OpenedBy" class="control-label"></label>
+                <label asp-for="Chemical.OpenedBy" class="control-label">
+                </label>
                 <input asp-for="Chemical.OpenedBy" class="form-control" />
                 <span asp-validation-for="Chemical.OpenedBy" class="text-danger"></span>
             </div>
