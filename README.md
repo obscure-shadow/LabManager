@@ -17,8 +17,10 @@ This project was built in C# using Microsoft Asp.Net Core (v2.2) with Entity Fra
 You will first be presented with a login screen requiring your credentials. 
 If you do not have an account, you must first register. 
 
-![Register](/LabManager/wwwroot/images/ReadmeImages/LabManagerRegister.png)
-![Login](/LabManager/wwwroot/images/ReadmeImages/LabManagerLogin.png)
+![](/LabManager/wwwroot/images/ReadmeImages/LabManagerRegister.png)
+
+
+![](/LabManager/wwwroot/images/ReadmeImages/LabManagerLogin.png)
 
 
 You may also login with the following sample credentials:
