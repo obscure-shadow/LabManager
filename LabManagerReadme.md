@@ -14,7 +14,14 @@ This project was built in C# using Microsoft Asp.Net Core (v2.2) with Entity Fra
 
 ### Login
 
-You will first be presented with a login screen requiring your credentials. If you do not have an account, you must first register. You may also login with the following sample credentials:
+You will first be presented with a login screen requiring your credentials. 
+If you do not have an account, you must first register. 
+
+![](./images/ReadmeImages/LabManagerRegister.png)
+![](./images/ReadmeImages/LabManagerLogin.png)
+
+
+You may also login with the following sample credentials:
 
 Username: labmanager@email.com"
 Password: LabManager1!
