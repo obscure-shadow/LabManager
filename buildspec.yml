@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+
+  build:
+    commands:
+      - dotnet restore EbCiTest/EbCiTest.csproj
+      - dotnet build EbCiTest/EbCiTest.csproj
+      - dotnet publish EbCiTest/EbCiTest.csproj -o ./staging/app
+      - cp ./EbCiTest/aws-windows-deployment-manifest.json ./EbCiTest/staging/.
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'EbCiTest/staging'
