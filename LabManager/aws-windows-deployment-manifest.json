@@ -4,7 +4,7 @@
         "aspNetCoreWeb": [{
                 "name": "LabManager",
                 "parameters": {
-                    "appBundle": "./staging/app",
+                    "appBundle": "./app",
                     "iisPath": "/",
                     "iisWebSite": "Default Web Site"
                 }
