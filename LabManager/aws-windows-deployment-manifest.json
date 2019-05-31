@@ -2,9 +2,9 @@
     "manifestVersion": 1,
     "deployments": {
         "aspNetCoreWeb": [{
-                "name": "CMS",
+                "name": "LabManager",
                 "parameters": {
-                    "appBundle": ".",
+                    "appBundle": "./staging/app",
                     "iisPath": "/",
                     "iisWebSite": "Default Web Site"
                 }
