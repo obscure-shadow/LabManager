@@ -4,7 +4,7 @@
         "aspNetCoreWeb": [{
                 "name": "CMS",
                 "parameters": {
-                    "appBundle": "./site",
+                    "appBundle": "./staging/site",
                     "iisPath": "/",
                     "iisWebSite": "Default Web Site"
                 }
